@@ -23,8 +23,14 @@ class PlayScene extends Scene {
 
         hoop.setRingTint(0xea4214);
 
-        hoop.setNetScale(3);
-    
+        //hoop.setNetScale(3);
+        hoop.setPosition(200, 200);
+
+        hoop.setScale(1);
+
+        hoop.setNetScale(1);
+
+        hoop.setRotation(0.5);
     }
 
     
