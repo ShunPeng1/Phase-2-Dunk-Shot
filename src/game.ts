@@ -1,4 +1,6 @@
-import Test from "./Test";
+import LoadingScene from "./scenes/LoadingScene";
+import PlayScene from "./scenes/PlayScene";
+
 
 class Game {
     constructor() {
@@ -25,7 +27,7 @@ class Game {
             type: Phaser.AUTO,
             width: gameWidth,
             height: gameHeight,
-            scene: Test,
+            scene: [LoadingScene, PlayScene],
             physics: {
                 default: 'arcade',
                 arcade: {
