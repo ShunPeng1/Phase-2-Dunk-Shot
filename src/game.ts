@@ -5,7 +5,7 @@ import PlayScene from "./scenes/PlayScene";
 class Game {
     constructor() {
         // Desired aspect ratio (width:height)
-        const aspectRatio = 3 / 4;
+        const aspectRatio = 9 / 16;
         
         let gameWidth, gameHeight;
 
@@ -32,7 +32,7 @@ class Game {
                 default: 'arcade',
                 arcade: {
                     debug: true,
-                    gravity: {x: 0, y: 0 }
+                    gravity: {x: 0, y: 200 }
                 }
             }
         };

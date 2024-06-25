@@ -58,6 +58,7 @@ class BasketballHoop {
         this.leftCollider.setImmovable(true);
         this.leftCollider.setVisible(false);
         this.leftCollider.setDepth(-1);
+        (this.leftCollider.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
         // Create the right collider
         this.rightCollider = scene.physics.add.image(x + this.colliderOffsetX + this.ringRadiusX, 0, "");
@@ -65,15 +66,18 @@ class BasketballHoop {
         this.rightCollider.setImmovable(true);
         this.rightCollider.setVisible(false);
         this.rightCollider.setDepth(-1);
+        (this.rightCollider.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
 
         // Create the line collider
         
         
         const lineCollider = new LineCollider(this.scene, x + this.colliderOffsetX +  this.ringRadiusX, y, -this.ringRadiusX , this.ringRadiusX, x => -1/83 * x**2 + 0 * x + this.ringRadiusX , 20, 20, { type: 'none', key: ''});
-        lineCollider.setImmovable(true);
-        
         this.lineCollider = lineCollider;
+
+        lineCollider.setImmovable(true);
+        lineCollider.setAllowGravity(false);
+        
     }
 
 

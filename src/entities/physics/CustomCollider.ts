@@ -23,6 +23,18 @@ class CustomCollider extends Phaser.GameObjects.Container{
         });
     }
 
+    public setGravity(valueX : number, valueY : number) : void {
+        this.colliders.getChildren().forEach(collider => {
+            (collider as unknown as Phaser.Physics.Arcade.Components.Gravity).setGravity(valueX, valueY);
+        });
+    }
+
+    public setAllowGravity(value: boolean) : void {
+        this.colliders.getChildren().forEach(collider => {
+            (collider as any).body.setAllowGravity(value);
+        });
+    }
+
 
     public getColliders() : Phaser.Physics.Arcade.Group {
         return this.colliders;
