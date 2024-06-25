@@ -1,10 +1,12 @@
 import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
+import LineCollider from "./physics/LineCollider";
 
 class BasketballHoop {
     
     private scene : Scene;
 
+    // Components of the basketball hoop
     private innerRing : Phaser.GameObjects.Image;
     private outerRing : Phaser.GameObjects.Image;
     private net : Phaser.GameObjects.Image;
@@ -16,11 +18,13 @@ class BasketballHoop {
     
     private ringRadiusX: number = 83; // Property to store the radius of the circle collider
     
-    private colliderOffsetX: number = 7;
-    private colliderOffsetY: number = 90;
+    // Collider properties
+    private colliderOffsetX: number = -76;
+    private colliderOffsetY: number = 0;
 
     private leftCollider: Phaser.Physics.Arcade.Image;
     private rightCollider: Phaser.Physics.Arcade.Image;
+    private lineCollider: LineCollider;
 
     private DEBUG = true;
 
@@ -49,19 +53,27 @@ class BasketballHoop {
         // Create the left collider
         console.log(this.innerRing.width, this.ringRadiusX,  x - this.ringRadiusX);
 
-        this.leftCollider = scene.physics.add.image(x, y, AssetManager.BASKETBALL_KEY);
+        this.leftCollider = scene.physics.add.image(x + this.colliderOffsetX - this.ringRadiusX, 0, "");
         this.leftCollider.setCircle(this.innerRing.width / 20);
         this.leftCollider.setImmovable(true);
         this.leftCollider.setVisible(false);
         this.leftCollider.setDepth(-1);
 
         // Create the right collider
-        this.rightCollider = scene.physics.add.image(x + 2 * this.ringRadiusX, y, AssetManager.BASKETBALL_KEY);
+        this.rightCollider = scene.physics.add.image(x + this.colliderOffsetX + this.ringRadiusX, 0, "");
         this.rightCollider.setCircle(this.innerRing.width / 20);
         this.rightCollider.setImmovable(true);
         this.rightCollider.setVisible(false);
         this.rightCollider.setDepth(-1);
 
+
+        // Create the line collider
+        
+        
+        const lineCollider = new LineCollider(this.scene, x + this.colliderOffsetX +  this.ringRadiusX, y, -this.ringRadiusX , this.ringRadiusX, x => -1/83 * x**2 + 0 * x + this.ringRadiusX , 20, 20, { type: 'none', key: ''});
+        lineCollider.setImmovable(true);
+        
+        this.lineCollider = lineCollider;
     }
 
 
@@ -89,6 +101,8 @@ class BasketballHoop {
         this.innerRing.setPosition(x, y);
         this.outerRing.setPosition(x, y);
         this.net.setPosition(x, y + this.netOffsetY); // Adjust the Y offset as needed
+
+        this.lineCollider.setPosition(x, y,0,0);
     }
 
     // Method to set the scale of the basketball hoop components
@@ -97,6 +111,8 @@ class BasketballHoop {
 
         this.innerRing.setScale(scale);
         this.outerRing.setScale(scale);
+        
+        this.lineCollider.setScale(scale, scale);
     
         this.updateComponentPosition();
     }
@@ -105,6 +121,9 @@ class BasketballHoop {
         this.innerRing.setRotation(angle);
         this.outerRing.setRotation(angle);
         this.net.setRotation(angle);
+
+        this.lineCollider.setRotation(angle);
+
         this.updateComponentPosition();
     }
 
@@ -125,6 +144,9 @@ class BasketballHoop {
 
         // Enable collision between the ball and the right collider of the hoop
         this.scene.physics.add.collider(ball, this.rightCollider);
+
+        // Enable collision between the ball and the line collider
+        this.scene.physics.add.collider(ball, this.lineCollider.getColliders());
     }
 
     private updateComponentPosition() : void {
@@ -143,13 +165,13 @@ class BasketballHoop {
         // Calculate new positions for the colliders based on the hoop's rotation
         const angle = this.innerRing.rotation;
         const cosAngle = Math.cos(angle + Math.PI/2);
-        const sinAngle = Math.sin((angle + Math.PI * 1.5)) + 1;
+        const sinAngle1 = Math.sin((angle + Math.PI * 1.5)) + 1;
         const sinAngle2 = Math.sin(angle + Math.PI * 0.5) + 1;
         const radiusX = this.ringRadiusX * this.currentRingScale;
         const offsetX = this.colliderOffsetX * this.currentRingScale;
         const offsetY = this.colliderOffsetY * this.currentRingScale;
         
-        this.leftCollider.x = this.innerRing.x + offsetX + radiusX * sinAngle;
+        this.leftCollider.x = this.innerRing.x + offsetX + radiusX * sinAngle1;
         this.leftCollider.y = this.innerRing.y + offsetY + radiusX * cosAngle;
 
         this.rightCollider.x = this.innerRing.x + offsetX + radiusX * sinAngle2;
@@ -159,6 +181,8 @@ class BasketballHoop {
         this.leftCollider.setRotation(angle);
         this.rightCollider.setRotation(angle);
 
+        
+        
     }
 
 }

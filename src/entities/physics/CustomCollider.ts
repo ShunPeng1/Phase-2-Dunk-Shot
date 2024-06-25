@@ -1,8 +1,8 @@
-class CustomCollider {
-    protected scene: Phaser.Scene;
+class CustomCollider extends Phaser.GameObjects.Container{
+  
     protected colliders : Phaser.Physics.Arcade.Group;
-    constructor(scene : Phaser.Scene) {
-        this.scene = scene;
+    constructor(scene : Phaser.Scene, x? : number, y? : number) {
+        super(scene, x, y);
         this.colliders = this.scene.physics.add.group();
         
     }

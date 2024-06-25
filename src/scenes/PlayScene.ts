@@ -1,7 +1,7 @@
 import { Physics, Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import BasketballHoop from "../entities/BasketballHoop";
-import PolygonCollider from "../entities/physics/PolygonCollider";
+
 import LineCollider from "../entities/physics/LineCollider";
 
 class PlayScene extends Scene {
@@ -22,17 +22,17 @@ class PlayScene extends Scene {
         // Set the background color to white
         //this.cameras.main.setBackgroundColor('#FFFFFF');
     
-        let hoop = new BasketballHoop(this, 100, 100);
+        let hoop = new BasketballHoop(this, 400, 400);
         this.hoop = hoop;
 
         hoop.setRingTint(0xea4214);
 
         //hoop.setNetScale(3);
-        hoop.setPosition(400, 400);
+        hoop.setPosition(200, 400);
 
-        hoop.setScale(2);
+        hoop.setScale(1);
 
-        hoop.setNetScale(2);
+        //hoop.setNetScale(2);
 
         hoop.setRotation(3.14*0);
 
@@ -53,10 +53,6 @@ class PlayScene extends Scene {
             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
         });
 
-        const lineCollider = new LineCollider(this, 100, 500, x => 300 + 100 * Math.sin(x / 50), 10, 100, { type: 'image', key: AssetManager.BASKETBALL_KEY });
-        //lineCollider.setPushable(false);
-        lineCollider.setImmovable(true);
-        lineCollider.enableCollision(this.ball);
 
     }
 
