@@ -1,6 +1,8 @@
 import { Physics, Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import BasketballHoop from "../entities/BasketballHoop";
+import PolygonCollider from "../entities/physics/PolygonCollider";
+import LineCollider from "../entities/physics/LineCollider";
 
 class PlayScene extends Scene {
 
@@ -40,7 +42,7 @@ class PlayScene extends Scene {
         this.ball.setCircle(this.ball.width / 2);
 
         
-        hoop.addCollider(this.ball);
+        hoop.enableCollision(this.ball);
         
 
         // Create keyboard inputs
@@ -50,6 +52,11 @@ class PlayScene extends Scene {
             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
         });
+
+        const lineCollider = new LineCollider(this, 100, 500, x => 300 + 100 * Math.sin(x / 50), 10, 100, { type: 'image', key: AssetManager.BASKETBALL_KEY });
+        //lineCollider.setPushable(false);
+        lineCollider.setImmovable(true);
+        lineCollider.enableCollision(this.ball);
 
     }
 

@@ -118,7 +118,7 @@ class BasketballHoop {
 
 
 
-    public addCollider(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
+    public enableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
 
         // Enable collision between the ball and the left collider of the hoop
         this.scene.physics.add.collider(ball, this.leftCollider);
