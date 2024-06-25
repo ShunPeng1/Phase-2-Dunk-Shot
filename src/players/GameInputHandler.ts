@@ -1,3 +1,4 @@
+import Ball from "../entities/Ball";
 import BasketballHoop from "../entities/BasketballHoop";
 import PlayScene from "../scenes/PlayScene";
 
@@ -6,12 +7,19 @@ class GameInputHandler {
     private isDragging: boolean = false;
     private dragStartPoint: Phaser.Math.Vector2;
     private currentHoop: BasketballHoop;
+    private ball : Ball;
 
-    private readonly MIN_HOOP_SCALE: number = 1; // Example min scale
-    private readonly MAX_HOOP_SCALE: number = 2; // Example max scale
+    private readonly MIN_HOOP_SCALE: number = 1;
+    private readonly MAX_HOOP_SCALE: number = 2; 
 
-    constructor(scene: PlayScene) {
+    private readonly SCALING_FACTOR : number = 0.01;
+
+    private readonly PUSH_BALL_FORCE : number = 600;
+
+    constructor(scene: PlayScene, ball : Ball) {
         this.scene = scene;
+        this.ball = ball;
+        
         this.dragStartPoint = new Phaser.Math.Vector2();
 
         // Mouse down event
@@ -25,10 +33,10 @@ class GameInputHandler {
             if (!this.isDragging) return;
             
             // Scale logic
-            let dragDistance = Phaser.Math.Distance.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y);
-            let newScale = 1 + dragDistance / 100; // Example scaling factor
-            newScale = Phaser.Math.Clamp(newScale, this.MIN_HOOP_SCALE, this.MAX_HOOP_SCALE); // Clamp the scale value
-            this.currentHoop.setNetScale(newScale);
+            let dragDistance = this.calculateScaledDistance();
+
+            // Net scale logic
+            this.currentHoop.setNetScale(dragDistance + 1);
 
             // Rotation logic
             let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y) - Math.PI / 2;
@@ -40,6 +48,17 @@ class GameInputHandler {
         this.scene.input.on('pointerup', () => {
             this.isDragging = false;
             this.currentHoop.setNetScale(1); // Reset scale
+
+            // Add ball force
+            
+            let distance = this.calculateScaledDistance();
+            let force = this.calculateForce(distance);
+
+
+            let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI ;
+            this.ball.setVelocity(force * Math.cos(angle), force * Math.sin(angle));
+            
+
         });
     }
 
@@ -48,7 +67,20 @@ class GameInputHandler {
         this.currentHoop = hoop;
     }
 
+    private calculateScaledDistance() : number {
+        const distance = Phaser.Math.Distance.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y);
+        const scaledDistance = Phaser.Math.Clamp(distance * this.SCALING_FACTOR, 0, 1);
+        return scaledDistance;
+    }
 
+    private calculateForce(scaledDistance : number) : number {
+        let force = Math.max(scaledDistance, 0) * this.PUSH_BALL_FORCE;
+        return force;
+    }
+
+
+    
+    
 }
 
 

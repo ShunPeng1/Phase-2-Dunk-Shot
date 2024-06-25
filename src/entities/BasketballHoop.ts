@@ -2,9 +2,8 @@ import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import LineCollider from "./physics/LineCollider";
 
-class BasketballHoop {
-    
-    private scene : Scene;
+class BasketballHoop extends Phaser.GameObjects.Container{
+    private isInitialized: boolean = false;
 
     // Components of the basketball hoop
     private innerRing : Phaser.GameObjects.Image;
@@ -29,7 +28,8 @@ class BasketballHoop {
     private DEBUG = true;
 
     constructor(scene : Scene, x : number, y : number) {
-        this.scene = scene;        
+        
+        super(scene, x, y);   
 
         // Load images
         this.innerRing = scene.add.image(x, y, AssetManager.INNER_RING_BASKET_KEY);
@@ -44,6 +44,8 @@ class BasketballHoop {
 
 
         this.initCircleCollider(scene, x, y); // Initialize the circle collider
+        
+        this.isInitialized = true;
 
         this.updateComponentPosition();
     
@@ -101,27 +103,43 @@ class BasketballHoop {
     }
 
     
-    public setPosition(x: number, y: number) : void {
+    public setPosition(x: number, y: number) : this {
+        super.setPosition(x, y);
+
+        if (!this.isInitialized) {
+            return this;
+        }
+
         this.innerRing.setPosition(x, y);
         this.outerRing.setPosition(x, y);
         this.net.setPosition(x, y + this.netOffsetY); // Adjust the Y offset as needed
 
         this.lineCollider.setPosition(x, y,0,0);
+
+        this.updateComponentPosition();
+
+        return this;
     }
 
     // Method to set the scale of the basketball hoop components
-    public setScale(scale: number) : void {
-        this.currentRingScale = scale;
+    public setScale(scaleX: number, scaledY? : number) : this {
+        super.setScale(scaleX, scaledY);
 
-        this.innerRing.setScale(scale);
-        this.outerRing.setScale(scale);
+        this.currentRingScale = scaleX;
+
+        this.innerRing.setScale(scaleX);
+        this.outerRing.setScale(scaleX);
         
-        this.lineCollider.setScale(scale, scale);
+        
     
         this.updateComponentPosition();
+
+        return this;
     }
     
-    public setRotation(angle: number) : void {
+    public setRotation(angle: number) : this {
+        super.setRotation(angle);
+
         this.innerRing.setRotation(angle);
         this.outerRing.setRotation(angle);
         this.net.setRotation(angle);
@@ -129,6 +147,8 @@ class BasketballHoop {
         this.lineCollider.setRotation(angle);
 
         this.updateComponentPosition();
+
+        return this;
     }
 
     public getRotation() : number {
@@ -163,7 +183,9 @@ class BasketballHoop {
         // Update colliders' scale to match the ring's scale
         this.leftCollider.setScale(this.currentRingScale);
         this.rightCollider.setScale(this.currentRingScale);
-
+        
+        // Update the line collider
+        this.lineCollider.setScale(this.currentRingScale, this.currentRingScale * this.currentNetScale);
         
 
         // Calculate new positions for the colliders based on the hoop's rotation
@@ -185,8 +207,6 @@ class BasketballHoop {
         this.leftCollider.setRotation(angle);
         this.rightCollider.setRotation(angle);
 
-        
-        
     }
 
 }

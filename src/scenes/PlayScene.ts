@@ -4,6 +4,7 @@ import BasketballHoop from "../entities/BasketballHoop";
 
 import LineCollider from "../entities/physics/LineCollider";
 import GameInputHandler from "../players/GameInputHandler";
+import Ball from "../entities/Ball";
 
 class PlayScene extends Scene {
 
@@ -41,15 +42,14 @@ class PlayScene extends Scene {
         hoop2.setScale(0.5);
         hoop2.setRotation(3.14*0);
 
-        let inputHandler = new GameInputHandler(this);
-        inputHandler.setCurrentHoop(hoop1);
-
 
         // Create the ball with physics enabled
-        this.ball = this.physics.add.sprite(150, 650, AssetManager.BASKETBALL_KEY);
-        this.ball.setCollideWorldBounds(true);
-        this.ball.setCircle(this.ball.width / 2);
+        this.ball = new Ball(this, 150,650 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
+
+        let inputHandler = new GameInputHandler(this, this.ball);
+        inputHandler.setCurrentHoop(hoop1);
+
 
         
         hoop1.enableCollision(this.ball);
