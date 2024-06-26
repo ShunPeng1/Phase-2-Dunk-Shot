@@ -1,11 +1,17 @@
-class CustomCollider extends Phaser.GameObjects.Container{
+abstract class CustomCollider extends Phaser.GameObjects.Container{
   
     protected colliders : Phaser.Physics.Arcade.Group;
     constructor(scene : Phaser.Scene, x? : number, y? : number) {
         super(scene, x, y);
-        this.colliders = this.scene.physics.add.group();
-        
     }
+
+    protected initColliders(): void {
+        const colliderChildren = this.createColliderChildren();
+        this.colliders = this.scene.physics.add.group(colliderChildren);
+        this.add(colliderChildren);
+    }
+
+    protected abstract createColliderChildren() : Phaser.GameObjects.GameObject[];
 
     public enableCollision(collider : Phaser.GameObjects.GameObject) : void {
         this.scene.physics.add.collider(collider, this.colliders);

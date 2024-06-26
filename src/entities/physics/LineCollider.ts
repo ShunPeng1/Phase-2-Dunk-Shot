@@ -20,11 +20,13 @@ class LineCollider extends CustomCollider {
         this.colliderSize = colliderSize;
         this.visual = visual;
 
-        this.createColliders();
+        this.initColliders();
     }
 
-    private createColliders(): void {
+    protected createColliderChildren(): Phaser.GameObjects.GameObject[] {
         const step = (this.to - this.from) / (this.numColliders - 1);
+
+        const colliderChildren: Phaser.GameObjects.GameObject[] = [];
 
         for (let i = 0; i < this.numColliders; i++) {
             const x = this.from + i * step;
@@ -46,10 +48,11 @@ class LineCollider extends CustomCollider {
                     .setDisplaySize(this.colliderSize, this.colliderSize);
             }
 
-            this.colliders.add(collider);
+            colliderChildren.push(collider);
 
-            this.add(collider);
         }
+
+        return colliderChildren;
     }
 
 }
