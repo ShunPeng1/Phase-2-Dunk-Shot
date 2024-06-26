@@ -8,7 +8,7 @@ import Ball from "../entities/Ball";
 
 class PlayScene extends Scene {
 
-    private ball: Physics.Arcade.Sprite;
+    private ball: Ball;
     private cursors: any;
     private currentHoop: BasketballHoop;
     private nextHoop: BasketballHoop;
@@ -50,10 +50,11 @@ class PlayScene extends Scene {
         let inputHandler = new GameInputHandler(this, this.ball);
         inputHandler.setCurrentHoop(hoop1);
 
-
-        hoop1.enableOverlap(this.ball, inputHandler.onHoopEnter);
-        
+        hoop1.enableOverlap(this.ball, inputHandler.onHoopEnter.bind(inputHandler));
         hoop1.enableCollision(this.ball);
+
+        hoop2.enableOverlap(this.ball, inputHandler.onHoopEnter.bind(inputHandler));
+        hoop2.enableCollision(this.ball);
         
 
     }
