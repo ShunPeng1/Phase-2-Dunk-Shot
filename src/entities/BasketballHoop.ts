@@ -29,6 +29,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private readonly COLLIDER_OFFSET_X: number = 6;
     private readonly COLLIDER_OFFSET_Y: number = 5;
+    private readonly COLLIDER_INTERNAL_OFFSET_Y = 30;
     private readonly COLLIDER_INTERNAL_RADIUS = 35;
 
     private ringCollider: RingCollider;
@@ -44,15 +45,14 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.scene.add.existing(this);
 
 
-        this.internalHoopContainer = scene.add.container(x, y, []);
 
         this.initImageComponents(scene, x, y); // Initialize the image components
 
         this.initCircleCollider(scene, x, y); // Initialize the circle collider
         
-        this.isInitialized = true;
+        this.initInternalHoopComponents(scene, x, y); // Initialize the internal hoop components
 
-        this.add(this.internalHoopContainer);
+        this.isInitialized = true;
 
         this.updateComponentPosition();
     
@@ -81,18 +81,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         this.add(this.ringCollider);
 
-        // Create the internal collider
-        this.internalHoopCollider = new InternalHoopCollider(scene, 0, 30, this.COLLIDER_INTERNAL_RADIUS, this);
-        this.internalHoopCollider.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
-        this.internalHoopCollider.setImmovable(true);
-        this.internalHoopCollider.setAllowGravity(false);
-        this.internalHoopCollider.setEnable(true); // Make the collider a trigger
-    
-        this.add(this.internalHoopCollider);
-        //this.internalHoopContainer.add(this.internalHoopImage);
 
         // Create the line collider
-        
         this.lineCollider = new LineCollider(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, { type: 'none', key: ''});
         
         this.lineCollider.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
@@ -103,6 +93,24 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         this.add(this.lineCollider)
         
+    }
+
+    private initInternalHoopComponents(scene: Scene, x: number, y: number): void {
+        
+        // Create the internal hoop components
+        this.internalHoopContainer = scene.add.container(0, this.COLLIDER_INTERNAL_OFFSET_Y);
+        this.add(this.internalHoopContainer);
+
+
+        
+        // Create the internal collider
+        this.internalHoopCollider = new InternalHoopCollider(scene, 0, this.COLLIDER_INTERNAL_OFFSET_Y, this.COLLIDER_INTERNAL_RADIUS, this);
+        this.internalHoopCollider.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
+        this.internalHoopCollider.setImmovable(true);
+        this.internalHoopCollider.setAllowGravity(false);
+        this.internalHoopCollider.setEnable(true); // Make the collider a trigger
+    
+        this.add(this.internalHoopCollider);
     }
 
 
