@@ -1,10 +1,11 @@
-import { Physics, Scene } from "phaser";
+import { Physics, Scene, GameObjects } from "phaser";
 import AssetManager from "../AssetManager";
 import BasketballHoop from "../entities/BasketballHoop";
 
 import LineCollider from "../entities/physics/LineCollider";
 import GameInputHandler from "../players/GameInputHandler";
 import Ball from "../entities/Ball";
+import InternalHoopArcadeImage from "../entities/InternalHoopArcadeImage";
 
 class PlayScene extends Scene {
 
@@ -50,21 +51,18 @@ class PlayScene extends Scene {
         let inputHandler = new GameInputHandler(this, this.ball);
         inputHandler.setCurrentHoop(hoop1);
 
-        hoop1.enableOverlap(this.ball, inputHandler.onHoopEnter.bind(inputHandler));
+        hoop1.enableOverlap(this.ball, this.ball.hoopCollideCallback);
         hoop1.enableCollision(this.ball);
 
-        hoop2.enableOverlap(this.ball, inputHandler.onHoopEnter.bind(inputHandler));
+        hoop2.enableOverlap(this.ball, this.ball.hoopCollideCallback);
         hoop2.enableCollision(this.ball);
         
 
     }
 
+    
 
     
-    update() {
-
-
-    }
 
 
 }

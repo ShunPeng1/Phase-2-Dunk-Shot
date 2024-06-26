@@ -15,7 +15,7 @@ class GameInputHandler {
     private readonly SCALING_FACTOR: number = 0.01;
 
     private readonly PUSH_BALL_FORCE: number = 600;
-
+    private readonly SHOOT_COOLDOWN: number = 1000;
     constructor(scene: PlayScene, ball: Ball) {
         this.scene = scene;
         this.ball = ball;
@@ -30,6 +30,11 @@ class GameInputHandler {
 
         // Mouse up event
         this.scene.input.on('pointerup', this.onPointerUp.bind(this));
+
+        // Overlap events
+        
+        this.ball.on("internal hoop overlapstart", this.onHoopEnter.bind(this));
+        this.ball.on("internal hoop overlapend", this.onHoopExit.bind(this));
     }
 
     private onPointerDown(pointer: Phaser.Input.Pointer) {
@@ -60,6 +65,8 @@ class GameInputHandler {
         let force = this.calculateForceFromScaleDistance(distance);
         let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI;
         
+        
+        
         this.ball.pushBall(force, angle);
     }
 
@@ -67,15 +74,24 @@ class GameInputHandler {
         this.currentHoop = hoop;
     }
 
-    public onHoopEnter(): void {
+    private onHoopEnter(basketballHoop : BasketballHoop): void {
         this.canShoot = true;
+        
+        this.currentHoop = basketballHoop;
 
         this.ball.bindBall();
-        this.ball.setGravity(0, 0);
+
+        console.log("Hoop entered");
+
+        
+
     }
 
-    private onHoopExit(): void {
+    public onHoopExit(basketballHoop : BasketballHoop): void {
         console.log("Hoop exited");
+
+        this.canShoot = false;
+        this.currentHoop.enableOverlap(this.ball, this.ball.hoopCollideCallback);
     }
 
     private calculateScaledDistance(): number {
