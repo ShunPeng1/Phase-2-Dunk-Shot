@@ -38,7 +38,7 @@ class PlayScene extends Scene {
         this.nextHoop = hoop2;
 
         hoop2.setRingTint(0xea4214);
-        hoop2.setPosition(600, 400);
+        hoop2.setPosition(400, 400);
         hoop2.setScale(0.5);
         hoop2.setRotation(3.14*0);
 
@@ -51,11 +51,13 @@ class PlayScene extends Scene {
         inputHandler.setCurrentHoop(hoop1);
 
 
+        hoop1.enableOverlap(this.ball, inputHandler.onHoopEnter);
         
         hoop1.enableCollision(this.ball);
         
 
     }
+
 
     
     update() {
