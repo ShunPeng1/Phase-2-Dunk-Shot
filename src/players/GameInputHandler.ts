@@ -14,7 +14,10 @@ class GameInputHandler {
 
     private readonly SCALING_FACTOR: number = 0.01;
 
-    private readonly PUSH_BALL_FORCE: number = 1200;
+    private readonly PUSH_BALL_FORCE: number = 1100;
+    private readonly MAX_DISTANCE_TRAJECTORY: number = 400;
+    private readonly TRAJECTORY_MAX_ITERATION: number = 1000;
+    private readonly TRAJECTORY_SKIPPING: number = 100;
     
     constructor(scene: PlayScene, ball: Ball) {
         this.scene = scene;
@@ -56,7 +59,7 @@ class GameInputHandler {
         this.currentHoop.setRotation(angle  - Math.PI / 2);
 
         // Draw trajectory
-        this.ball.drawTrajectory(this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
+        this.ball.drawTrajectory(this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI, this.MAX_DISTANCE_TRAJECTORY, this.TRAJECTORY_MAX_ITERATION, this.TRAJECTORY_SKIPPING);
     }
 
     private onPointerUp() {

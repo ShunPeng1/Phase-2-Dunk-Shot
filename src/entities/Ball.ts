@@ -12,7 +12,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     private bindingHoop: BasketballHoop | null = null;
     private lastBindingHoop: BasketballHoop | null = null;
 
-    private readonly MAX_TRAJECTORY_INTERATION = 1000;
 
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture) {
@@ -117,31 +116,32 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(force * Math.cos(angle), force * Math.sin(angle));
     }
 
-    public drawTrajectory(force: number, angle: number): void {
+    public drawTrajectory(force: number, angle: number, maxDistance: number, maxIteration: number, skipping : number): void {
         // Clear the previous trajectory line
         this.trajectoryGraphics.clear();
         const forceVector = new Phaser.Math.Vector2(force * Math.cos(angle), force * Math.sin(angle));
         // Start drawing the trajectory
         this.trajectoryGraphics.lineStyle(2, 0xffff00, 1);
     
+        let startPosition = new Phaser.Math.Vector2(this.worldX, this.worldY);
         let currentPosition = new Phaser.Math.Vector2(this.worldX, this.worldY);
         let velocity = new Phaser.Math.Vector2(forceVector.x, forceVector.y);
         let gravity = this.scene.physics.world.gravity;
     
         // Predict the trajectory
-        let previousYVelocity = velocity.y;
-        for (let i = 0; i < this.MAX_TRAJECTORY_INTERATION; i += 6) {
+
+        for (let i = 0; i < maxIteration; i += skipping) {
             let time = i / this.scene.physics.world.fps; // Convert iteration to seconds
-            let dx = currentPosition.x + velocity.x * time;
-            let dy = currentPosition.y + velocity.y * time + 0.5 * gravity.y * time * time;
+            let dx = startPosition.x + velocity.x * time;
+            let dy = startPosition.y + velocity.y * time + 0.5 * gravity.y * time * time;
     
-            // Check if the ball has reached its maximum height or if it's descending
-            let currentYVelocity = velocity.y + gravity.y * time;
-            if (currentYVelocity > 0 && previousYVelocity <= 0) {
-                // Ball is descending, break the loop
+            currentPosition.set(dx, dy);
+            let distanceTraveled = Phaser.Math.Distance.Between(startPosition.x, startPosition.y, currentPosition.x, currentPosition.y);
+    
+            // End the loop if the distance traveled exceeds the maximum distance
+            if (distanceTraveled > maxDistance) {
                 break;
             }
-            previousYVelocity = currentYVelocity;
     
             if (i === 0) {
                 this.trajectoryGraphics.beginPath();
@@ -149,6 +149,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.trajectoryGraphics.lineTo(dx, dy);
             }
+
         }
     
         this.trajectoryGraphics.strokePath();

@@ -45,6 +45,7 @@ class PlayScene extends Scene {
         // Create the ball with physics enabled
         this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
+        this.ball.setBounce(0.8,0.8);
 
         let inputHandler = new GameInputHandler(this, this.ball);
         inputHandler.setCurrentHoop(hoop1);
