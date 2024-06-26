@@ -83,6 +83,8 @@ class GameInputHandler {
 
         console.log("Hoop entered");
 
+        const internalHoopContainer = basketballHoop.getInternalHoopContainer();
+
         
 
     }

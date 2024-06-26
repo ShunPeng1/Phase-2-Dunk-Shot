@@ -32,6 +32,8 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
           
     }
 
+    
+
     public bindBall() : void{    
         this.setVelocity(0,0);
         //this.setImmovable(true);

@@ -2,8 +2,11 @@ import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import LineCollider from "./physics/LineCollider";
 import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
+import RingCollider from "./physics/RingCollider";
+import InternalHoopCollider from "./InternalHoopCollider";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
+    
     private isInitialized: boolean = false;
 
     // Components of the basketball hoop
@@ -14,20 +17,22 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     private currentRingScale = 1;
     private currentNetScale = 1;
     
-    private ringRadiusX: number = 83; // Property to store the radius of the circle collider
+    private readonly RING_RADIUS: number = 83; // Property to store the radius of the circle collider
     
+    // Container to hold the hoop components
+    private internalHoopContainer: Phaser.GameObjects.Container;
+
+
     // Collider properties
     
     private readonly NET_OFFSET_Y = 10; // Vertical offset between components
 
-    private readonly COLLIDER_OFFSET_X: number = -76;
-    private readonly COLLIDER_OFFSET_Y: number = 0;
-    private readonly COLLIDER_INTERNAL_OFFSET_Y: number = -80;
+    private readonly COLLIDER_OFFSET_X: number = 6;
+    private readonly COLLIDER_OFFSET_Y: number = 5;
     private readonly COLLIDER_INTERNAL_RADIUS = 35;
 
-    private leftColliderImage: Phaser.Physics.Arcade.Image;
-    private rightColliderImage: Phaser.Physics.Arcade.Image;
-    private internalHoopImage: InternalHoopArcadeImage;
+    private ringCollider: RingCollider;
+    private internalHoopCollider: InternalHoopCollider;
     private lineCollider: LineCollider;
     
 
@@ -36,65 +41,67 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     constructor(scene : Scene, x : number, y : number) {
         
         super(scene, x, y);   
+        this.scene.add.existing(this);
 
-        // Load images
-        this.innerRing = scene.add.image(x, y, AssetManager.INNER_RING_BASKET_KEY);
-        this.innerRing.setDepth(-1);
 
-        this.outerRing = scene.add.image(x, y, AssetManager.OUTER_RING_BASKET_KEY);
-        this.outerRing.setDepth(2);
+        this.internalHoopContainer = scene.add.container(x, y, []);
 
-        this.net = scene.add.image(x, y + this.NET_OFFSET_Y , AssetManager.NET_BASKET_KEY);
-        this.net.setDepth(1);
-        this.net.setOrigin(0.5, 0);
-
+        this.initImageComponents(scene, x, y); // Initialize the image components
 
         this.initCircleCollider(scene, x, y); // Initialize the circle collider
         
         this.isInitialized = true;
 
+        this.add(this.internalHoopContainer);
+
         this.updateComponentPosition();
     
     }
 
+    private initImageComponents(scene: Scene, x: number, y: number): void {
+        // Load images
+        this.innerRing = scene.add.image(x , y , AssetManager.INNER_RING_BASKET_KEY);
+        this.innerRing.setDepth(-1);
+        
+
+        this.outerRing = scene.add.image(x , y , AssetManager.OUTER_RING_BASKET_KEY);
+        this.outerRing.setDepth(2);
+
+        this.net = scene.add.image(x, y + this.NET_OFFSET_Y , AssetManager.NET_BASKET_KEY);
+        this.net.setDepth(1);
+        this.net.setOrigin(0.5, 0);
+    }
+
     private initCircleCollider(scene: Scene, x: number, y: number): void {
-        // Create the left collider
-        console.log(this.innerRing.width, this.ringRadiusX,  x - this.ringRadiusX);
 
-        this.leftColliderImage = scene.physics.add.image(x + this.COLLIDER_OFFSET_X - this.ringRadiusX, 0, "");
-        this.leftColliderImage.setCircle(this.innerRing.width / 20);
-        this.leftColliderImage.setImmovable(true);
-        this.leftColliderImage.setVisible(false);
-        this.leftColliderImage.setDepth(-1);
-        (this.leftColliderImage.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+        this.ringCollider = new RingCollider(scene, 0, 0, this.RING_RADIUS, 0, 10);
+        this.ringCollider.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
+        this.ringCollider.setImmovable(true);
+        this.ringCollider.setAllowGravity(false);
 
-        // Create the right collider
-        this.rightColliderImage = scene.physics.add.image(x + this.COLLIDER_OFFSET_X + this.ringRadiusX, 0, "");
-        this.rightColliderImage.setCircle(this.innerRing.width / 20);
-        this.rightColliderImage.setImmovable(true);
-        this.rightColliderImage.setVisible(false);
-        this.rightColliderImage.setDepth(-1);
-        (this.rightColliderImage.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
-
+        this.add(this.ringCollider);
 
         // Create the internal collider
-        this.internalHoopImage = new InternalHoopArcadeImage(scene, x + this.COLLIDER_OFFSET_X, y + this.COLLIDER_INTERNAL_OFFSET_Y, "", this);
-        this.internalHoopImage.setCircle(this.COLLIDER_INTERNAL_RADIUS);
-        this.internalHoopImage.setImmovable(true);
-        this.internalHoopImage.setVisible(false);
-        this.internalHoopImage.setDepth(-1);
-        (this.internalHoopImage.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
-        (this.internalHoopImage.body as Phaser.Physics.Arcade.Body).setEnable(true); // Make the collider a trigger
-
-        
+        this.internalHoopCollider = new InternalHoopCollider(scene, 0, 30, this.COLLIDER_INTERNAL_RADIUS, this);
+        this.internalHoopCollider.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
+        this.internalHoopCollider.setImmovable(true);
+        this.internalHoopCollider.setAllowGravity(false);
+        this.internalHoopCollider.setEnable(true); // Make the collider a trigger
+    
+        this.add(this.internalHoopCollider);
+        //this.internalHoopContainer.add(this.internalHoopImage);
 
         // Create the line collider
         
-        const lineCollider = new LineCollider(this.scene, x + this.COLLIDER_OFFSET_X +  this.ringRadiusX, y, -this.ringRadiusX , this.ringRadiusX, x => -1/83 * x**2 + 0 * x + this.ringRadiusX , 20, 20, { type: 'none', key: ''});
-        this.lineCollider = lineCollider;
+        this.lineCollider = new LineCollider(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, { type: 'none', key: ''});
+        
+        this.lineCollider.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
+        this.lineCollider.setImmovable(true);
+        this.lineCollider.setAllowGravity(false);
 
-        lineCollider.setImmovable(true);
-        lineCollider.setAllowGravity(false);
+        
+
+        this.add(this.lineCollider)
         
     }
 
@@ -130,7 +137,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.outerRing.setPosition(x, y);
         this.net.setPosition(x, y + this.NET_OFFSET_Y); // Adjust the Y offset as needed
 
-        this.lineCollider.setPosition(x, y,0,0);
+        //this.lineCollider.setPosition(x, y,0,0);
+        this.internalHoopContainer.setPosition(x, y);
 
         this.updateComponentPosition();
 
@@ -146,8 +154,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.innerRing.setScale(scaleX);
         this.outerRing.setScale(scaleX);
         
-        
-    
+        this.internalHoopContainer.setScale(scaleX);
+
         this.updateComponentPosition();
 
         return this;
@@ -160,7 +168,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.outerRing.setRotation(angle);
         this.net.setRotation(angle);
 
-        this.lineCollider.setRotation(angle);
+        this.internalHoopContainer.setRotation(angle);
 
         this.updateComponentPosition();
 
@@ -176,14 +184,13 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
 
 
+    public getInternalHoopContainer(): Phaser.GameObjects.Container {
+        return this.internalHoopContainer;
+    }
 
     public enableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
 
-        // Enable collision between the ball and the left collider of the hoop
-        this.scene.physics.add.collider(ball, this.leftColliderImage);
-
-        // Enable collision between the ball and the right collider of the hoop
-        this.scene.physics.add.collider(ball, this.rightColliderImage);
+        this.scene.physics.add.collider(ball, this.ringCollider.getColliders());
 
         // Enable collision between the ball and the line collider
         this.scene.physics.add.collider(ball, this.lineCollider.getColliders());
@@ -194,8 +201,10 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         {
             return;
         }
+
+        const internalHoopImage = this.internalHoopCollider.getColliders();
         
-        this.hoopCollider = this.scene.physics.add.overlap(ball, this.internalHoopImage, callback, undefined, this);
+        this.hoopCollider = this.scene.physics.add.overlap(ball, internalHoopImage, callback, undefined, this);
     }
 
     public disableOverlap() : void {
@@ -208,7 +217,6 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
 
 
-
     private updateComponentPosition() : void {
         
         // Net scale is relative to the ring scale
@@ -216,40 +224,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.net.y = this.innerRing.y + this.NET_OFFSET_Y * this.currentRingScale - Math.abs(Math.sin(this.innerRing.rotation/2)) * this.currentRingScale * 20;
         this.net.x = this.innerRing.x - Math.sin(this.innerRing.rotation) * this.currentRingScale * 10;
 
-        // Update colliders' scale to match the ring's scale
-        this.leftColliderImage.setScale(this.currentRingScale);
-        this.rightColliderImage.setScale(this.currentRingScale);
-        this.internalHoopImage.setScale(this.currentRingScale);
-        
-        // Update the line collider
-        this.lineCollider.setScale(this.currentRingScale, this.currentRingScale * this.currentNetScale);
-        
-
-        // Calculate new positions for the colliders based on the hoop's rotation
-        const angle = this.innerRing.rotation;
-        const cosAngle = Math.cos(angle + Math.PI/2);
-        const sinAngle1 = Math.sin((angle + Math.PI * 1.5)) + 1;
-        const sinAngle2 = Math.sin(angle + Math.PI * 0.5) + 1;
-        const radiusX = this.ringRadiusX * this.currentRingScale;
-        const offsetX = this.COLLIDER_OFFSET_X * this.currentRingScale;
-        const offsetY = this.COLLIDER_OFFSET_Y * this.currentRingScale;
-        const internalOffsetY = this.COLLIDER_INTERNAL_OFFSET_Y * this.currentRingScale;
-        const internalRadius = this.COLLIDER_INTERNAL_RADIUS * this.currentRingScale;
-        
-        this.leftColliderImage.x = this.innerRing.x + offsetX + radiusX * sinAngle1;
-        this.leftColliderImage.y = this.innerRing.y + offsetY + radiusX * cosAngle;
-
-        this.rightColliderImage.x = this.innerRing.x + offsetX + radiusX * sinAngle2;
-        this.rightColliderImage.y = this.innerRing.y + offsetY - radiusX * cosAngle;
-
-
-        this.leftColliderImage.setRotation(angle);
-        this.rightColliderImage.setRotation(angle);
-
-        this.internalHoopImage.x = this.innerRing.x + offsetX + radiusX * 0.5 * cosAngle + internalRadius * 1.5 ;
-        this.internalHoopImage.y = this.innerRing.y + internalOffsetY + radiusX * sinAngle2 * 0.55;
-        this.internalHoopImage.setRotation(angle);
-
+        this.lineCollider.setScale(1, this.currentNetScale);
     }
 
 }
