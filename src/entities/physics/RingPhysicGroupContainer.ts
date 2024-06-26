@@ -1,6 +1,6 @@
-import CustomCollider from "./CustomCollider";
+import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer";
 
-class RingCollider extends CustomCollider {
+class RingPhysicGroupContainer extends CustomPhysicGroupContainer {
     
 
     private radiusX: number;
@@ -30,4 +30,4 @@ class RingCollider extends CustomCollider {
     }
 }
 
-export default RingCollider;
+export default RingPhysicGroupContainer;

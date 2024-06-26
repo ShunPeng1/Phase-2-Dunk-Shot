@@ -1,6 +1,6 @@
-import CustomCollider from "./CustomCollider";
+import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer";
 
-class OneCollider extends CustomCollider {
+class OnePhysicGroupContainer extends CustomPhysicGroupContainer {
 
     protected size: number;
     constructor(scene : Phaser.Scene, x : number, y : number, size : number) {
@@ -21,4 +21,4 @@ class OneCollider extends CustomCollider {
     }
 }
 
-export default OneCollider;
+export default OnePhysicGroupContainer;

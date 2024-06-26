@@ -1,4 +1,4 @@
-abstract class CustomCollider extends Phaser.GameObjects.Container{
+abstract class CustomPhysicGroupContainer extends Phaser.GameObjects.Container{
   
     protected colliders : Phaser.Physics.Arcade.Group;
     constructor(scene : Phaser.Scene, x? : number, y? : number) {
@@ -69,4 +69,4 @@ abstract class CustomCollider extends Phaser.GameObjects.Container{
 
 }
 
-export default CustomCollider;
+export default CustomPhysicGroupContainer;

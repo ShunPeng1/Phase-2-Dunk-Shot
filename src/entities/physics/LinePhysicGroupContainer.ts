@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import CustomCollider from './CustomCollider';
+import CustomPhysicGroupContainer from './CustomPhysicGroupContainer';
 
-class LineCollider extends CustomCollider {
+class LinePhysicGroupContainer extends CustomPhysicGroupContainer {
     private from: number;
     private to: number;
     private func: (x: number) => number;
@@ -57,4 +57,4 @@ class LineCollider extends CustomCollider {
 
 }
 
-export default LineCollider;
+export default LinePhysicGroupContainer;

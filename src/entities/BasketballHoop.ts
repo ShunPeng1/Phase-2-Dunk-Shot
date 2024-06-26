@@ -1,9 +1,9 @@
 import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
-import LineCollider from "./physics/LineCollider";
+import LinePhysicGroupContainer from "./physics/LinePhysicGroupContainer";
 import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
-import RingCollider from "./physics/RingCollider";
-import InternalHoopCollider from "./InternalHoopCollider";
+import RingPhysicGroupContainer from "./physics/RingPhysicGroupContainer";
+import InternalHoopPhysicGroupContainer from "./InternalHoopPhysicGroupContainer";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
     
@@ -29,15 +29,17 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private readonly COLLIDER_OFFSET_X: number = 6;
     private readonly COLLIDER_OFFSET_Y: number = 5;
-    private readonly COLLIDER_INTERNAL_OFFSET_Y = 30;
+    public readonly COLLIDER_INTERNAL_OFFSET_Y = 30;
     private readonly COLLIDER_INTERNAL_RADIUS = 35;
 
-    private ringCollider: RingCollider;
-    private internalHoopCollider: InternalHoopCollider;
-    private lineCollider: LineCollider;
+    private ringPhysicGroupContainer: RingPhysicGroupContainer;
+    private internalHoopPhysicGroupContainer: InternalHoopPhysicGroupContainer;
+    private linePhysicGroupContainer: LinePhysicGroupContainer;
     
 
-    private hoopCollider: Phaser.Physics.Arcade.Collider;
+    private lineCollider: Phaser.Physics.Arcade.Collider;
+    private ringCollider: Phaser.Physics.Arcade.Collider;
+    private internalHoopOverlap: Phaser.Physics.Arcade.Collider;
 
     constructor(scene : Scene, x : number, y : number) {
         
@@ -74,24 +76,24 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private initCircleCollider(scene: Scene, x: number, y: number): void {
 
-        this.ringCollider = new RingCollider(scene, 0, 0, this.RING_RADIUS, 0, 10);
-        this.ringCollider.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
-        this.ringCollider.setImmovable(true);
-        this.ringCollider.setAllowGravity(false);
+        this.ringPhysicGroupContainer = new RingPhysicGroupContainer(scene, 0, 0, this.RING_RADIUS, 0, 10);
+        this.ringPhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
+        this.ringPhysicGroupContainer.setImmovable(true);
+        this.ringPhysicGroupContainer.setAllowGravity(false);
 
-        this.add(this.ringCollider);
+        this.add(this.ringPhysicGroupContainer);
 
 
         // Create the line collider
-        this.lineCollider = new LineCollider(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, { type: 'none', key: ''});
+        this.linePhysicGroupContainer = new LinePhysicGroupContainer(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, { type: 'none', key: ''});
         
-        this.lineCollider.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
-        this.lineCollider.setImmovable(true);
-        this.lineCollider.setAllowGravity(false);
+        this.linePhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
+        this.linePhysicGroupContainer.setImmovable(true);
+        this.linePhysicGroupContainer.setAllowGravity(false);
 
         
 
-        this.add(this.lineCollider)
+        this.add(this.linePhysicGroupContainer)
         
     }
 
@@ -100,17 +102,17 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         // Create the internal hoop components
         this.internalHoopContainer = scene.add.container(0, this.COLLIDER_INTERNAL_OFFSET_Y);
         this.add(this.internalHoopContainer);
-
+        
 
         
         // Create the internal collider
-        this.internalHoopCollider = new InternalHoopCollider(scene, 0, this.COLLIDER_INTERNAL_OFFSET_Y, this.COLLIDER_INTERNAL_RADIUS, this);
-        this.internalHoopCollider.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
-        this.internalHoopCollider.setImmovable(true);
-        this.internalHoopCollider.setAllowGravity(false);
-        this.internalHoopCollider.setEnable(true); // Make the collider a trigger
+        this.internalHoopPhysicGroupContainer = new InternalHoopPhysicGroupContainer(scene, 0, this.COLLIDER_INTERNAL_OFFSET_Y, this.COLLIDER_INTERNAL_RADIUS, this);
+        this.internalHoopPhysicGroupContainer.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
+        this.internalHoopPhysicGroupContainer.setImmovable(true);
+        this.internalHoopPhysicGroupContainer.setAllowGravity(false);
+        this.internalHoopPhysicGroupContainer.setEnable(true); // Make the collider a trigger
     
-        this.add(this.internalHoopCollider);
+        this.add(this.internalHoopPhysicGroupContainer);
     }
 
 
@@ -162,7 +164,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.innerRing.setScale(scaleX);
         this.outerRing.setScale(scaleX);
         
-        this.internalHoopContainer.setScale(scaleX);
+        this.internalHoopContainer.setScale(1/scaleX);
 
         this.updateComponentPosition();
 
@@ -198,30 +200,35 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     public enableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
 
-        this.scene.physics.add.collider(ball, this.ringCollider.getColliders());
+        this.ringCollider = this.scene.physics.add.collider(ball, this.ringPhysicGroupContainer.getColliders());
 
         // Enable collision between the ball and the line collider
-        this.scene.physics.add.collider(ball, this.lineCollider.getColliders());
+        this.lineCollider = this.scene.physics.add.collider(ball, this.linePhysicGroupContainer.getColliders());
+    }
+
+    public disableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
+        this.scene.physics.world.removeCollider(this.ringCollider);
+        this.scene.physics.world.removeCollider(this.lineCollider);
     }
 
     public enableOverlap(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) : void {
-        if (this.hoopCollider)
+        if (this.internalHoopOverlap)
         {
             return;
         }
 
-        const internalHoopImage = this.internalHoopCollider.getColliders();
+        const internalHoopImage = this.internalHoopPhysicGroupContainer.getColliders();
         
-        this.hoopCollider = this.scene.physics.add.overlap(ball, internalHoopImage, callback, undefined, this);
+        this.internalHoopOverlap = this.scene.physics.add.overlap(ball, internalHoopImage, callback, undefined, this);
     }
 
     public disableOverlap() : void {
-        if (!this.hoopCollider)
+        if (!this.internalHoopOverlap)
         {
             return;
         }
         
-        this.scene.physics.world.removeCollider(this.hoopCollider);
+        this.scene.physics.world.removeCollider(this.internalHoopOverlap);
     }
 
 
@@ -232,7 +239,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.net.y = this.innerRing.y + this.NET_OFFSET_Y * this.currentRingScale - Math.abs(Math.sin(this.innerRing.rotation/2)) * this.currentRingScale * 20;
         this.net.x = this.innerRing.x - Math.sin(this.innerRing.rotation) * this.currentRingScale * 10;
 
-        this.lineCollider.setScale(1, this.currentNetScale);
+        this.linePhysicGroupContainer.setScale(1, this.currentNetScale);
     }
 
 }

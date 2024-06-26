@@ -1,9 +1,9 @@
 import BasketballHoop from "./BasketballHoop";
 import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
-import CustomCollider from "./physics/CustomCollider";
-import OneCollider from "./physics/OneCollider";
+import CustomPhysicGroupContainer from "./physics/CustomPhysicGroupContainer";
+import OnePhysicGroupContainer from "./physics/OnePhysicGroupContainer";
 
-class InternalHoopCollider extends CustomCollider{
+class InternalHoopPhysicGroupContainer extends CustomPhysicGroupContainer{
     
     private size: number;
 
@@ -33,4 +33,4 @@ class InternalHoopCollider extends CustomCollider{
     }
 }
 
-export default InternalHoopCollider;
+export default InternalHoopPhysicGroupContainer;
