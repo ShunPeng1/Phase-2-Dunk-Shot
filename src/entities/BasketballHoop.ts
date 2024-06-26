@@ -22,6 +22,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     private readonly COLLIDER_OFFSET_X: number = -76;
     private readonly COLLIDER_OFFSET_Y: number = 0;
     private readonly COLLIDER_MIDDLE_OFFSET_Y: number = -80;
+    private readonly COLLIDER_MIDDLE_RADIUS = 35;
 
     private leftColliderImage: Phaser.Physics.Arcade.Image;
     private rightColliderImage: Phaser.Physics.Arcade.Image;
@@ -76,7 +77,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         // Create the middle collider
         this.middleColliderImage = scene.physics.add.image(x + this.COLLIDER_OFFSET_X, 0, "");
-        this.middleColliderImage.setCircle(this.innerRing.width / 4);
+        this.middleColliderImage.setCircle(this.COLLIDER_MIDDLE_RADIUS);
         this.middleColliderImage.setImmovable(true);
         this.middleColliderImage.setVisible(false);
         this.middleColliderImage.setDepth(-1);
@@ -221,6 +222,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         const offsetX = this.COLLIDER_OFFSET_X * this.currentRingScale;
         const offsetY = this.COLLIDER_OFFSET_Y * this.currentRingScale;
         const middleOffsetY = this.COLLIDER_MIDDLE_OFFSET_Y * this.currentRingScale;
+        const middleRadius = this.COLLIDER_MIDDLE_RADIUS * this.currentRingScale;
         
         this.leftColliderImage.x = this.innerRing.x + offsetX + radiusX * sinAngle1;
         this.leftColliderImage.y = this.innerRing.y + offsetY + radiusX * cosAngle;
@@ -232,8 +234,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.leftColliderImage.setRotation(angle);
         this.rightColliderImage.setRotation(angle);
 
-        this.middleColliderImage.x = this.innerRing.x + offsetX + radiusX * (0.5 + cosAngle * 0.5);
-        this.middleColliderImage.y = this.innerRing.y + middleOffsetY + radiusX * sinAngle2 * 0.5;
+        this.middleColliderImage.x = this.innerRing.x + offsetX + radiusX * (cosAngle * 0.5) + middleRadius * 1.5 ;
+        this.middleColliderImage.y = this.innerRing.y + middleOffsetY + radiusX * sinAngle2 * 0.55;
         this.middleColliderImage.setRotation(angle);
 
     }
