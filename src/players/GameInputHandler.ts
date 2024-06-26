@@ -41,12 +41,14 @@ class GameInputHandler {
     }
 
     private onPointerDown(pointer: Phaser.Input.Pointer) {
+        if (!this.canShoot) return;
+
         this.isDragging = true;
         this.dragStartPoint.set(pointer.x, pointer.y);
     }
 
     private onPointerMove(pointer: Phaser.Input.Pointer) {
-        if (!this.isDragging) return;
+        if (!this.isDragging || !this.canShoot) return;
 
         // Scale logic
         let dragDistance = this.calculateScaledDistance();
@@ -63,6 +65,8 @@ class GameInputHandler {
     }
 
     private onPointerUp() {
+        if (!this.isDragging || !this.canShoot) return;
+
         this.isDragging = false;
         this.currentHoop.setNetScale(1); // Reset scale
 
