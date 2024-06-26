@@ -14,8 +14,8 @@ class GameInputHandler {
 
     private readonly SCALING_FACTOR: number = 0.01;
 
-    private readonly PUSH_BALL_FORCE: number = 600;
-    private readonly SHOOT_COOLDOWN: number = 1000;
+    private readonly PUSH_BALL_FORCE: number = 1200;
+    
     constructor(scene: PlayScene, ball: Ball) {
         this.scene = scene;
         this.ball = ball;
@@ -52,8 +52,11 @@ class GameInputHandler {
         this.currentHoop.setNetScale(dragDistance + 1);
 
         // Rotation logic
-        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y) - Math.PI / 2;
-        this.currentHoop.setRotation(angle);
+        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y);
+        this.currentHoop.setRotation(angle  - Math.PI / 2);
+
+        // Draw trajectory
+        this.ball.drawTrajectory(this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
     }
 
     private onPointerUp() {
@@ -66,6 +69,16 @@ class GameInputHandler {
         let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI;
         
         
+        const internalHoopContainer = this.currentHoop.getInternalHoopContainer();
+        internalHoopContainer.remove(this.ball);
+
+        this.ball.unbindBall();
+        
+        // Reset Position of ball
+        let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
+        this.ball.x = worldPosition.x;
+        this.ball.y = worldPosition.y;
+
         
         this.ball.pushBall(force, angle);
     }
@@ -79,13 +92,16 @@ class GameInputHandler {
         
         this.currentHoop = basketballHoop;
 
-        this.ball.bindBall();
 
         console.log("Hoop entered");
 
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
 
+        this.ball.x = 0;
+        this.ball.y = 0;
+        internalHoopContainer.add(this.ball);
         
+        basketballHoop.disableCollision();
 
     }
 
@@ -93,6 +109,8 @@ class GameInputHandler {
         console.log("Hoop exited");
 
         this.canShoot = false;
+
+        this.currentHoop.enableCollision(this.ball);
         this.currentHoop.enableOverlap(this.ball, this.ball.hoopCollideCallback);
     }
 

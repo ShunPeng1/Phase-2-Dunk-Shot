@@ -32,7 +32,7 @@ class Game {
                 default: 'arcade',
                 arcade: {
                     debug: true,
-                    gravity: {x: 0, y: 500 }
+                    gravity: {x: 0, y: 1500 }
                 }
             }
         };

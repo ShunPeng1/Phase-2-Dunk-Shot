@@ -17,14 +17,16 @@ class PlayScene extends Scene {
     }
 
     preload() {
-
+        //console.log("FPS",  this.physics.world.fps);
+    
+        this.physics.world.setFPS(2000);
     }
 
     create() {
         // Set the background color to white
         this.cameras.main.setBackgroundColor('#e8e8e8');
     
-        let hoop1 = new BasketballHoop(this, 150, 700);
+        let hoop1 = new BasketballHoop(this, 150, 600);
         this.currentHoop = hoop1;
 
         hoop1.setRingTint(0xea4214);
@@ -32,7 +34,7 @@ class PlayScene extends Scene {
         hoop1.setRotation(3.14*0);
 
 
-        let hoop2 = new BasketballHoop(this, 400, 400);
+        let hoop2 = new BasketballHoop(this, 350, 500);
         this.nextHoop = hoop2;
 
         hoop2.setRingTint(0xea4214);
@@ -41,7 +43,7 @@ class PlayScene extends Scene {
 
 
         // Create the ball with physics enabled
-        this.ball = new Ball(this, 150,650 , AssetManager.BASKETBALL_KEY);
+        this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
 
         let inputHandler = new GameInputHandler(this, this.ball);

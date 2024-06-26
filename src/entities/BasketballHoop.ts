@@ -193,6 +193,22 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         return this.currentRingScale;
     }
 
+    public getInternalHoopWorldPosition() : Phaser.Math.Vector2 {
+        // Create a new Matrix to hold the world transformation
+        let matrix = new Phaser.GameObjects.Components.TransformMatrix();
+        // Create a point that represents the local position of the internalHoopContainer
+        let localPoint = new Phaser.Geom.Point(0, 0);
+        // Create a point to hold the transformed world position
+        let worldPoint = new Phaser.Geom.Point();
+
+        // Get the world transformation matrix for the internalHoopContainer
+        this.internalHoopContainer.getWorldTransformMatrix(matrix);
+        // Apply the matrix transformation to the local point to get the world position
+        matrix.transformPoint(localPoint.x, localPoint.y, worldPoint);
+
+
+        return new Phaser.Math.Vector2(worldPoint.x, worldPoint.y);
+    }
 
     public getInternalHoopContainer(): Phaser.GameObjects.Container {
         return this.internalHoopContainer;
@@ -206,7 +222,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.lineCollider = this.scene.physics.add.collider(ball, this.linePhysicGroupContainer.getColliders());
     }
 
-    public disableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
+    public disableCollision() : void {
         this.scene.physics.world.removeCollider(this.ringCollider);
         this.scene.physics.world.removeCollider(this.lineCollider);
     }
