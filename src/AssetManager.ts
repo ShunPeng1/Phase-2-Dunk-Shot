@@ -38,6 +38,11 @@ class AssetManager {
 
     
 
+    // WORLD RESOLUTION
+    
+    public static readonly RATIO = 9/16;
+    public static readonly WORLD_WIDTH: number = 520;
+    public static readonly WORLD_HEIGHT: number = AssetManager.WORLD_WIDTH / AssetManager.RATIO;
 
 
 

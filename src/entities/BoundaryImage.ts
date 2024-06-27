@@ -1,7 +1,7 @@
 class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
-    private readonly BOUND_WIDTH = 10; // Width of the bounds, making them thin
-    private readonly BOUND_HEIGHT = 999999999999; // Height of the bounds, making them tall
+    public readonly BOUND_WIDTH = 10; // Width of the bounds, making them thin
+    public readonly BOUND_HEIGHT = 999999999999; // Height of the bounds, making them tall
 
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture) {
@@ -14,7 +14,6 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
         this.setSize(this.BOUND_WIDTH, this.BOUND_HEIGHT);
         this.setVisible(false);
-
 
 
     }

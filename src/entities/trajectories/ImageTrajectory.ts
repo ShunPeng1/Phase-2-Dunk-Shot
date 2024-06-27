@@ -4,15 +4,15 @@ import ITrajectory from "./ITrajectory";
 
 class ImageTrajectory implements ITrajectory {
     
-    private scene: Phaser.Scene;
-    private body: Phaser.Physics.Arcade.Body;
-    private maxDistance: number;
-    private maxIteration: number;
-    private skipping: number;
-    private images: Phaser.GameObjects.Image[];
-    private textureKey: string;
-    private color: number = 0xffff00;
-    private scale: number = 1;
+    protected scene: Phaser.Scene;
+    protected body: Phaser.Physics.Arcade.Body;
+    protected maxDistance: number;
+    protected maxIteration: number;
+    protected skipping: number;
+    protected images: Phaser.GameObjects.Image[];
+    protected textureKey: string;
+    protected color: number = 0xffff00;
+    protected scale: number = 1;
 
     constructor(scene: Phaser.Scene, body: Phaser.Physics.Arcade.Body, maxDistance: number = 1000, maxIteration: number = 100, skipping: number = 1, textureKey: string = "", color: number = 0xffff00, scale: number = 1) {
         this.scene = scene;
