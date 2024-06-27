@@ -14,12 +14,12 @@ class GameInputHandler {
 
     private canShoot: boolean = false;
 
-    private readonly SCALING_FACTOR: number = 0.01;
+    private readonly MIN_REQUIRED_SCALED_DISTANCE: number = 0.4;
+
+    private readonly SCALING_FACTOR: number = 0.008;
 
     private readonly PUSH_BALL_FORCE: number = 1100;
-    private readonly MAX_DISTANCE_TRAJECTORY: number = 400;
-    private readonly TRAJECTORY_MAX_ITERATION: number = 1000;
-    private readonly TRAJECTORY_SKIPPING: number = 100;
+    
     
     constructor(scene: PlayScene, ball: Ball, trajectory : ITrajectory) {
         this.scene = scene;
@@ -64,6 +64,12 @@ class GameInputHandler {
         this.currentHoop.setRotation(angle  - Math.PI / 2);
 
         // Draw trajectory
+
+        if (this.MIN_REQUIRED_SCALED_DISTANCE > dragDistance) {
+            this.trajectory.clear();
+            return;
+        }
+
         const ballWorldPosition = this.ball.getWorldPosition();
         this.trajectory.draw(ballWorldPosition, this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
     }
@@ -71,11 +77,19 @@ class GameInputHandler {
     private onPointerUp(pointer: Phaser.Input.Pointer) {
         if (!this.isDragging || !this.canShoot) return;
 
+        
+        let distance = this.calculateScaledDistance();
+        
+
         this.isDragging = false;
         this.currentHoop.setNetScale(1); // Reset scale
+        this.trajectory.clear();
+
+        if (this.MIN_REQUIRED_SCALED_DISTANCE > distance) {
+            return;
+        }
 
         // Add ball force
-        let distance = this.calculateScaledDistance();
         let force = this.calculateForceFromScaleDistance(distance);
         let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI;
         
@@ -84,7 +98,6 @@ class GameInputHandler {
         internalHoopContainer.remove(this.ball);
 
         this.ball.unbindBall();
-        this.trajectory.clear();
         
         // Reset Position of ball
         let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
