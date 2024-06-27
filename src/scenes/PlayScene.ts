@@ -42,15 +42,15 @@ class PlayScene extends Scene {
             [
                 new HoopSpawnInfo.Builder(BasketballHoop)
                 .setSpawnType("RANDOM")
-                .setMinOffset(new Phaser.Math.Vector2(0,500))
-                .setMaxOffset(new Phaser.Math.Vector2(0,100))
-                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4, Math.PI/4))
+                .setMinOffset(new Phaser.Math.Vector2(0,-100))
+                .setMaxOffset(new Phaser.Math.Vector2(380,-200))
+                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 * 0, 0 * Math.PI/4))
                 .setSpawnChance(1)
                 .build()
             ]),
             hoopFactory,
-            0, 
-            800);
+            70, 
+            450);
         
 
 
@@ -76,8 +76,7 @@ class PlayScene extends Scene {
 
         hoopSpawner.setCurrentHoop(hoop1);
         hoopSpawner.setNextHoop(hoop2);
-        hoopSpawner.spawnNextHoop();
-
+        
         
 
     }

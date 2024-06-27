@@ -20,9 +20,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.setCircle(this.width /2 );
-        this.setBounce(1);
-        this.setCollideWorldBounds(true);
-        this.setDepth(1);
+        this.setDepth(0);
 
         this.worldX = x;
         this.worldY = y;
@@ -185,7 +183,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             
             let basketballHoop = internalHoop.getBasketballHoop();
             if (!ball.isBinded() && !ball.wasBinded()){
-                console.log("internal hoop overlapstart");
+                //console.log("internal hoop overlapstart");
                 
                 ball.bindBall(basketballHoop);
                 ball.emit("internal hoop overlapstart", basketballHoop);

@@ -28,6 +28,15 @@ class HoopSpawner {
         this.leftBound = leftBound;
         this.rightBound = rightBound;
         this.middleBound = (leftBound + rightBound) / 2;
+
+
+        this.ball.on("internal hoop overlapstart", this.checkForCurrentHoop, this)
+    }
+
+    private checkForCurrentHoop(enterHoop : BasketballHoop) : void {
+        if (this.nextHoop === enterHoop) {
+            this.spawnNextHoop();
+        }
     }
 
 
@@ -45,15 +54,17 @@ class HoopSpawner {
         
             rotation = hoopSpawnInfo.rotationVariance.x + Math.random() * (hoopSpawnInfo.rotationVariance.y - hoopSpawnInfo.rotationVariance.x);
 
-
+            
             if (currentPosition.x < this.middleBound) {
-                x += this.middleBound;
+                x = Math.random() * (this.rightBound - this.middleBound) + this.middleBound;   
             }
             else {
-                x -= this.middleBound;
+                x = Math.random() * (this.middleBound - this.leftBound) + this.leftBound;
             }
 
-            x += currentPosition.x;
+            // Adjust x to loop within left and right bounds relative to the current position
+            
+
             y += currentPosition.y;
             
         } else {
@@ -92,27 +103,26 @@ class HoopSpawner {
     }
 
     public spawnNextHoop() : BasketballHoop{
-        var worldPosition = new Phaser.Math.Vector2(this.middleBound, 0);
-        if (this.currentHoop) {
-            // Get the world transformation matrix
-            let matrix = this.currentHoop.getWorldTransformMatrix();
-            worldPosition = new Phaser.Math.Vector2();
-            
-            // Apply the matrix transformation to the local point to get the world position
-            worldPosition.x = matrix.tx;
-            worldPosition.y = matrix.ty;
-                
         
-            // Destroy the current hoop and update references
+        if (this.currentHoop) {
             this.currentHoop.destroy();
         }
     
+        this.currentHoop = this.nextHoop;
+        
+        let matrix = this.nextHoop!.getWorldTransformMatrix();
+        let worldPosition = new Phaser.Math.Vector2();
+        
+        // Apply the matrix transformation to the local point to get the world position
+        worldPosition.x = matrix.tx;
+        worldPosition.y = matrix.ty;
         // Spawn the next hoop at the world position of the current hoop
         this.nextHoop = this.spawnHoop(worldPosition);
 
-        this.currentHoop = this.nextHoop;
         return this.nextHoop;
     }
+
+
 }
 
 export default HoopSpawner;

@@ -36,9 +36,9 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     private linePhysicGroupContainer: LinePhysicGroupContainer;
     
 
-    private lineCollider: Phaser.Physics.Arcade.Collider;
-    private ringCollider: Phaser.Physics.Arcade.Collider;
-    private internalHoopOverlap: Phaser.Physics.Arcade.Collider;
+    private lineCollider: Phaser.Physics.Arcade.Collider | null;
+    private ringCollider: Phaser.Physics.Arcade.Collider | null;
+    private internalHoopOverlap: Phaser.Physics.Arcade.Collider | null;
 
     constructor(scene : Scene, x : number, y : number) {
         
@@ -222,8 +222,16 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
 
     public disableCollision() : void {
-        this.scene.physics.world.removeCollider(this.ringCollider);
-        this.scene.physics.world.removeCollider(this.lineCollider);
+        if (this.ringCollider) {
+            this.scene.physics.world.removeCollider(this.ringCollider);
+            this.ringCollider = null;
+        }
+
+        if (this.lineCollider) {
+            this.scene.physics.world.removeCollider(this.lineCollider);
+            this.lineCollider = null;
+        }
+
     }
 
     public enableOverlap(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback) : void {
@@ -238,12 +246,12 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
 
     public disableOverlap() : void {
-        if (!this.internalHoopOverlap)
-        {
-            return;
+        if (this.internalHoopOverlap)
+        {    
+            this.scene.physics.world.removeCollider(this.internalHoopOverlap);  
+            this.internalHoopOverlap = null;
         }
         
-        this.scene.physics.world.removeCollider(this.internalHoopOverlap);
     }
 
 
@@ -258,10 +266,15 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
 
     public destroy(): void {
-        super.destroy();
+        
         this.innerRing.destroy();
         this.outerRing.destroy();
         this.net.destroy();
+
+        this.disableCollision();
+        this.disableOverlap();
+        
+        super.destroy();
     }
 
 }
