@@ -1,5 +1,5 @@
-import BasketballHoop from "./BasketballHoop";
-import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
+import BasketballHoop from "./hoops/BasketballHoop";
+import InternalHoopArcadeImage from "./hoops/InternalHoopArcadeImage";
 
 class Ball extends Phaser.Physics.Arcade.Sprite {
     private trajectoryGraphics: Phaser.GameObjects.Graphics;
@@ -138,6 +138,16 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             currentPosition.set(dx, dy);
             let distanceTraveled = Phaser.Math.Distance.Between(startPosition.x, startPosition.y, currentPosition.x, currentPosition.y);
     
+            // Check for collision with world bounds and apply bounce
+            if (dx < 0 || dx > this.scene.physics.world.bounds.width) {
+                velocity.x *= -this.arcadeBody.bounce;
+                dx = Phaser.Math.Clamp(dx, 0, this.scene.physics.world.bounds.width);
+            }
+            if (dy < 0 || dy > this.scene.physics.world.bounds.height) {
+                velocity.y *= - this.arcadeBody.bounce;
+                dy = Phaser.Math.Clamp(dy, 0, this.scene.physics.world.bounds.height);
+            }
+
             // End the loop if the distance traveled exceeds the maximum distance
             if (distanceTraveled > maxDistance) {
                 break;
