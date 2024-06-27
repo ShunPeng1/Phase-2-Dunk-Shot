@@ -1,7 +1,7 @@
-import BasketballHoop from "./BasketballHoop";
-import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
-import CustomPhysicGroupContainer from "./physics/CustomPhysicGroupContainer";
-import OnePhysicGroupContainer from "./physics/OnePhysicGroupContainer";
+import BasketballHoop from "../BasketballHoop";
+import InternalHoopArcadeImage from "../InternalHoopArcadeImage";
+import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer";
+import OnePhysicGroupContainer from "./OnePhysicGroupContainer";
 
 class InternalHoopPhysicGroupContainer extends CustomPhysicGroupContainer{
     

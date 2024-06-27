@@ -3,7 +3,7 @@ import AssetManager from "../AssetManager";
 import LinePhysicGroupContainer from "./physics/LinePhysicGroupContainer";
 import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
 import RingPhysicGroupContainer from "./physics/RingPhysicGroupContainer";
-import InternalHoopPhysicGroupContainer from "./InternalHoopPhysicGroupContainer";
+import InternalHoopPhysicGroupContainer from "./physics/InternalHoopPhysicGroupContainer";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
     

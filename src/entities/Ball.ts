@@ -155,6 +155,11 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.trajectoryGraphics.strokePath();
     }
 
+    public clearTrajectory() : void{
+        this.trajectoryGraphics.clear();
+    }
+    
+
     public hoopCollideCallback(ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, internalHoop: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
         // You can emit an event from the ball or execute any logic here
         

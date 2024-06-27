@@ -80,6 +80,7 @@ class GameInputHandler {
         internalHoopContainer.remove(this.ball);
 
         this.ball.unbindBall();
+        this.ball.clearTrajectory();
         
         // Reset Position of ball
         let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
