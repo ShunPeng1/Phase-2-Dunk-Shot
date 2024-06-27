@@ -1,4 +1,4 @@
-import BasketballHoop from "./hoops/BasketballHoop";
+import BasketballHoop from "./BasketballHoop";
 
 class InternalHoopArcadeImage extends Phaser.Physics.Arcade.Image {
     private basketballHoop: BasketballHoop;

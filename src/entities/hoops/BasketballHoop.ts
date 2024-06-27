@@ -43,7 +43,6 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     constructor(scene : Scene, x : number, y : number) {
         
         super(scene, x, y);   
-        this.scene.add.existing(this);
 
 
 
@@ -256,6 +255,13 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.net.x = this.innerRing.x - Math.sin(this.innerRing.rotation) * this.currentRingScale * 10;
 
         this.linePhysicGroupContainer.setScale(1, this.currentNetScale);
+    }
+
+    public destroy(): void {
+        super.destroy();
+        this.innerRing.destroy();
+        this.outerRing.destroy();
+        this.net.destroy();
     }
 
 }
