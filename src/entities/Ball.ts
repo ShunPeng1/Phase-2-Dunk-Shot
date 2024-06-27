@@ -115,60 +115,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(force * Math.cos(angle), force * Math.sin(angle));
     }
 
-    public drawTrajectory(force: number, angle: number, maxDistance: number, maxIteration: number, skipping : number): void {
-        // Clear the previous trajectory line
-        this.trajectoryGraphics.clear();
-        const forceVector = new Phaser.Math.Vector2(force * Math.cos(angle), force * Math.sin(angle));
-        // Start drawing the trajectory
-        this.trajectoryGraphics.lineStyle(2, 0xffff00, 1);
-    
-        let startPosition = new Phaser.Math.Vector2(this.worldX, this.worldY);
-        let currentPosition = new Phaser.Math.Vector2(this.worldX, this.worldY);
-        let velocity = new Phaser.Math.Vector2(forceVector.x, forceVector.y);
-        let gravity = this.scene.physics.world.gravity;
-    
-        // Predict the trajectory
-
-        for (let i = 0; i < maxIteration; i += skipping) {
-            let time = i / this.scene.physics.world.fps; // Convert iteration to seconds
-            let dx = startPosition.x + velocity.x * time;
-            let dy = startPosition.y + velocity.y * time + 0.5 * gravity.y * time * time;
-    
-            currentPosition.set(dx, dy);
-            let distanceTraveled = Phaser.Math.Distance.Between(startPosition.x, startPosition.y, currentPosition.x, currentPosition.y);
-    
-            // Check for collision with world bounds and apply bounce
-            if (dx < 0 || dx > this.scene.physics.world.bounds.width) {
-                velocity.x *= -this.arcadeBody.bounce;
-                dx = Phaser.Math.Clamp(dx, 0, this.scene.physics.world.bounds.width);
-            }
-            if (dy < 0 || dy > this.scene.physics.world.bounds.height) {
-                velocity.y *= - this.arcadeBody.bounce;
-                dy = Phaser.Math.Clamp(dy, 0, this.scene.physics.world.bounds.height);
-            }
-
-            // End the loop if the distance traveled exceeds the maximum distance
-            if (distanceTraveled > maxDistance) {
-                break;
-            }
-    
-            if (i === 0) {
-                this.trajectoryGraphics.beginPath();
-                this.trajectoryGraphics.moveTo(dx, dy);
-            } else {
-                this.trajectoryGraphics.lineTo(dx, dy);
-            }
-
-        }
-    
-        this.trajectoryGraphics.strokePath();
-    }
-
-    public clearTrajectory() : void{
-        this.trajectoryGraphics.clear();
-    }
-    
-
     public getWorldPosition() : Phaser.Math.Vector2 {
         return new Phaser.Math.Vector2(this.worldX, this.worldY);
     }

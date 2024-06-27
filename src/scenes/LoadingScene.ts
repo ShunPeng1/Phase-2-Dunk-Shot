@@ -14,6 +14,7 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.NET_BASKET_KEY, AssetManager.NET_BASKET_IMAGE);
 
         this.load.image(AssetManager.BASKETBALL_KEY, AssetManager.BASKETBALL_IMAGE);
+        this.load.image(AssetManager.TRAJECTORY_KEY, AssetManager.TRAJECTORY_IMAGE);
     }
     
     // The rest of this file makes the visual loading bar work!

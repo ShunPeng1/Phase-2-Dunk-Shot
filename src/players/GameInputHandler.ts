@@ -1,5 +1,6 @@
 import Ball from "../entities/Ball";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
+import ITrajectory from "../entities/trajectories/ITrajectory";
 import PlayScene from "../scenes/PlayScene";
 
 
@@ -9,6 +10,7 @@ class GameInputHandler {
     private dragStartPoint: Phaser.Math.Vector2;
     private currentHoop: BasketballHoop;
     private ball: Ball;
+    private trajectory : ITrajectory;
 
     private canShoot: boolean = false;
 
@@ -19,9 +21,10 @@ class GameInputHandler {
     private readonly TRAJECTORY_MAX_ITERATION: number = 1000;
     private readonly TRAJECTORY_SKIPPING: number = 100;
     
-    constructor(scene: PlayScene, ball: Ball) {
+    constructor(scene: PlayScene, ball: Ball, trajectory : ITrajectory) {
         this.scene = scene;
         this.ball = ball;
+        this.trajectory = trajectory;
 
         this.dragStartPoint = new Phaser.Math.Vector2();
 
@@ -61,7 +64,8 @@ class GameInputHandler {
         this.currentHoop.setRotation(angle  - Math.PI / 2);
 
         // Draw trajectory
-        this.ball.drawTrajectory(this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI, this.MAX_DISTANCE_TRAJECTORY, this.TRAJECTORY_MAX_ITERATION, this.TRAJECTORY_SKIPPING);
+        const ballWorldPosition = this.ball.getWorldPosition();
+        this.trajectory.draw(ballWorldPosition, this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
     }
 
     private onPointerUp(pointer: Phaser.Input.Pointer) {
@@ -80,7 +84,7 @@ class GameInputHandler {
         internalHoopContainer.remove(this.ball);
 
         this.ball.unbindBall();
-        this.ball.clearTrajectory();
+        this.trajectory.clear();
         
         // Reset Position of ball
         let worldPosition = this.currentHoop.getInternalHoopWorldPosition();

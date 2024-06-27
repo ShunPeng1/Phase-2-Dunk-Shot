@@ -8,11 +8,17 @@ import HoopSpawner from "../entities/hoops/HoopSpawner";
 import HoopSpawnSet from "../entities/hoops/HoopSpawnSet";
 import HoopSpawnInfo from "../entities/hoops/HoopSpawnInfo";
 import HoopFactory from "../entities/hoops/HoopFactory";
+import BoundaryImage from "../entities/BoundaryImage";
+import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 
 class PlayScene extends Scene {
 
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
+
+    private readonly PHYSICS_FPS: number = 300;
+    private readonly WORLD_WIDTH: number = 520;
+    private readonly WORLD_HEIGHT: number = this.WORLD_WIDTH / 9 * 16;
     
     constructor() {
         super({ key: AssetManager.PLAY_SCENE });
@@ -21,7 +27,11 @@ class PlayScene extends Scene {
     preload() {
         //console.log("FPS",  this.physics.world.fps);
     
-        this.physics.world.setFPS(2000);
+        this.physics.world.setFPS(this.PHYSICS_FPS);
+
+        this.physics.world.setBounds(0, 0, this.WORLD_WIDTH, this.WORLD_HEIGHT);
+
+        console.log(this.physics.world.bounds)
     }
 
     create() {
@@ -30,7 +40,8 @@ class PlayScene extends Scene {
         // Set the background color to white
         let camera = this.cameras.main;
         camera.setBackgroundColor('#e8e8e8');
-        //camera.zoom = 0.5;
+        camera.zoom = camera.width / this.WORLD_WIDTH;
+        //camera.width = this.WORLD_WIDTH;
         
         // Create the ball with physics enabled
         this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
@@ -43,35 +54,29 @@ class PlayScene extends Scene {
 
 
         // Camera follow settings
-        camera.startFollow(this.invisibleBallFollower, true, 0, 0.3, -this.physics.world.bounds.width/2 , 0);
+        camera.startFollow(this.invisibleBallFollower, true, 0, 0.05, -this.WORLD_WIDTH/2 , 0);
         //camera.setFollowOffset(0, 0); // Adjust if you want an offset
         //camera.setBounds(0, 0, this.physics.world.bounds.width, this.physics.world.bounds.height);
 
         // Create physics group for the invisible bounds
-        let boundsGroup = this.physics.add.staticGroup();
+        
 
         // Define the size of the bounds
         const boundWidth = 10; // Width of the bounds, making them thin
-        const boundHeight = 9999999999; // Making the height equal to the camera's height
+        const boundHeight = 999999999999; // Height of the bounds, making them tall
 
-        // Create left bound
-        let leftBound = this.add.rectangle(0, 0, boundWidth, boundHeight, 0x0000ff);
-        leftBound.setVisible(false); // Make it invisible
-        boundsGroup.add(leftBound); // Add to the physics group
+        let leftBound = new BoundaryImage(this, 0, 0, '');
+        let rightBound = new BoundaryImage(this, 0, 0, '');
 
-        // Create right bound
-        let rightBound = this.add.rectangle(this.cameras.main.width, 0, boundWidth, boundHeight, 0x0000ff);
-        rightBound.setVisible(false); // Make it invisible
-        boundsGroup.add(rightBound); // Add to the physics group
+        leftBound.setPosition(0, 0);
+        rightBound.setPosition(this.WORLD_WIDTH, 0);
 
-        // Position the bounds correctly
-        leftBound.setPosition(leftBound.width / 2, this.cameras.main.height / 2);
-        rightBound.setPosition(this.cameras.main.width - rightBound.width / 2, this.cameras.main.height / 2);
-
-        // Enable physics for the bounds
-        this.physics.add.collider(this.ball, boundsGroup, undefined, undefined, this.ball);
-
-
+        
+        leftBound.enableCollision(this.ball);
+        rightBound.enableCollision(this.ball);
+        
+        
+        
 
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
     
@@ -111,7 +116,8 @@ class PlayScene extends Scene {
         
         
 
-        let inputHandler = new GameInputHandler(this, this.ball);
+        let inputHandler = new GameInputHandler(this, this.ball, 
+            new ImageTrajectory(this, this.ball.arcadeBody, 4000, 240, 30, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.3));
         inputHandler.setCurrentHoop(hoop1);
 
     }
