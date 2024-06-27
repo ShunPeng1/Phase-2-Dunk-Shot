@@ -36,7 +36,7 @@ class ImageTrajectory implements ITrajectory {
         let gravity = this.scene.physics.world.gravity;
     
         // Predict the trajectory
-        for (let i = 0; i < this.maxIteration; i += this.skipping) {
+        for (let i = this.skipping; i < this.maxIteration; i += this.skipping) {
             let time = i / this.scene.physics.world.fps; // Convert iteration to seconds
             let dx = startPosition.x + velocity.x * time;
             let dy = startPosition.y + velocity.y * time + 0.5 * gravity.y * time * time;

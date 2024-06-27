@@ -118,7 +118,7 @@ class PlayScene extends Scene {
         
 
         let inputHandler = new GameInputHandler(this, this.ball, 
-            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 200, 30, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
+            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 209, 19, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
         inputHandler.setCurrentHoop(hoop1);
 
     }
