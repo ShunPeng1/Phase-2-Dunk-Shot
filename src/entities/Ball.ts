@@ -2,6 +2,7 @@ import BasketballHoop from "./hoops/BasketballHoop";
 import InternalHoopArcadeImage from "./hoops/InternalHoopArcadeImage";
 
 class Ball extends Phaser.Physics.Arcade.Sprite {
+    
     private trajectoryGraphics: Phaser.GameObjects.Graphics;
 
     public readonly arcadeBody: Phaser.Physics.Arcade.Body;
@@ -167,6 +168,10 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.trajectoryGraphics.clear();
     }
     
+
+    public getWorldPosition() : Phaser.Math.Vector2 {
+        return new Phaser.Math.Vector2(this.worldX, this.worldY);
+    }
 
     public hoopCollideCallback(ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, internalHoop: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
         // You can emit an event from the ball or execute any logic here
