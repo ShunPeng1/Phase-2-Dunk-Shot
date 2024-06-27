@@ -1,5 +1,5 @@
 import Ball from "../entities/Ball";
-import BasketballHoop from "../entities/BasketballHoop";
+import BasketballHoop from "../entities/hoops/BasketballHoop";
 import PlayScene from "../scenes/PlayScene";
 
 
@@ -64,7 +64,7 @@ class GameInputHandler {
         this.ball.drawTrajectory(this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI, this.MAX_DISTANCE_TRAJECTORY, this.TRAJECTORY_MAX_ITERATION, this.TRAJECTORY_SKIPPING);
     }
 
-    private onPointerUp() {
+    private onPointerUp(pointer: Phaser.Input.Pointer) {
         if (!this.isDragging || !this.canShoot) return;
 
         this.isDragging = false;

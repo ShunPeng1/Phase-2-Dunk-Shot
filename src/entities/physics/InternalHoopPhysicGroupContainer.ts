@@ -1,5 +1,5 @@
-import BasketballHoop from "../BasketballHoop";
-import InternalHoopArcadeImage from "../InternalHoopArcadeImage";
+import BasketballHoop from "../hoops/BasketballHoop";
+import InternalHoopArcadeImage from "../hoops/InternalHoopArcadeImage";
 import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer";
 import OnePhysicGroupContainer from "./OnePhysicGroupContainer";
 

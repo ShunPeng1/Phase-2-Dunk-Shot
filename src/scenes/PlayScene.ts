@@ -1,6 +1,6 @@
 import { Physics, Scene, GameObjects } from "phaser";
 import AssetManager from "../AssetManager";
-import BasketballHoop from "../entities/BasketballHoop";
+import BasketballHoop from "../entities/hoops/BasketballHoop";
 
 import GameInputHandler from "../players/GameInputHandler";
 import Ball from "../entities/Ball";

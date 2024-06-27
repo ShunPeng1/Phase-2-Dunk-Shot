@@ -1,9 +1,8 @@
 import { Scene } from "phaser";
-import AssetManager from "../AssetManager";
-import LinePhysicGroupContainer from "./physics/LinePhysicGroupContainer";
-import InternalHoopArcadeImage from "./InternalHoopArcadeImage";
-import RingPhysicGroupContainer from "./physics/RingPhysicGroupContainer";
-import InternalHoopPhysicGroupContainer from "./physics/InternalHoopPhysicGroupContainer";
+import AssetManager from "../../AssetManager";
+import LinePhysicGroupContainer from "../physics/LinePhysicGroupContainer";
+import RingPhysicGroupContainer from "../physics/RingPhysicGroupContainer";
+import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
     
@@ -53,7 +52,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.initCircleCollider(scene, x, y); // Initialize the circle collider
         
         this.initInternalHoopComponents(scene, x, y); // Initialize the internal hoop components
-
+        
+        
         this.isInitialized = true;
 
         this.updateComponentPosition();
