@@ -29,7 +29,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
         }
 
         
-        let score = 1 + this.prefectCount;
+        let score = Math.min(1 + this.prefectCount, 10);
 
         if (this.isBounceWall) {
             score = score * 2;

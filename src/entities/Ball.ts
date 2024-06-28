@@ -59,7 +59,11 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         if (this.bindingHoop){
             let internalHoopPosition = this.bindingHoop.getInternalHoopWorldPosition();
             this.worldX = internalHoopPosition.x;
-            this.worldY = internalHoopPosition.y;          
+            this.worldY = internalHoopPosition.y;         
+            
+            
+            this.x = 0;
+            this.y = 0;
         }
         else{
             this.worldX = this.x;
@@ -86,8 +90,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.worldX = internalHoopPosition.x;
         this.worldY = internalHoopPosition.y;
         
-
-        this.setPosition(this.worldX, this.worldY);
     }
 
     public unbindBall() : void{
@@ -96,7 +98,6 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.bindingHoop = null;
 
         //this.setImmovable(false);
-        this.arcadeBody.setAllowGravity(true);
     
         //this.setPosition(this.worldX, this.worldY);
 

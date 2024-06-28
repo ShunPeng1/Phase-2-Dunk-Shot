@@ -121,10 +121,10 @@ class GameInputHandler {
         
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
 
+        internalHoopContainer.add(this.ball);
         this.ball.x = 0;
         this.ball.y = 0;
-        internalHoopContainer.add(this.ball);
-        
+
         basketballHoop.disableCollision();
 
     }
