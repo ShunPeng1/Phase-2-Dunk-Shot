@@ -61,6 +61,12 @@ abstract class CustomPhysicGroupContainer extends Phaser.GameObjects.Container{
             (collider as any).setOffset(x, y);
         });
     }
+
+    public setBounce(value: number) : void {
+        this.colliders.getChildren().forEach(collider => {
+            (collider as any).setBounce(value);
+        });
+    }
     
 
     public getColliders() : Phaser.Physics.Arcade.Group {

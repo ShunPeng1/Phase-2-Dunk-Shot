@@ -17,6 +17,9 @@ class HoopSpawner {
 
     private currentHoop: BasketballHoop | null = null;
     private nextHoop: BasketballHoop | null = null;
+    
+    private enterNextHoopSubscribers: ((hoop: BasketballHoop) => void)[] = [];
+    private enterCurrentHoopSubcribers: ((hoop: BasketballHoop) => void)[] = [];
 
 
     constructor(scene : Scene, ball : Ball, hoopSpawnSet: HoopSpawnSet, hoopFactory : HoopFactory, leftBound: number, rightBound: number) {
@@ -30,15 +33,37 @@ class HoopSpawner {
         this.middleBound = (leftBound + rightBound) / 2;
 
 
-        this.ball.on("internal hoop overlapstart", this.checkForCurrentHoop, this)
+        this.ball.on("internal hoop overlapstart", this.checkEnterNextHoop, this)
     }
 
-    private checkForCurrentHoop(enterHoop : BasketballHoop) : void {
+    private checkEnterNextHoop(enterHoop : BasketballHoop) : void {
         if (this.nextHoop === enterHoop) {
+            this.enterNextHoopSubscribers.forEach(subscriber => subscriber(enterHoop));
+            
             this.spawnNextHoop();
+            
+        }
+        else{
+            this.enterCurrentHoopSubcribers.forEach(subscriber => subscriber(enterHoop));
+        
         }
     }
+    
+    public subscribeToEnterNextHoop(subscriber: (hoop: BasketballHoop) => void): void {
+        this.enterNextHoopSubscribers.push(subscriber);
+    }
 
+    public unsubscribeFromEnterNextHoop(subscriber: (hoop: BasketballHoop) => void): void {
+        this.enterNextHoopSubscribers = this.enterNextHoopSubscribers.filter(sub => sub !== subscriber);
+    }
+
+    public subscribeToEnterCurrentHoop(subscriber: (hoop: BasketballHoop) => void): void {
+        this.enterCurrentHoopSubcribers.push(subscriber);
+    }
+
+    public unsubscribeFromEnterCurrentHoop(subscriber: (hoop: BasketballHoop) => void): void {
+        this.enterCurrentHoopSubcribers = this.enterCurrentHoopSubcribers.filter(sub => sub !== subscriber);
+    }
 
     public spawnHoop(currentPosition : Phaser.Math.Vector2 ): BasketballHoop {
         

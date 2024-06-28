@@ -11,6 +11,7 @@ import HoopFactory from "../entities/hoops/HoopFactory";
 import BoundaryImage from "../entities/BoundaryImage";
 import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTrajectory";
+import ScoreText from "../ui/ScoreText";
 
 class PlayScene extends Scene {
 
@@ -87,7 +88,7 @@ class PlayScene extends Scene {
                 .setSpawnType("RANDOM")
                 .setMinOffset(new Phaser.Math.Vector2(0,-100))
                 .setMaxOffset(new Phaser.Math.Vector2(380,-200))
-                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 * 0, 0 * Math.PI/4))
+                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 , Math.PI/4))
                 .setSpawnChance(1)
                 .build()
             ]),
@@ -118,9 +119,26 @@ class PlayScene extends Scene {
         
 
         let inputHandler = new GameInputHandler(this, this.ball, 
-            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 209, 19, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
+            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
         inputHandler.setCurrentHoop(hoop1);
 
+
+        
+        let scoreText = new ScoreText(
+            this, 
+            this.cameras.main.width / 2, // X position: Middle of the screen
+            this.cameras.main.height / 4, // Y position: Middle of the screen
+            '0', 
+            { 
+                fontSize: 'bold 150px', 
+                fontFamily: 'Arial Bold', // Specify a bold font family
+                color: '#c6c6c6', // Example color: white
+                align: 'center' // Ensure the text is centered
+            }
+        );
+        scoreText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
+        scoreText.setDepth(-5);
+        scoreText.setScrollFactor(0, 0); // This line makes the score text follow the camera
     }
 
     

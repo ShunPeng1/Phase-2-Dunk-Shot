@@ -79,6 +79,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.ringPhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
         this.ringPhysicGroupContainer.setImmovable(true);
         this.ringPhysicGroupContainer.setAllowGravity(false);
+        this.ringPhysicGroupContainer.setBounce(0.5);
 
         this.add(this.ringPhysicGroupContainer);
 
@@ -89,6 +90,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.linePhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
         this.linePhysicGroupContainer.setImmovable(true);
         this.linePhysicGroupContainer.setAllowGravity(false);
+        this.linePhysicGroupContainer.setBounce(0.5);
 
         
 
@@ -273,7 +275,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         this.disableCollision();
         this.disableOverlap();
-        
+
         super.destroy();
     }
 
