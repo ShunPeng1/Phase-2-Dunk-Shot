@@ -51,8 +51,6 @@ class PlayScene extends Scene {
         // Create the ball with physics enabled
         this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
-        this.ball.setBounce(1);
-        
 
          // Create an invisible object
         this.invisibleBallFollower = this.add.graphics();
@@ -74,8 +72,8 @@ class PlayScene extends Scene {
         rightBound.setOffset(rightBound.BOUND_WIDTH*2, 0);
 
         
-        leftBound.enableCollision(this.ball);
-        rightBound.enableCollision(this.ball);
+        leftBound.enableCollision(this.ball, this.ball.wallCollisionCallback);
+        rightBound.enableCollision(this.ball,  this.ball.wallCollisionCallback);
         
         
         
@@ -101,15 +99,15 @@ class PlayScene extends Scene {
         let hoop1 = hoopFactory.createHoop(BasketballHoop, 150, 600);
         
         this.add.existing(hoop1);
-        hoop1.enableOverlap(this.ball, this.ball.hoopCollideCallback);
-        hoop1.enableCollision(this.ball);
+        hoop1.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
+        hoop1.enableCollision(this.ball, this.ball.hoopCollisionCallback);
 
 
         let hoop2 =  hoopFactory.createHoop(BasketballHoop, 350, 500);
         
         this.add.existing(hoop2);
-        hoop2.enableOverlap(this.ball, this.ball.hoopCollideCallback);
-        hoop2.enableCollision(this.ball);
+        hoop2.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
+        hoop2.enableCollision(this.ball, this.ball.hoopCollisionCallback);
 
 
 

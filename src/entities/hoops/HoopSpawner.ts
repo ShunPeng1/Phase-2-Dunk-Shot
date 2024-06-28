@@ -113,8 +113,8 @@ class HoopSpawner {
 
         hoop.setRotation(rotation);
         
-        hoop.enableOverlap(this.ball, this.ball.hoopCollideCallback);
-        hoop.enableCollision(this.ball);
+        hoop.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
+        hoop.enableCollision(this.ball, this.ball.hoopCollisionCallback);
 
         return hoop;
     }

@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import AssetManager from "../../AssetManager";
 import LinePhysicGroupContainer from "../physics/LinePhysicGroupContainer";
-import RingPhysicGroupContainer from "../physics/RingPhysicGroupContainer";
+import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContainer";
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
@@ -31,7 +31,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     public readonly COLLIDER_INTERNAL_OFFSET_Y = 30;
     private readonly COLLIDER_INTERNAL_RADIUS = 35;
 
-    private ringPhysicGroupContainer: RingPhysicGroupContainer;
+    private ringPhysicGroupContainer: RingHoopPhysicGroupContainer;
     private internalHoopPhysicGroupContainer: InternalHoopPhysicGroupContainer;
     private linePhysicGroupContainer: LinePhysicGroupContainer;
     
@@ -75,7 +75,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private initCircleCollider(scene: Scene, x: number, y: number): void {
 
-        this.ringPhysicGroupContainer = new RingPhysicGroupContainer(scene, 0, 0, this.RING_RADIUS, 0, 10);
+        this.ringPhysicGroupContainer = new RingHoopPhysicGroupContainer(scene, 0, 0, this.RING_RADIUS, 0, 10, this);
         this.ringPhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
         this.ringPhysicGroupContainer.setImmovable(true);
         this.ringPhysicGroupContainer.setAllowGravity(false);
@@ -215,12 +215,12 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         return this.internalHoopContainer;
     }
 
-    public enableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType) : void {
+    public enableCollision(ball : Phaser.Types.Physics.Arcade.ArcadeColliderType, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback ) : void {
 
-        this.ringCollider = this.scene.physics.add.collider(ball, this.ringPhysicGroupContainer.getColliders());
+        this.ringCollider = this.scene.physics.add.collider(ball, this.ringPhysicGroupContainer.getColliders(), callback, undefined, this);
 
         // Enable collision between the ball and the line collider
-        this.lineCollider = this.scene.physics.add.collider(ball, this.linePhysicGroupContainer.getColliders());
+        this.lineCollider = this.scene.physics.add.collider(ball, this.linePhysicGroupContainer.getColliders(), callback, undefined, this);
     }
 
     public disableCollision() : void {

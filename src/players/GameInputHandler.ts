@@ -39,8 +39,8 @@ class GameInputHandler {
 
         // Overlap events
         
-        this.ball.on("internal hoop overlapstart", this.onHoopEnter.bind(this));
-        this.ball.on("internal hoop overlapend", this.onHoopExit.bind(this));
+        this.ball.on(this.ball.INTERNAL_HOOP_OVERLAP_START_EVENT, this.onHoopEnter.bind(this));
+        this.ball.on(this.ball.INTERNAL_HOOP_OVERLAP_END_EVENT, this.onHoopExit.bind(this));
     }
 
     private onPointerDown(pointer: Phaser.Input.Pointer) {
@@ -136,7 +136,7 @@ class GameInputHandler {
         this.canShoot = false;
 
         this.currentHoop.enableCollision(this.ball);
-        this.currentHoop.enableOverlap(this.ball, this.ball.hoopCollideCallback);
+        this.currentHoop.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
     }
 
     private calculateScaledDistance(): number {

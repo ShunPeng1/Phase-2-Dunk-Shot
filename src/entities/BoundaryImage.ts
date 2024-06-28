@@ -18,21 +18,21 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
     }
 
-    public enableCollision(collider: Phaser.GameObjects.GameObject): void {
+    public enableCollision(collider: Phaser.GameObjects.GameObject, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback): void {
 
-        this.scene.physics.add.collider(collider, this, this.collisionCallback);
+        this.scene.physics.add.collider(collider, this, callback, undefined, this.scene);
     }
 
 
 
-    private collisionCallback(other : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, bound : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) : void {
-        const body = (other as Phaser.Types.Physics.Arcade.GameObjectWithBody).body;
+    // private collisionCallback(other : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, bound : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) : void {
+    //     const body = (other as Phaser.Types.Physics.Arcade.GameObjectWithBody).body;
         
-        const collisionX = body.x;
-        const collisionY = body.y;
-        console.log(`Left bound collision at x: ${collisionX}, y: ${collisionY}`);
-        // Additional logic for left bound collision can be added here
-    };
+    //     const collisionX = body.x;
+    //     const collisionY = body.y;
+    //     console.log(`Left bound collision at x: ${collisionX}, y: ${collisionY}`);
+    //     // Additional logic for left bound collision can be added here
+    // };
 
 }
 
