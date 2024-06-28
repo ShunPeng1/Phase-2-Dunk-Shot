@@ -105,7 +105,7 @@ class GameInputHandler {
         this.ball.y = worldPosition.y;
 
         
-        this.ball.pushBall(force, angle);
+        this.ball.pushBall(force, force * 2, angle);
     }
 
     public setCurrentHoop(hoop: BasketballHoop): void {
@@ -117,9 +117,8 @@ class GameInputHandler {
         
         this.currentHoop = basketballHoop;
 
-
-        console.log("Hoop entered");
-
+        this.ball.stableBall();
+        
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
 
         this.ball.x = 0;

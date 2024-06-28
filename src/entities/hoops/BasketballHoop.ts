@@ -3,6 +3,7 @@ import AssetManager from "../../AssetManager";
 import LinePhysicGroupContainer from "../physics/LinePhysicGroupContainer";
 import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContainer";
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
+import NetLinePhysicGroupContainer from "../physics/NetLinePhysicGroupContainer";
 
 class BasketballHoop extends Phaser.GameObjects.Container{
     
@@ -33,7 +34,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private ringPhysicGroupContainer: RingHoopPhysicGroupContainer;
     private internalHoopPhysicGroupContainer: InternalHoopPhysicGroupContainer;
-    private linePhysicGroupContainer: LinePhysicGroupContainer;
+    private linePhysicGroupContainer: NetLinePhysicGroupContainer;
     
 
     private lineCollider: Phaser.Physics.Arcade.Collider | null;
@@ -85,7 +86,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
 
         // Create the line collider
-        this.linePhysicGroupContainer = new LinePhysicGroupContainer(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, { type: 'none', key: ''});
+        this.linePhysicGroupContainer = new NetLinePhysicGroupContainer(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, this);
         
         this.linePhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
         this.linePhysicGroupContainer.setImmovable(true);

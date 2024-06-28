@@ -3,6 +3,7 @@ import BoundaryImage from "./BoundaryImage";
 import BasketballHoop from "./hoops/BasketballHoop";
 import InternalHoopArcadeImage from "./hoops/InternalHoopArcadeImage";
 import RingHoopArcadeImage from "./hoops/RingHoopArcadeImage";
+import NetArcadeImage from "./hoops/NetArcardImage";
 
 class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly arcadeBody: Phaser.Physics.Arcade.Body;
@@ -18,6 +19,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly INTERNAL_HOOP_OVERLAP_END_EVENT = "internal hoop overlapend";
     public readonly RING_HOOP_COLLIDE_EVENT = "collide with ring hoop";
     public readonly WALL_COLLIDE_EVENT = "collide with wall";
+    public readonly NET_COLLIDE_EVENT = "collide with net";
 
 
 
@@ -48,6 +50,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
 
         this.on(this.WALL_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
         this.on(this.RING_HOOP_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
+        this.on(this.NET_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
 
 
     }
@@ -79,14 +82,9 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public bindBall(basketballHoop : BasketballHoop) : void{    
         this.bindingHoop = basketballHoop;
 
-        this.setVelocity(0,0);
-        //this.setImmovable(true);
-        this.arcadeBody.setAllowGravity(false);
-
         let internalHoopPosition = basketballHoop.getInternalHoopWorldPosition();
         this.worldX = internalHoopPosition.x;
         this.worldY = internalHoopPosition.y;
-    
         
 
         this.setPosition(this.worldX, this.worldY);
@@ -118,12 +116,29 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     }
 
 
-    public pushBall(force : number, angle : number) : void{
-        //this.setImmovable(false);
+    public pushBall(force: number, angularForce : number, angle: number): void {
         this.arcadeBody.setAllowGravity(true);
-        
+    
+        // Calculate horizontal and vertical components of the force
+        const horizontalForce = force * Math.cos(angle);
+        const verticalForce = force * Math.sin(angle);
+    
+        // Set the velocity of the ball
+        this.setVelocity(horizontalForce, verticalForce);
+    
+        // Determine the direction for the angular velocity based on the horizontal movement
+        // If moving left (negative horizontal force), rotate counterclockwise, and vice versa
+        const angularVelocityDirection = horizontalForce < 0 ? -1 : 1;
+    
+        // Set the angular velocity. Adjust the multiplier as needed to control the rotation speed
+        this.setAngularVelocity(angularVelocityDirection * Math.abs(angularForce));
+    }
 
-        this.setVelocity(force * Math.cos(angle), force * Math.sin(angle));
+    public stableBall(): void{
+        this.setVelocity(0,0);
+        //this.setImmovable(true);
+        this.arcadeBody.setAllowGravity(false);
+        this.setAngularVelocity(0);
     }
 
     public getWorldPosition() : Phaser.Math.Vector2 {
@@ -168,6 +183,9 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         if (ball instanceof Ball && hoop instanceof RingHoopArcadeImage) {
             ball.emit(ball.RING_HOOP_COLLIDE_EVENT, hoop);
         }
+        else if (ball instanceof Ball && hoop instanceof NetArcadeImage) {
+            ball.emit(ball.NET_COLLIDE_EVENT, hoop);
+        }
     }
 
 
@@ -179,10 +197,17 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         
         if (collidedObject instanceof BoundaryImage) { // Assuming Platform is a class you have for platforms
             this.setBounce(1);
+            console.log("collided with wall");
         } 
         else if (collidedObject instanceof RingHoopArcadeImage) {
-            this.setBounce(0.5);
+            this.setBounce(0.7);
+            console.log("collided with ring hoop");
         }
+        else if (collidedObject instanceof NetArcadeImage) {
+            this.setBounce(0.4);
+            console.log("collided with net hoop");
+        }
+
     }
 }
 
