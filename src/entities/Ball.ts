@@ -200,11 +200,11 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             console.log("collided with wall");
         } 
         else if (collidedObject instanceof RingHoopArcadeImage) {
-            this.setBounce(0.7);
+            this.setBounce(0.5);
             console.log("collided with ring hoop");
         }
         else if (collidedObject instanceof NetArcadeImage) {
-            this.setBounce(0.4);
+            this.setBounce(0.3);
             console.log("collided with net hoop");
         }
 

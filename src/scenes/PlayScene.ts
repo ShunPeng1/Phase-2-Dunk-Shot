@@ -12,6 +12,7 @@ import BoundaryImage from "../entities/BoundaryImage";
 import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTrajectory";
 import ScoreText from "../ui/ScoreText";
+import ScoreCounter from "../entities/scores/ScoreCounter";
 
 class PlayScene extends Scene {
 
@@ -51,8 +52,10 @@ class PlayScene extends Scene {
         // Create the ball with physics enabled
         this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
-
-         // Create an invisible object
+        //this.ball.setDrag(0);
+        //this.ball.setFriction(1);
+        
+        // Create an invisible object
         this.invisibleBallFollower = this.add.graphics();
         this.invisibleBallFollower.setVisible(false); // Make it invisible
 
@@ -122,6 +125,10 @@ class PlayScene extends Scene {
 
 
         
+        const scoreCounter = new ScoreCounter(hoopSpawner, this.ball);
+
+        
+
         let scoreText = new ScoreText(
             this, 
             this.cameras.main.width / 2, // X position: Middle of the screen
@@ -137,6 +144,11 @@ class PlayScene extends Scene {
         scoreText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
         scoreText.setDepth(-5);
         scoreText.setScrollFactor(0, 0); // This line makes the score text follow the camera
+    
+        scoreCounter.on(scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
+            scoreText.updateScore(totalScore);
+            console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
+        });
     }
 
     
