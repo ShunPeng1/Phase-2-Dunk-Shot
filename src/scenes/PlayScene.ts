@@ -13,6 +13,7 @@ import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTrajectory";
 import ScoreText from "../ui/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
+import LoseBoundaryImage from "../entities/LoseBoundaryImage";
 
 class PlayScene extends Scene {
 
@@ -62,7 +63,7 @@ class PlayScene extends Scene {
 
 
         // Camera follow settings
-        camera.startFollow(this.invisibleBallFollower, true, 0, 0.05, -AssetManager.WORLD_WIDTH/2 , 0);
+        camera.startFollow(this.invisibleBallFollower, true, 0, 0.025, -AssetManager.WORLD_WIDTH/2 , 0);
         
         
         
@@ -150,6 +151,15 @@ class PlayScene extends Scene {
             scoreText.updateScore(totalScore);
             console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
         });
+
+
+        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner);
+        loseBoundaryImage.enableOverlap(this.ball, () => {
+            console.log("LOSE");
+        
+        });
+
+
     }
 
     
