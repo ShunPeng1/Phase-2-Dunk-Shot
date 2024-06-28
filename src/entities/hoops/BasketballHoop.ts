@@ -29,8 +29,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     private readonly COLLIDER_OFFSET_X: number = 6;
     private readonly COLLIDER_OFFSET_Y: number = 5;
-    public readonly COLLIDER_INTERNAL_OFFSET_Y = 30;
-    private readonly COLLIDER_INTERNAL_RADIUS = 35;
+    public readonly COLLIDER_INTERNAL_OFFSET_Y = 40;
+    private readonly COLLIDER_INTERNAL_RADIUS = 25;
 
     private ringPhysicGroupContainer: RingHoopPhysicGroupContainer;
     private internalHoopPhysicGroupContainer: InternalHoopPhysicGroupContainer;
@@ -86,7 +86,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
 
         // Create the line collider
-        this.linePhysicGroupContainer = new NetLinePhysicGroupContainer(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 20, 20, this);
+        this.linePhysicGroupContainer = new NetLinePhysicGroupContainer(this.scene, 0, 0, -this.RING_RADIUS + 5 , this.RING_RADIUS - 5, x => -1/83 * x**2 + 0 * x + this.RING_RADIUS , 10, 20, this);
         
         this.linePhysicGroupContainer.setOffset(this.COLLIDER_OFFSET_X, this.COLLIDER_OFFSET_Y);
         this.linePhysicGroupContainer.setImmovable(true);
@@ -109,7 +109,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         
         // Create the internal collider
         this.internalHoopPhysicGroupContainer = new InternalHoopPhysicGroupContainer(scene, 0, this.COLLIDER_INTERNAL_OFFSET_Y, this.COLLIDER_INTERNAL_RADIUS, this);
-        this.internalHoopPhysicGroupContainer.setOffset(-this.COLLIDER_INTERNAL_RADIUS/2, -this.COLLIDER_INTERNAL_RADIUS/2);
+        this.internalHoopPhysicGroupContainer.setOffset(-this.COLLIDER_INTERNAL_RADIUS*0.35, -this.COLLIDER_INTERNAL_RADIUS/2);
         this.internalHoopPhysicGroupContainer.setImmovable(true);
         this.internalHoopPhysicGroupContainer.setAllowGravity(false);
         this.internalHoopPhysicGroupContainer.setEnable(true); // Make the collider a trigger

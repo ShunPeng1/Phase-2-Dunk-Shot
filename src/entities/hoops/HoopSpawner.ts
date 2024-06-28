@@ -74,17 +74,22 @@ class HoopSpawner {
         // Check the spawn type
         if (hoopSpawnInfo.spawnType === "RANDOM") {
             // Calculate random position within the specified offsets
-            x = hoopSpawnInfo.minOffset.x + Math.random() * (hoopSpawnInfo.maxOffset.x - hoopSpawnInfo.minOffset.x);
+            x = Math.random() * (this.rightBound - this.leftBound) + this.leftBound;
             y = hoopSpawnInfo.minOffset.y + Math.random() * (hoopSpawnInfo.maxOffset.y - hoopSpawnInfo.minOffset.y);
         
             rotation = hoopSpawnInfo.rotationVariance.x + Math.random() * (hoopSpawnInfo.rotationVariance.y - hoopSpawnInfo.rotationVariance.x);
 
+            while( Math.abs(x - currentPosition.x) < hoopSpawnInfo.minOffset.x || Math.abs(x - currentPosition.x) > hoopSpawnInfo.maxOffset.x){
+                x = Math.random() * (this.rightBound - this.leftBound) + this.leftBound;
             
-            if (currentPosition.x < this.middleBound) {
-                x = Math.random() * (this.rightBound - this.middleBound) + this.middleBound;   
             }
-            else {
-                x = Math.random() * (this.middleBound - this.leftBound) + this.leftBound;
+            
+            if (currentPosition.x < x) { // Spawn to the right
+                rotation = Math.random() * (hoopSpawnInfo.rotationVariance.x);
+
+            }
+            else { // Spawn to the left
+                rotation = Math.random() * (hoopSpawnInfo.rotationVariance.y);
             }
 
             // Adjust x to loop within left and right bounds relative to the current position

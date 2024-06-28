@@ -52,8 +52,9 @@ class PlayScene extends Scene {
         // Create the ball with physics enabled
         this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
-        //this.ball.setDrag(0);
-        //this.ball.setFriction(1);
+        this.ball.setDrag(0);
+        this.ball.setFriction(0);
+        this.ball.setAngularDrag(0);
         
         // Create an invisible object
         this.invisibleBallFollower = this.add.graphics();
@@ -87,8 +88,8 @@ class PlayScene extends Scene {
             [
                 new HoopSpawnInfo.Builder(BasketballHoop)
                 .setSpawnType("RANDOM")
-                .setMinOffset(new Phaser.Math.Vector2(0,-100))
-                .setMaxOffset(new Phaser.Math.Vector2(380,-200))
+                .setMinOffset(new Phaser.Math.Vector2(120,-100))
+                .setMaxOffset(new Phaser.Math.Vector2(500,-200))
                 .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 , Math.PI/4))
                 .setSpawnChance(1)
                 .build()
