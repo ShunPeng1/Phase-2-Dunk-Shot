@@ -15,6 +15,7 @@ import ScoreText from "../ui/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
+import ScoreManager from "../managers/ScoreManager";
 
 class GameScene extends Scene {
 
@@ -131,7 +132,7 @@ class GameScene extends Scene {
         inputHandler.setCurrentHoop(hoop1);
 
 
-        
+        ScoreManager.getInstance().resetScore();
         const scoreCounter = new ScoreCounter(hoopSpawner, this.ball);
 
         
@@ -157,7 +158,6 @@ class GameScene extends Scene {
             console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
         });
 
-
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner, hoop1);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
             console.log("LOSE");
@@ -167,8 +167,11 @@ class GameScene extends Scene {
                     ball.setPosition(ballSpawnPlace.x, ballSpawnPlace.y);
                 }
                 else{
-                    gameStateManager.loadRestartUI();
                     camera.stopFollow();
+                    
+                    ScoreManager.getInstance().saveHighScore();
+                    
+                    gameStateManager.loadRestartUI();
                 }
             }
         });

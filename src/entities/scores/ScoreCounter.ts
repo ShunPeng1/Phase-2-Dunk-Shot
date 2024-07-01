@@ -4,6 +4,7 @@ import BasketballHoop from "../hoops/BasketballHoop";
 import HoopSpawner from "../hoops/HoopSpawner";
 
 class ScoreCounter extends Phaser.Events.EventEmitter {
+   
     private isBounceRing : boolean = false;
     private isBounceWall : boolean = false;
 
@@ -19,7 +20,6 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
         ball.on(ball.RING_HOOP_COLLIDE_EVENT, this.setBounceRing.bind(this));
         ball.on(ball.WALL_COLLIDE_EVENT, this.setBounceWall.bind(this));
     }
-
     
     private calculateScore(hoop : BasketballHoop) : void {
         

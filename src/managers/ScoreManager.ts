@@ -57,6 +57,12 @@ class ScoreManager {
         this.notifyHighScoreSubscribers();
     }
 
+    public resetHighScore() {
+        this.highScore = 0;
+        localStorage.removeItem('highScore'); // Removes the high score from local storage
+        this.notifyHighScoreSubscribers(); // Notifies all high score subscribers about the reset
+    }
+
     public getHighScore() {
         return this.highScore;
     }

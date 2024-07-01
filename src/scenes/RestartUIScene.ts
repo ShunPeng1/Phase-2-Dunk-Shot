@@ -3,6 +3,7 @@ import AssetManager from "../managers/AssetManager";
 import UiImage from "../ui/UiImage";
 import UiImageButton from "../ui/UiImageButton";
 import MainMenuInputHandler from "../input-handlers/MainMenuInputHandler";
+import ScoreManager from "../managers/ScoreManager";
 
 class RestartUIScene extends Scene {
     constructor() {
@@ -11,8 +12,14 @@ class RestartUIScene extends Scene {
 
 
     create() {      
+
+        let highScoreTextLabel = this.add.text(300, 50, 'High Score', { font: '30px Arial', color: '#ff8b00'  }).setOrigin(0.5); 
+        let highScoreText = this.add.text(300, 120, ScoreManager.getInstance().getHighScore().toString(), { font: 'bold 100px Arial', color: '#ff8b00'  }).setOrigin(0.5);
+
         
-        let restartButton = new UiImageButton(this, AssetManager.WORLD_WIDTH/2, 550, AssetManager.RESTART_BUTTON_KEY);
+
+        
+        let restartButton = new UiImageButton(this, 300, 550, AssetManager.RESTART_BUTTON_KEY);
         restartButton.setScale(0.6);
         restartButton.setOnActiveCallback(() => {
             this.scene.stop(AssetManager.RESTART_UI_SCENE); // Stop the current restart UI scene

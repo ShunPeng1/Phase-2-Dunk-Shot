@@ -14,25 +14,25 @@ class MainMenuUIScene extends Scene {
         
         let inputHandler = new MainMenuInputHandler(this);
 
-        let title = new UiImage(this, AssetManager.WORLD_WIDTH/2 - 50, 190, AssetManager.MAIN_MENU_TITLE_KEY);
-        title.setScale(0.4);
+        let title = new UiImage(this, 260 , 230, AssetManager.MAIN_MENU_TITLE_KEY);
+        title.setScale(0.5);
 
-        let mobileTile = new UiImage(this, AssetManager.WORLD_WIDTH/2 + 170, 190, AssetManager.MOBILE_TITLE_KEY);
-        mobileTile.setScale(0.4);
+        let mobileTile = new UiImage(this,500, 300, AssetManager.MOBILE_TITLE_KEY);
+        mobileTile.setScale(0.5);
     
         // Create a button background
         
-        let challengeButton = new UiImageButton(this, AssetManager.WORLD_WIDTH/2+ 20, 550, AssetManager.CHALENGES_BUTTON_KEY);
+        let challengeButton = new UiImageButton(this, 350, 650, AssetManager.CHALENGES_BUTTON_KEY);
         
-        challengeButton.setScale(0.6);
+        challengeButton.setScale(0.7);
         challengeButton.setOnActiveCallback(() => {
             console.log("Challenge button is active");
         });
         let challengeButtonText = this.add.text(challengeButton.x - 7, challengeButton.y + 28, 'CHALLENGES', { font: 'bold 12px Arial' }).setOrigin(0.5);
 
         
-        let customizeButton = new UiImageButton(this, AssetManager.WORLD_WIDTH/2 + 150, 550, AssetManager.CUSTOMIZE_BUTTON_KEY);
-        customizeButton.setScale(0.6);
+        let customizeButton = new UiImageButton(this, 500, 650, AssetManager.CUSTOMIZE_BUTTON_KEY);
+        customizeButton.setScale(0.7);
         customizeButton.setOnActiveCallback(() => {
             console.log("Customize button is active");
         });
