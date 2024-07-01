@@ -42,7 +42,7 @@
     "prettier": "^2.5.1",
     "prettier-eslint": "^15.0.1",
     "rimraf": "^3.0.2",
-    "serve": "^13.0.2",
+    "serve": "^14.2.3",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.3",
     "webpack": "^5.65.0",
@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "gh-pages": "^6.1.1",
-    "phaser": "^3.80.1"
+    "phaser": "^3.80.1",
+    "phaser-ui-tools": "^2.0.0-beta"
   }
 }
