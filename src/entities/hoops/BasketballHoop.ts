@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import AssetManager from "../../AssetManager";
+import AssetManager from "../../managers/AssetManager";
 import LinePhysicGroupContainer from "../physics/LinePhysicGroupContainer";
 import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContainer";
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";

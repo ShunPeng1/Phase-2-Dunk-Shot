@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import AssetManager from "../AssetManager"
+import AssetManager from "../managers/AssetManager"
 
 class LoadingScene extends Scene {
     private loadingProgressComplete: boolean;
@@ -15,6 +15,12 @@ class LoadingScene extends Scene {
 
         this.load.image(AssetManager.BASKETBALL_KEY, AssetManager.BASKETBALL_IMAGE);
         this.load.image(AssetManager.TRAJECTORY_KEY, AssetManager.TRAJECTORY_IMAGE);
+
+
+        // Main menu title image
+        this.load.image(AssetManager.MAIN_MENU_TITLE_KEY, AssetManager.MAIN_MENU_TITLE_IMAGE);
+        this.load.image(AssetManager.MOBILE_TITLE_KEY, AssetManager.MOBILE_TITLE_IMAGE);
+    
     }
     
     // The rest of this file makes the visual loading bar work!

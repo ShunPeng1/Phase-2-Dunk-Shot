@@ -1,5 +1,5 @@
 import { Physics, Scene, GameObjects } from "phaser";
-import AssetManager from "../AssetManager";
+import AssetManager from "../managers/AssetManager";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 
 import GameInputHandler from "../players/GameInputHandler";
@@ -14,6 +14,7 @@ import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTraje
 import ScoreText from "../ui/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/LoseBoundaryImage";
+import GameStateManager from "../managers/GameStateManager";
 
 class PlayScene extends Scene {
 
@@ -44,6 +45,8 @@ class PlayScene extends Scene {
 
     create() {
         
+        let gameStateManager = new GameStateManager(this);
+        gameStateManager.loadMainMenuUI();
 
         // Set the background color to white
         let camera = this.cameras.main;

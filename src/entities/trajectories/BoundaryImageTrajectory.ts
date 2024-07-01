@@ -1,7 +1,7 @@
 import ImageTrajectory from "./ImageTrajectory";
 import Vector2Utils from "../../ultilities/Vector2Ultis"; // Assuming Vector2Utils is in the same directory
 import Phaser from "phaser";
-import AssetManager from "../../AssetManager";
+import AssetManager from "../../managers/AssetManager";
 
 class BoundaryImageTrajectory extends ImageTrajectory {
     public draw(startPosition: Phaser.Math.Vector2, force: number, angle: number): void {

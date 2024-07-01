@@ -1,4 +1,4 @@
-import ScoreManager from "../../ScoreManager";
+import ScoreManager from "../../managers/ScoreManager";
 import Ball from "../Ball";
 import HoopSpawner from "../hoops/HoopSpawner";
 
