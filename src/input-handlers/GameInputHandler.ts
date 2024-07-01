@@ -1,11 +1,11 @@
 import Ball from "../entities/Ball";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 import ITrajectory from "../entities/trajectories/ITrajectory";
-import GameScene from "../scenes/GameScene";
+import DunkShotGameScene from "../scenes/DunkShotGameScene";
 
 
 class GameInputHandler {
-    private scene: GameScene;
+    private scene: DunkShotGameScene;
     private isDragging: boolean = false;
     private dragStartPoint: Phaser.Math.Vector2;
     private currentHoop: BasketballHoop;
@@ -21,7 +21,7 @@ class GameInputHandler {
     private readonly PUSH_BALL_FORCE: number = 1100;
     
     
-    constructor(scene: GameScene, ball: Ball, trajectory : ITrajectory) {
+    constructor(scene: DunkShotGameScene, ball: Ball, trajectory : ITrajectory) {
         this.scene = scene;
         this.ball = ball;
         this.trajectory = trajectory;
@@ -134,7 +134,7 @@ class GameInputHandler {
 
         this.canShoot = false;
 
-        this.currentHoop.enableCollision(this.ball);
+        this.currentHoop.enableCollision(this.ball, this.ball.hoopCollisionCallback);
         this.currentHoop.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
     }
 
