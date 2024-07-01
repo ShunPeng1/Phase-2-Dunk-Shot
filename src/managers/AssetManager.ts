@@ -28,6 +28,9 @@ class AssetManager {
     public static readonly TRAJECTORY_IMAGE: string = AssetManager.MASKS_FOLDER + "45.png";
     public static readonly TRAJECTORY_KEY: string = "trajectory";
 
+    public static readonly PAUSE_BUTTON_IMAGE: string = AssetManager.MASKS_FOLDER + "188.png";
+    public static readonly PAUSE_BUTTON_KEY: string = "pause button";
+
 
     // Title images
     public static readonly MAIN_MENU_TITLE_IMAGE: string = AssetManager.TITLES_FOLDER + "10.png";
@@ -60,9 +63,12 @@ class AssetManager {
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";
     public static readonly GAME_SCENE: string = "GameScene";
+
+
     public static readonly MAIN_MENU_UI_SCENE: string = "MainMenuUIScene";
     public static readonly RESTART_UI_SCENE: string = "RestartUIScene";
-
+    public static readonly GAME_UI_SCENE: string = "GameUIScene";
+    public static readonly PAUSE_UI_SCENE: string = "PauseUIScene";
     
 
     // WORLD RESOLUTION

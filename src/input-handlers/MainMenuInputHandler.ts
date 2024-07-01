@@ -1,15 +1,20 @@
 import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
+import GameStateManager from "../managers/GameStateManager";
 
 class MainMenuInputHandler {
     private scene : Scene;
     private gameScene : Scene;
+    private gameStateManager: GameStateManager; 
+    
     private onPointerDownInMainMenuScene: () => void; // Define the event handler as a class member
+    
 
-    constructor(scene: Scene) {
+    constructor(scene: Scene, gameStateManager: GameStateManager) {
         
         this.scene = scene;
         this.gameScene = this.scene.scene.get(AssetManager.GAME_SCENE);
+        this.gameStateManager = gameStateManager;
 
         this.onPointerDownInMainMenuScene = () => this.stopMainMenuUI(); // Initialize the event handler
     
@@ -19,7 +24,7 @@ class MainMenuInputHandler {
 
     
     private stopMainMenuUI(): void {
-        this.scene.scene.stop(AssetManager.MAIN_MENU_UI_SCENE);
+        this.gameStateManager.unloadMainMenuUI();
         this.gameScene.input.off('pointerdown', this.onPointerDownInMainMenuScene); // Unsubscribe the event handler
     }
 }

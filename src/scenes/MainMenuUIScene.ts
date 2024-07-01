@@ -3,16 +3,24 @@ import AssetManager from "../managers/AssetManager";
 import UiImage from "../ui/UiImage";
 import UiImageButton from "../ui/UiImageButton";
 import MainMenuInputHandler from "../input-handlers/MainMenuInputHandler";
+import GameStateManager from "../managers/GameStateManager";
 
 class MainMenuUIScene extends Scene {
+    private gameStateManager : GameStateManager;
+
     constructor() {
         super({ key: AssetManager.MAIN_MENU_UI_SCENE });
+        
+    }
+
+    init(data: GameStateManager) {
+        this.gameStateManager = data;
     }
 
 
     create() {
         
-        let inputHandler = new MainMenuInputHandler(this);
+        let inputHandler = new MainMenuInputHandler(this, this.gameStateManager);
 
         let title = new UiImage(this, 260 , 230, AssetManager.MAIN_MENU_TITLE_KEY);
         title.setScale(0.5);

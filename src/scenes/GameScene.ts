@@ -30,28 +30,17 @@ class GameScene extends Scene {
     }
 
     preload() {
-        //console.log("FPS",  this.physics.world.fps);
-    
-        this.physics.world.setFPS(this.PHYSICS_FPS);
-
-        this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
-
         
-        // Set the background color to white
-        let camera = this.cameras.main;
-        camera.setBackgroundColor('#e8e8e8');
-        camera.zoom = camera.width / AssetManager.WORLD_WIDTH;
-        //camera.zoom = 0.5;
     }
 
     create() {
-        
+        //console.log("FPS",  this.physics.world.fps);
+        this.physics.world.setFPS(this.PHYSICS_FPS);
+        this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
+
+
         let gameStateManager = new GameStateManager(this);
         gameStateManager.loadMainMenuUI();
-
-        // Set the background color to white
-        let camera = this.cameras.main;
-        
         
         
         // Create the ball with physics enabled
@@ -66,6 +55,12 @@ class GameScene extends Scene {
         this.invisibleBallFollower = this.add.graphics();
         this.invisibleBallFollower.setVisible(false); // Make it invisible
         this.invisibleBallFollower.setY(600);
+
+
+        // Set the background color to white
+        let camera = this.cameras.main;
+        camera.setBackgroundColor('#e8e8e8');
+        camera.zoom = camera.width / AssetManager.WORLD_WIDTH;
 
         // Camera follow settings
         camera.setPosition(0, 0);
@@ -144,7 +139,7 @@ class GameScene extends Scene {
             '0', 
             { 
                 fontSize: 'bold 150px', 
-                fontFamily: 'Arial Bold', // Specify a bold font family
+                fontFamily: 'Arial', // Specify a bold font family
                 color: '#c6c6c6', // Example color: white
                 align: 'center' // Ensure the text is centered
             }
