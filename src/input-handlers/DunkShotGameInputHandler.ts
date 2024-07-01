@@ -82,7 +82,6 @@ class DunkShotGameInputHandler {
         
 
         this.isDragging = false;
-        this.currentHoop.setNetScale(1); // Reset scale
         this.trajectory.clear();
 
         if (this.MIN_REQUIRED_SCALED_DISTANCE > distance) {
@@ -94,18 +93,34 @@ class DunkShotGameInputHandler {
         let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI;
         
         
-        const internalHoopContainer = this.currentHoop.getInternalHoopContainer();
-        internalHoopContainer.remove(this.ball);
 
-        this.ball.unbindBall();
-        
-        // Reset Position of ball
-        let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
-        this.ball.x = worldPosition.x;
-        this.ball.y = worldPosition.y;
+        // Tween for net scale
+        this.scene.tweens.add({
+            targets: this.currentHoop, 
+            value: { from: this.currentHoop.getCurrentNetScale(), to: 1 }, // Dynamically scale from current to 1
+            duration: 100, // Duration of the tween in milliseconds
+            ease: 'Sine.easeInOut', // Easing function
+            onComplete: () => {
+                // Once the tween is complete, push the ball
+                
+                const internalHoopContainer = this.currentHoop.getInternalHoopContainer();
+                internalHoopContainer.remove(this.ball);
 
+                this.ball.unbindBall();
         
-        this.ball.pushBall(force, force * 2, angle);
+                // Reset Position of ball
+                let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
+                this.ball.x = worldPosition.x;
+                this.ball.y = worldPosition.y;
+                
+                this.ball.pushBall(force, force * 2, angle);
+            },
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                console.log(value);
+                this.currentHoop.setNetScale(value);
+            }
+        });
     }
 
     public setCurrentHoop(hoop: BasketballHoop): void {

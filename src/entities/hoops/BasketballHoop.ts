@@ -7,6 +7,7 @@ import NetLinePhysicGroupContainer from "../physics/NetLinePhysicGroupContainer"
 
 class BasketballHoop extends Phaser.GameObjects.Container{
     
+    
     private isInitialized: boolean = false;
 
     // Components of the basketball hoop
@@ -211,6 +212,10 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
 
         return new Phaser.Math.Vector2(worldPoint.x, worldPoint.y);
+    }
+
+    public getCurrentNetScale(): number {
+        return this.currentNetScale;
     }
 
     public getInternalHoopContainer(): Phaser.GameObjects.Container {
