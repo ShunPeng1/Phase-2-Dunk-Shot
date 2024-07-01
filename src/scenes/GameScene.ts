@@ -64,10 +64,11 @@ class GameScene extends Scene {
         // Create an invisible object
         this.invisibleBallFollower = this.add.graphics();
         this.invisibleBallFollower.setVisible(false); // Make it invisible
-
+        this.invisibleBallFollower.setY(600);
 
         // Camera follow settings
-        camera.startFollow(this.invisibleBallFollower, true, 0, 0.025, -AssetManager.WORLD_WIDTH/2 , 0);
+        camera.setPosition(0, 0);
+        camera.startFollow(this.invisibleBallFollower, true, 0, 0.01, -AssetManager.WORLD_WIDTH/2 , 100);
         
         
         
@@ -167,6 +168,7 @@ class GameScene extends Scene {
                 }
                 else{
                     gameStateManager.loadRestartUI();
+                    camera.stopFollow();
                 }
             }
         });
@@ -177,12 +179,16 @@ class GameScene extends Scene {
     
 
     update() {
+        this.followBall();
+
+    }
+
+    private followBall() {
         let ballWorldPosition = this.ball.getWorldPosition();
 
         // Update the invisible object's position to follow the ball
         this.invisibleBallFollower.x = ballWorldPosition.x;
         this.invisibleBallFollower.y = ballWorldPosition.y;
-
     }
 
 }

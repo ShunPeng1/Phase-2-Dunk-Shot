@@ -1,5 +1,6 @@
 import ScoreManager from "../../managers/ScoreManager";
 import Ball from "../Ball";
+import BasketballHoop from "../hoops/BasketballHoop";
 import HoopSpawner from "../hoops/HoopSpawner";
 
 class ScoreCounter extends Phaser.Events.EventEmitter {
@@ -13,13 +14,14 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     constructor(spawner : HoopSpawner, ball : Ball) {
         super();
         spawner.subscribeToEnterNextHoop(this.calculateScore.bind(this));
+        spawner.subscribeToEnterCurrentHoop(this.resetBounceCount.bind(this));
 
         ball.on(ball.RING_HOOP_COLLIDE_EVENT, this.setBounceRing.bind(this));
         ball.on(ball.WALL_COLLIDE_EVENT, this.setBounceWall.bind(this));
     }
 
     
-    private calculateScore() : void {
+    private calculateScore(hoop : BasketballHoop) : void {
         
         if (this.isBounceRing) {
             this.prefectCount = 0;
@@ -45,6 +47,13 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
         this.isBounceRing = false;
         this.isBounceWall = false;
     }
+
+    private resetBounceCount() : void {
+        this.isBounceWall = false;
+
+    
+    }
+
 
     private setBounceRing() : void {
         this.isBounceRing = true;
