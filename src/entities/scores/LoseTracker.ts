@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Ball from "./Ball";
+import Ball from "../Ball";
 
 
 class GameStateManager extends Phaser.Events.EventEmitter {
