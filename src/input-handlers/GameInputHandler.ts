@@ -1,11 +1,11 @@
 import Ball from "../entities/Ball";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 import ITrajectory from "../entities/trajectories/ITrajectory";
-import PlayScene from "../scenes/PlayScene";
+import GameScene from "../scenes/GameScene";
 
 
 class GameInputHandler {
-    private scene: PlayScene;
+    private scene: GameScene;
     private isDragging: boolean = false;
     private dragStartPoint: Phaser.Math.Vector2;
     private currentHoop: BasketballHoop;
@@ -21,7 +21,7 @@ class GameInputHandler {
     private readonly PUSH_BALL_FORCE: number = 1100;
     
     
-    constructor(scene: PlayScene, ball: Ball, trajectory : ITrajectory) {
+    constructor(scene: GameScene, ball: Ball, trajectory : ITrajectory) {
         this.scene = scene;
         this.ball = ball;
         this.trajectory = trajectory;

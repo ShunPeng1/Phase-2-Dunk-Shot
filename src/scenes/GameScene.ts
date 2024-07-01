@@ -16,7 +16,7 @@ import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
 
-class PlayScene extends Scene {
+class GameScene extends Scene {
 
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
@@ -25,7 +25,7 @@ class PlayScene extends Scene {
     
     
     constructor() {
-        super({ key: AssetManager.PLAY_SCENE });
+        super({ key: AssetManager.GAME_SCENE });
     }
 
     preload() {
@@ -54,7 +54,8 @@ class PlayScene extends Scene {
         
         
         // Create the ball with physics enabled
-        this.ball = new Ball(this, 150,550 , AssetManager.BASKETBALL_KEY);
+        const ballSpawnPlace = new Phaser.Math.Vector2(150, 550);
+        this.ball = new Ball(this, ballSpawnPlace.x, ballSpawnPlace.y, AssetManager.BASKETBALL_KEY);
         this.ball.setScale(0.2);
         this.ball.setDrag(0);
         this.ball.setFriction(0);
@@ -156,10 +157,18 @@ class PlayScene extends Scene {
         });
 
 
-        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner);
-        loseBoundaryImage.enableOverlap(this.ball, () => {
+        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner, hoop1);
+        loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
             console.log("LOSE");
-        
+            
+            if (ball instanceof Ball && loseBoundaryImage instanceof LoseBoundaryImage) {
+                if (loseBoundaryImage.getIsFirstHoop()){
+                    ball.setPosition(ballSpawnPlace.x, ballSpawnPlace.y);
+                }
+                else{
+                    gameStateManager.loadRestartUI();
+                }
+            }
         });
 
 
@@ -180,4 +189,4 @@ class PlayScene extends Scene {
 
 
 
-export default PlayScene;
+export default GameScene;

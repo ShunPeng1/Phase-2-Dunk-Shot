@@ -50,6 +50,8 @@ class AssetManager {
     public static readonly CLOSE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "close-button.png";
     public static readonly CLOSE_BUTTON_KEY: string = "close button";
     
+    public static readonly RESTART_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "112.png";
+    public static readonly RESTART_BUTTON_KEY: string = "restart button";
 
     // Sounds
     public static readonly DUNK_SHOT_SOUND_FOLDER: string = "assets/sounds/dunk-shot/";
@@ -57,8 +59,9 @@ class AssetManager {
 
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";
-    public static readonly PLAY_SCENE: string = "PlayScene";
+    public static readonly GAME_SCENE: string = "GameScene";
     public static readonly MAIN_MENU_UI_SCENE: string = "MainMenuUIScene";
+    public static readonly RESTART_UI_SCENE: string = "RestartUIScene";
 
     
 

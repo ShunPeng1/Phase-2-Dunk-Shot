@@ -1,6 +1,7 @@
 import LoadingScene from "./scenes/LoadingScene";
 import MainMenuUIScene from "./scenes/MainMenuUIScene";
-import PlayScene from "./scenes/PlayScene";
+import GameScene from "./scenes/GameScene";
+import RestartUIScene from "./scenes/RestartUIScene";
 
 
 class Game {
@@ -28,7 +29,7 @@ class Game {
             type: Phaser.AUTO,
             width: gameWidth,
             height: gameHeight,
-            scene: [LoadingScene, PlayScene, MainMenuUIScene],
+            scene: [LoadingScene, GameScene, MainMenuUIScene, RestartUIScene],
             physics: {
                 default: 'arcade',
                 arcade: {
