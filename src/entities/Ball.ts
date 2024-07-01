@@ -71,7 +71,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         }
 
 
-        if (!this.isBinded() && this.wasBinded() && this.arcadeBody.overlapR === 0){
+        if (!this.getIsBinded() && this.getWasBinded() && this.arcadeBody.overlapR === 0){
             
             this.endOverlap();
             this.emit("internal hoop overlapend", this.bindingHoop);
@@ -108,11 +108,11 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.lastBindingHoop = null;
     }
 
-    public isBinded() : boolean{
+    public getIsBinded() : boolean{
         return this.bindingHoop !== null;
     }
 
-    public wasBinded() : boolean{
+    public getWasBinded() : boolean{
         return this.lastBindingHoop !== null;
     }
 
@@ -160,9 +160,9 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             //console.log(touching, ball.isBinded(), ball.wasBinded());
             
             let basketballHoop = internalHoop.getBasketballHoop();
-            if (!ball.isBinded() && !ball.wasBinded()){
+            if (!ball.getIsBinded() && !ball.getWasBinded()){
                 
-                ball.bindBall(basketballHoop);
+                //ball.bindBall(basketballHoop);
                 ball.emit(ball.INTERNAL_HOOP_OVERLAP_START_EVENT, basketballHoop);
                 
             }
@@ -198,20 +198,20 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         
         if (collidedObject instanceof BoundaryImage) { // Assuming Platform is a class you have for platforms
             //this.setBounce(1);
-            console.log("collided with wall");
+            //console.log("collided with wall");
         } 
         else if (collidedObject instanceof RingHoopArcadeImage) {
             //this.setBounce(0.8);
             
             this.arcadeBody.velocity.x *= 0.55;
             this.arcadeBody.velocity.y *= 0.55;
-            console.log("collided with ring hoop");
+            //console.log("collided with ring hoop");
         }
         else if (collidedObject instanceof NetArcadeImage) {
             //this.setBounce(0.3);
             this.arcadeBody.velocity.x *= 0.3;
             this.arcadeBody.velocity.y *= 0.3;
-            console.log("collided with net hoop");
+            //console.log("collided with net hoop");
         }
 
     }
