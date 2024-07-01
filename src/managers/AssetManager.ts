@@ -37,6 +37,18 @@ class AssetManager {
     public static readonly MOBILE_TITLE_KEY: string = "mobile title";
 
 
+    // Ui images
+    public static readonly BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "button.png";
+    public static readonly BUTTON_KEY: string = "button";
+
+    public static readonly CHALENGES_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "36.png";
+    public static readonly CHALENGES_BUTTON_KEY: string = "chalenges button";
+
+    public static readonly CUSTOMIZE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "205.png";
+    public static readonly CUSTOMIZE_BUTTON_KEY: string = "customize button";
+
+    public static readonly CLOSE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "close-button.png";
+    public static readonly CLOSE_BUTTON_KEY: string = "close button";
     
 
     // Sounds

@@ -20,6 +20,12 @@ class LoadingScene extends Scene {
         // Main menu title image
         this.load.image(AssetManager.MAIN_MENU_TITLE_KEY, AssetManager.MAIN_MENU_TITLE_IMAGE);
         this.load.image(AssetManager.MOBILE_TITLE_KEY, AssetManager.MOBILE_TITLE_IMAGE);
+
+        // UI Buttons
+        this.load.image(AssetManager.CHALENGES_BUTTON_KEY, AssetManager.CHALENGES_BUTTON_IMAGE);
+        this.load.image(AssetManager.CUSTOMIZE_BUTTON_KEY, AssetManager.CUSTOMIZE_BUTTON_IMAGE);
+        
+
     
     }
     

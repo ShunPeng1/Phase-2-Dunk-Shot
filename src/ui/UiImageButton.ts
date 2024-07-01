@@ -49,4 +49,22 @@ class UiImageButton extends UiImage implements IUiClickable, IUiHoverable{
             this.onRestCallback();
         }
     }
+
+    public setOnActiveCallback(callback: () => void): void {
+        this.onActiveCallback = callback;
+    }
+    
+    public setOnUnactiveCallback(callback: () => void): void {
+        this.onUnactiveCallback = callback;
+    }
+    
+    public setOnHoverCallback(callback: () => void): void {
+        this.onHoverCallback = callback;
+    }
+    
+    public setOnRestCallback(callback: () => void): void {
+        this.onRestCallback = callback;
+    }
 }
+
+export default UiImageButton;
