@@ -4,7 +4,7 @@ import ITrajectory from "../entities/trajectories/ITrajectory";
 import DunkShotGameScene from "../scenes/DunkShotGameScene";
 
 
-class GameInputHandler {
+class DunkShotGameInputHandler {
     private scene: DunkShotGameScene;
     private isDragging: boolean = false;
     private dragStartPoint: Phaser.Math.Vector2;
@@ -150,4 +150,4 @@ class GameInputHandler {
     }
 }
 
-export default GameInputHandler;
+export default DunkShotGameInputHandler;
