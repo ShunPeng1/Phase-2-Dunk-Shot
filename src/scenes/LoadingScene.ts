@@ -24,10 +24,15 @@ class LoadingScene extends Scene {
         // UI Buttons
         this.load.image(AssetManager.CHALENGES_BUTTON_KEY, AssetManager.CHALENGES_BUTTON_IMAGE);
         this.load.image(AssetManager.CUSTOMIZE_BUTTON_KEY, AssetManager.CUSTOMIZE_BUTTON_IMAGE);
+        
         this.load.image(AssetManager.RESTART_BUTTON_KEY, AssetManager.RESTART_BUTTON_IMAGE);
+
         this.load.image(AssetManager.PAUSE_BUTTON_KEY, AssetManager.PAUSE_BUTTON_IMAGE);
         
         
+        this.load.image(AssetManager.RESUME_WIDE_BUTTON_KEY, AssetManager.RESUME_WIDE_BUTTON_IMAGE);
+        this.load.image(AssetManager.HOMEPAGE_WIDE_BUTTON_KEY, AssetManager.HOMEPAGE_WIDE_BUTTON_IMAGE);
+        this.load.image(AssetManager.SKIN_WIDE_BUTTON_KEY, AssetManager.SKIN_WIDE_BUTTON_IMAGE);
 
     
     }

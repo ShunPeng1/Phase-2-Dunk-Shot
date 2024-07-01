@@ -56,6 +56,15 @@ class AssetManager {
     public static readonly RESTART_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "112.png";
     public static readonly RESTART_BUTTON_KEY: string = "restart button";
 
+    public static readonly RESUME_WIDE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "100.png";
+    public static readonly RESUME_WIDE_BUTTON_KEY: string = "resume wide button";
+
+    public static readonly HOMEPAGE_WIDE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "70.png";
+    public static readonly HOMEPAGE_WIDE_BUTTON_KEY: string = "homepage wide button";
+
+    public static readonly SKIN_WIDE_BUTTON_IMAGE: string = AssetManager.UI_FOLDER + "185.png";
+    public static readonly SKIN_WIDE_BUTTON_KEY: string = "skin wide button";
+
     // Sounds
     public static readonly DUNK_SHOT_SOUND_FOLDER: string = "assets/sounds/dunk-shot/";
 

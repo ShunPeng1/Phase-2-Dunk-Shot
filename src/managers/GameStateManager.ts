@@ -4,6 +4,7 @@ import { PauseState } from "./game-states/PauseState";
 import { DunkShotGameState } from "./game-states/DunkShotGameState";
 import { RestartState } from "./game-states/RestartState";
 import { MainMenuState } from "./game-states/MainMenuState";
+import AssetManager from "./AssetManager";
 
 export class GameStateManager extends Phaser.Events.EventEmitter {
     private scene : Scene;
@@ -37,6 +38,11 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
 
     }
 
+    public loadGame() {
+        this.loadMainMenuUI();
+        this.scene.scene.stop(AssetManager.GAME_SCENE); // Stop the current game scene
+        this.scene.scene.start(AssetManager.GAME_SCENE); // Start the game scene again, effectively restarting it
+    }
     
 
     public loadMainMenuUI(): void {
