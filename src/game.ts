@@ -1,7 +1,9 @@
 import LoadingScene from "./scenes/LoadingScene";
 import MainMenuUIScene from "./scenes/MainMenuUIScene";
-import GameScene from "./scenes/GameScene";
+import DunkShotGameScene from "./scenes/DunkShotGameScene";
 import RestartUIScene from "./scenes/RestartUIScene";
+import DunkShotGameUIScene from "./scenes/DunkShotGameUIScene";
+import PauseUIScene from "./scenes/PauseUIScene";
 
 
 class Game {
@@ -33,11 +35,11 @@ class Game {
                 width: gameWidth,
                 height: gameHeight
             },
-            scene: [LoadingScene, GameScene, MainMenuUIScene, RestartUIScene],
+            scene: [LoadingScene, DunkShotGameScene, MainMenuUIScene, RestartUIScene, DunkShotGameUIScene, PauseUIScene],
             physics: {
                 default: 'arcade',
                 arcade: {
-                    debug: false,
+                    debug: true,
                     gravity: {x: 0, y: 1500 }
                 }
             }

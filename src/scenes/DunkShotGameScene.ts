@@ -17,7 +17,7 @@ import LoseBoundaryImage from "../entities/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
 import ScoreManager from "../managers/ScoreManager";
 
-class GameScene extends Scene {
+class DunkShotGameScene extends Scene {
 
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
@@ -193,4 +193,4 @@ class GameScene extends Scene {
 
 
 
-export default GameScene;
+export default DunkShotGameScene;

@@ -1,51 +1,60 @@
 import { Scene } from "phaser";
-import AssetManager from "./AssetManager";
+import BaseStateMachine from "../ultilities/state_machines/StateMachine";
+import { PauseState } from "./game-states/PauseState";
+import { DunkShotGameState } from "./game-states/DunkShotGameState";
+import { RestartState } from "./game-states/RestartState";
+import { MainMenuState } from "./game-states/MainMenuState";
 
-class GameStateManager extends Phaser.Events.EventEmitter {
+export class GameStateManager extends Phaser.Events.EventEmitter {
     private scene : Scene;
+    private stateMachine : BaseStateMachine;
     
-    
+    private dunkShotGameState: DunkShotGameState;
+    private mainMenuState: MainMenuState;
+    private restartState: RestartState;
+    private pauseState: PauseState;
+
+
+
     constructor(scene: Scene) {
         super();
         
         this.scene = scene;
     
+        this.dunkShotGameState = new DunkShotGameState(scene, this);
+        this.mainMenuState = new MainMenuState(scene, this);
+        this.restartState = new RestartState(scene, this);
+        this.pauseState = new PauseState(scene, this);
+
+        this.stateMachine = new BaseStateMachine.Builder()
+            .withInitialState(this.mainMenuState, true)
+            .build();
+
+        this.stateMachine.addOrOverwriteState(this.dunkShotGameState);
+        this.stateMachine.addOrOverwriteState(this.mainMenuState);
+        this.stateMachine.addOrOverwriteState(this.restartState);
+        this.stateMachine.addOrOverwriteState(this.pauseState);
+
     }
+
+    
 
     public loadMainMenuUI(): void {
-        this.scene.scene.launch(AssetManager.MAIN_MENU_UI_SCENE, this);
-    }
-
-    public unloadMainMenuUI(): void {
-        this.scene.scene.stop(AssetManager.MAIN_MENU_UI_SCENE);
+        this.stateMachine.setToState(this.mainMenuState, null);
     }
 
     public loadRestartUI(): void {
-        this.scene.scene.launch(AssetManager.RESTART_UI_SCENE, this);
-    }
-
-    public unloadRestartUI(): void {
-        this.scene.scene.stop(AssetManager.RESTART_UI_SCENE);
+        this.stateMachine.setToState(this.restartState, null);
     }
 
     public loadGameUI(): void {
-        this.scene.scene.launch(AssetManager.GAME_UI_SCENE);
-    }
-
-    public unloadGameUI(): void {
-        this.scene.scene.stop(AssetManager.GAME_UI_SCENE);
+        this.stateMachine.setToState(this.dunkShotGameState, null);
     }
 
     public loadPauseUI(): void {
-        this.scene.scene.launch(AssetManager.PAUSE_UI_SCENE);
+        this.stateMachine.setToState(this.pauseState, null);
     }
-
-    public unloadPauseUI(): void {
-        this.scene.scene.stop(AssetManager.PAUSE_UI_SCENE);
-    }
-    
 
 }
-
 
 export default GameStateManager;

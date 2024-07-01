@@ -67,7 +67,7 @@ class AssetManager {
 
     public static readonly MAIN_MENU_UI_SCENE: string = "MainMenuUIScene";
     public static readonly RESTART_UI_SCENE: string = "RestartUIScene";
-    public static readonly GAME_UI_SCENE: string = "GameUIScene";
+    public static readonly DUNK_SHOT_GAME_UI_SCENE: string = "GameUIScene";
     public static readonly PAUSE_UI_SCENE: string = "PauseUIScene";
     
 

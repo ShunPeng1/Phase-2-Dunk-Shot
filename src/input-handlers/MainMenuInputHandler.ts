@@ -24,8 +24,8 @@ class MainMenuInputHandler {
 
     
     private stopMainMenuUI(): void {
-        this.gameStateManager.unloadMainMenuUI();
         this.gameScene.input.off('pointerdown', this.onPointerDownInMainMenuScene); // Unsubscribe the event handler
+        this.gameStateManager.loadGameUI();
     }
 }
 

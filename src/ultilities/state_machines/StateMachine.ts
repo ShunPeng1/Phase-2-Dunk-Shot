@@ -100,7 +100,12 @@ class BaseStateMachine {
         return null;
     }
     
-    public addOrOverwriteState(baseState: IState, transitions: Set<IStateTransition>): void {
+    public addOrOverwriteState(baseState: IState, transitions: Set<IStateTransition> = new Set()): void {
+        if (this.nodes.has(baseState.constructor)) {
+            this.nodes.delete(baseState.constructor);
+        }
+
+
         this.nodes.set(baseState.constructor, new StateNode(baseState, transitions));
     }
 

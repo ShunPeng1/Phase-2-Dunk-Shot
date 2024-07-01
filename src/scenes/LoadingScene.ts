@@ -25,6 +25,8 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.CHALENGES_BUTTON_KEY, AssetManager.CHALENGES_BUTTON_IMAGE);
         this.load.image(AssetManager.CUSTOMIZE_BUTTON_KEY, AssetManager.CUSTOMIZE_BUTTON_IMAGE);
         this.load.image(AssetManager.RESTART_BUTTON_KEY, AssetManager.RESTART_BUTTON_IMAGE);
+        this.load.image(AssetManager.PAUSE_BUTTON_KEY, AssetManager.PAUSE_BUTTON_IMAGE);
+        
         
 
     

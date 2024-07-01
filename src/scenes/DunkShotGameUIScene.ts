@@ -2,13 +2,13 @@ import AssetManager from "../managers/AssetManager";
 import GameStateManager from "../managers/GameStateManager";
 import UiImageButton from "../ui/UiImageButton";
 
-class GameUIScene extends Phaser.Scene {
+class DunkShotGameUIScene extends Phaser.Scene {
     private gameStateManager: GameStateManager;
 
     
 
     constructor() {
-        super(AssetManager.GAME_UI_SCENE);
+        super(AssetManager.DUNK_SHOT_GAME_UI_SCENE);
     }
 
     init(data: GameStateManager) {
@@ -18,11 +18,13 @@ class GameUIScene extends Phaser.Scene {
 
     create() {
         let pauseButton = new UiImageButton(this, 50, 50, AssetManager.PAUSE_BUTTON_KEY);
-        pauseButton.setScale(0.5);
+        pauseButton.setScale(1);
         pauseButton.setOnActiveCallback(() => {
-            console.log("Pause button is active");
+            this.gameStateManager.loadPauseUI();
         });
 
     }
 }
 
+
+export default DunkShotGameUIScene;
