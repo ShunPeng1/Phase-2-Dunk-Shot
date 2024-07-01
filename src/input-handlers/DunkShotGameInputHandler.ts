@@ -129,7 +129,6 @@ class DunkShotGameInputHandler {
     private onHoopEnter(basketballHoop : BasketballHoop): void {
         
         this.currentHoop = basketballHoop;
-        this.ball.stableBall();
 
         console.log("Hoop entered" , this.ball.x, this.ball.y, this.ball.getIsBinded());
         // Calculate world position of the hoop
@@ -138,25 +137,38 @@ class DunkShotGameInputHandler {
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
         basketballHoop.disableCollision();
 
+        let duration = this.ball.arcadeBody.speed / 8;
+        let power = this.ball.arcadeBody.speed / 1000;
+        //let duration = 100;
+        
+        console.log("Duration", duration, this.ball.arcadeBody.speed, power );
+
+        
+        this.ball.stableBall();
+        this.ball.bindBall(basketballHoop);
+
         // Tween for moving ball to the hoop's world position
         this.scene.tweens.add({
             targets: this.ball,
-            x: worldPosition.x,
-            y: worldPosition.y,
-            duration: 100, // Adjust duration as needed
+            x: {from: this.ball.x, to : worldPosition.x},
+            y: {from: this.ball.y, to : worldPosition.y},
+            duration: duration, // Adjust duration as needed
             ease: 'Power2.easeInOut',
             onComplete: () => {
                 // Once the ball reaches the hoop, add it to the internal hoop container
-                console.log("Ball reached hoop");
+                //console.log("Ball reached hoop");
 
                 internalHoopContainer.add(this.ball);
                 this.ball.x = 0;
                 this.ball.y = 0;
 
-                this.ball.bindBall(basketballHoop);
                 
                 
                 this.canShoot = true;
+            },
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                
             }
         });
 
@@ -164,7 +176,7 @@ class DunkShotGameInputHandler {
         this.scene.tweens.add({
             targets: this.ball.body,
             angularVelocity: 0,
-            duration: 100, // Adjust duration as needed
+            duration: duration, // Adjust duration as needed
             ease: 'Sine.easeOut',
         });
 
@@ -172,7 +184,7 @@ class DunkShotGameInputHandler {
         this.scene.tweens.add({
             targets: basketballHoop,
             values: { from : basketballHoop.getRotation(), to: 0},
-            duration: 100, // Adjust duration as needed
+            duration: duration, // Adjust duration as needed
             ease: 'Quad.easeOut',
 
             onUpdate: (tween) => {
@@ -182,14 +194,14 @@ class DunkShotGameInputHandler {
         });
 
         const originalScale = basketballHoop.getCurrentNetScale();
-        const maxScale = originalScale * 1.5; // Example scale factor
+        const maxScale = originalScale * (1+power); // Example scale factor
 
         this.scene.tweens.add({
             targets: basketballHoop,
             values: { from: originalScale, to: maxScale },
             yoyo: true, // Goes back to original scale
             ease: 'Sine.easeInOut', // This can be adjusted for different effects
-            duration: 100, // Duration of one cycle
+            duration: duration, // Duration of one cycle
             onUpdate: (tween) => {
                 const value = tween.getValue();
                 basketballHoop.setNetScale(value);
@@ -200,7 +212,7 @@ class DunkShotGameInputHandler {
     }
 
     public onHoopExit(basketballHoop : BasketballHoop): void {
-        console.log("Hoop exited");
+        //console.log("Hoop exited");
 
         this.canShoot = false;
 

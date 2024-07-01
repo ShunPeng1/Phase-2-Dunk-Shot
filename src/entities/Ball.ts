@@ -62,8 +62,8 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             this.worldY = internalHoopPosition.y;         
             
             
-            this.x = 0;
-            this.y = 0;
+            //this.x = 0;
+            //this.y = 0;
         }
         else{
             this.worldX = this.x;
@@ -181,11 +181,22 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public hoopCollisionCallback(ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, hoop: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
         // You can emit an event from the ball or execute any logic here
 
-        if (ball instanceof Ball && hoop instanceof RingHoopArcadeImage) {
-            ball.emit(ball.RING_HOOP_COLLIDE_EVENT, hoop);
+        if (!(ball instanceof Ball)) {
+            return ;
         }
-        else if (ball instanceof Ball && hoop instanceof NetArcadeImage) {
-            ball.emit(ball.NET_COLLIDE_EVENT, hoop);
+
+        let touching = !ball.arcadeBody.touching.none;
+        let wasTouching = !ball.arcadeBody.wasTouching.none;
+
+        console.log("touching", touching, "was touching", wasTouching);
+        if (!wasTouching){
+
+            if (hoop instanceof RingHoopArcadeImage) {
+                ball.emit(ball.RING_HOOP_COLLIDE_EVENT, hoop);
+            }
+            else if (hoop instanceof NetArcadeImage) {
+                ball.emit(ball.NET_COLLIDE_EVENT, hoop);
+            }
         }
     }
 
@@ -198,20 +209,20 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         
         if (collidedObject instanceof BoundaryImage) { // Assuming Platform is a class you have for platforms
             //this.setBounce(1);
-            //console.log("collided with wall");
+            console.log("collided with wall");
         } 
         else if (collidedObject instanceof RingHoopArcadeImage) {
             //this.setBounce(0.8);
             
             this.arcadeBody.velocity.x *= 0.55;
             this.arcadeBody.velocity.y *= 0.55;
-            //console.log("collided with ring hoop");
+            console.log("collided with ring hoop");
         }
         else if (collidedObject instanceof NetArcadeImage) {
             //this.setBounce(0.3);
-            this.arcadeBody.velocity.x *= 0.3;
-            this.arcadeBody.velocity.y *= 0.3;
-            //console.log("collided with net hoop");
+            this.arcadeBody.velocity.x *= 0.6;
+            this.arcadeBody.velocity.y *= 0.6;
+            console.log("collided with net hoop");
         }
 
     }
