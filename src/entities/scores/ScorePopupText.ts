@@ -18,7 +18,7 @@ class ScorePopupText {
     
     private showScorePopupText(totalScore: number, addScore: number, prefectCount: number, bounceCount: number): void {
         // Position for the popup texts, assuming they should appear above the ball
-        console.log("showScorePopupText");
+        //console.log("showScorePopupText");
         
         const position = { x: this.ball.x, y: this.ball.y - 50 };
     

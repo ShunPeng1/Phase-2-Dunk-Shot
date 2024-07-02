@@ -130,7 +130,7 @@ class DunkShotGameInputHandler {
         
         this.currentHoop = basketballHoop;
 
-        console.log("Hoop entered" , this.ball.x, this.ball.y, this.ball.getIsBinded());
+        //console.log("Hoop entered" , this.ball.x, this.ball.y, this.ball.getIsBinded());
         // Calculate world position of the hoop
         let worldPosition = basketballHoop.getInternalHoopWorldPosition();
         
@@ -141,7 +141,7 @@ class DunkShotGameInputHandler {
         let power = this.ball.arcadeBody.speed / 1000;
         //let duration = 100;
         
-        console.log("Duration", duration, this.ball.arcadeBody.speed, power );
+        //console.log("Duration", duration, this.ball.arcadeBody.speed, power );
 
         
         this.ball.stableBall();

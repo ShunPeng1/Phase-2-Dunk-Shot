@@ -26,7 +26,7 @@ import WallBoundaryImage from "../entities/boundaries/WallBoundaryImage";
 
 class DunkShotGameScene extends Scene {
 
-    private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 550);
+    private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 450);
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
 
@@ -192,7 +192,7 @@ class DunkShotGameScene extends Scene {
     
         scoreCounter.on(scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
             scoreText.updateScore(totalScore);
-            console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
+            //console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
         });
 
 
@@ -230,14 +230,36 @@ class DunkShotGameScene extends Scene {
         
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.hoopSpawner);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
-            console.log("LOSE");
             
             if (ball instanceof Ball && loseBoundaryImage instanceof LoseBoundaryImage) {
-                if (this.hoopSpawner.getFirstHoopExist()){
+                let firstHoop = this.hoopSpawner.getFirstHoop();
+                
+                if (firstHoop){
                     ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
+                    ball.stableBall();
+                    // Tween the hoop's rotation to 0
+                    this.tweens.add({
+                        targets: firstHoop,
+                        values: {from: firstHoop.getRotation(), to: 0}, 
+                        ease: 'Linear',
+                        duration: 100,
+                        onComplete: () => {
+                            // After the rotation tween completes, set the ball's position and velocity
+                            ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
+                            ball.pushBall(100, 100, Math.PI/2);
+                        },
+                        onUpdate: (tween) => {
+                            // Update the hoop's rotation during the tween
+                            const value = tween.getValue();
+                            firstHoop!.setRotation(value);
+                        }
+                    });
+
+
+                    
                 }
                 else{
-                    
+                    loseBoundaryImage.disableBody();
                     ScoreManager.getInstance().saveHighScore();
                     
                     gameStateManager.loadRestartUI();

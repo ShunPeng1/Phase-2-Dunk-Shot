@@ -230,20 +230,20 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         
         if (collidedObject instanceof BoundaryImage) { // Assuming Platform is a class you have for platforms
             //this.setBounce(1);
-            console.log("collided with wall");
+            //console.log("collided with wall");
         } 
         else if (collidedObject instanceof RingHoopArcadeImage) {
             //this.setBounce(0.8);
             
             this.arcadeBody.velocity.x *= 0.55;
             this.arcadeBody.velocity.y *= 0.55;
-            console.log("collided with ring hoop");
+            //console.log("collided with ring hoop");
         }
         else if (collidedObject instanceof NetArcadeImage) {
             //this.setBounce(0.3);
             this.arcadeBody.velocity.x *= 0.6;
             this.arcadeBody.velocity.y *= 0.6;
-            console.log("collided with net hoop");
+            //console.log("collided with net hoop");
         }
 
     }
