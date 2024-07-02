@@ -12,6 +12,10 @@ class LoadingScene extends Scene {
 
         // Basket
         this.load.image(AssetManager.GOLDEN_STAR_KEY, AssetManager.GOLDEN_STAR_IMAGE);
+        this.load.image(AssetManager.SHIELD_1_KEY, AssetManager.SHIELD_1_IMAGE);
+        this.load.image(AssetManager.SHIELD_2_KEY, AssetManager.SHIELD_2_IMAGE);
+        this.load.image(AssetManager.SHIELD_3_KEY, AssetManager.SHIELD_3_IMAGE);
+        this.load.image(AssetManager.SHIELD_4_KEY, AssetManager.SHIELD_4_IMAGE);
 
         // Masks
         this.load.image(AssetManager.INNER_RING_BASKET_KEY, AssetManager.INNER_RING_BASKET_IMAGE);
@@ -247,7 +251,7 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.UI_91_KEY, AssetManager.UI_91_IMAGE);
         this.load.image(AssetManager.UI_96_KEY, AssetManager.UI_96_IMAGE);
 
-        
+
         this.load.image(AssetManager.WHEEL_128_KEY, AssetManager.WHEEL_128_IMAGE);
         this.load.image(AssetManager.WHEEL_132_KEY, AssetManager.WHEEL_132_IMAGE);
         this.load.image(AssetManager.WHEEL_181_KEY, AssetManager.WHEEL_181_IMAGE);
@@ -258,6 +262,65 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.WHEEL_73_KEY, AssetManager.WHEEL_73_IMAGE);
         this.load.image(AssetManager.WHEEL_83_KEY, AssetManager.WHEEL_83_IMAGE);
     
+
+        // Sounds
+        this.load.audio(AssetManager.SOUNDS_BOUNCE_SHOT_KEY, AssetManager.SOUNDS_BOUNCE_SHOT_SOUND);   
+        this.load.audio(AssetManager.SOUNDS_BUBBLE_KEY, AssetManager.SOUNDS_BUBBLE_SOUND);
+        this.load.audio(AssetManager.SOUNDS_BUMP_1_KEY, AssetManager.SOUNDS_BUMP_1_SOUND);
+        this.load.audio(AssetManager.SOUNDS_BUMP_2_KEY, AssetManager.SOUNDS_BUMP_2_SOUND);
+        this.load.audio(AssetManager.SOUNDS_BUMP_3_KEY, AssetManager.SOUNDS_BUMP_3_SOUND);
+        this.load.audio(AssetManager.SOUNDS_BUMP_5_KEY, AssetManager.SOUNDS_BUMP_5_SOUND);
+        this.load.audio(AssetManager.SOUNDS_BUMP_6_KEY, AssetManager.SOUNDS_BUMP_6_SOUND);
+        this.load.audio(AssetManager.SOUNDS_CERAMIC_1_KEY, AssetManager.SOUNDS_CERAMIC_1_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_CLICK_1_KEY, AssetManager.SOUNDS_CLICK_1_SOUND);
+        this.load.audio(AssetManager.SOUNDS_FADE_IN_1_KEY, AssetManager.SOUNDS_FADE_IN_1_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_FIRE_1_KEY, AssetManager.SOUNDS_FIRE_1_SOUND);
+        this.load.audio(AssetManager.SOUNDS_FIRE_2_KEY, AssetManager.SOUNDS_FIRE_2_SOUND);
+        this.load.audio(AssetManager.SOUNDS_FIRE_3_KEY, AssetManager.SOUNDS_FIRE_3_SOUND);
+        this.load.audio(AssetManager.SOUNDS_FIRE_4_KEY, AssetManager.SOUNDS_FIRE_4_SOUND);
+        this.load.audio(AssetManager.SOUNDS_FIRE_5_KEY, AssetManager.SOUNDS_FIRE_5_SOUND);
+        this.load.audio(AssetManager.SOUNDS_GLASS_3_KEY, AssetManager.SOUNDS_GLASS_3_SOUND);
+        this.load.audio(AssetManager.SOUNDS_GLASS_HIGH_KEY, AssetManager.SOUNDS_GLASS_HIGH_SOUND);     
+        this.load.audio(AssetManager.SOUNDS_GLASS_LITE_KEY, AssetManager.SOUNDS_GLASS_LITE_SOUND);     
+        this.load.audio(AssetManager.SOUNDS_HIT_KEY, AssetManager.SOUNDS_HIT_SOUND);
+        this.load.audio(AssetManager.SOUNDS_NET_SHOOT_HARD_KEY, AssetManager.SOUNDS_NET_SHOOT_HARD_SOUND);
+        this.load.audio(AssetManager.SOUNDS_NET_SHOOT_LITE_KEY, AssetManager.SOUNDS_NET_SHOOT_LITE_SOUND);
+        this.load.audio(AssetManager.SOUNDS_NET_SHOOT_MEDIUM_KEY, AssetManager.SOUNDS_NET_SHOOT_MEDIUM_SOUND);
+        this.load.audio(AssetManager.SOUNDS_NON_PERFECT_KEY, AssetManager.SOUNDS_NON_PERFECT_SOUND);   
+        this.load.audio(AssetManager.SOUNDS_OTHER_15_KEY, AssetManager.SOUNDS_OTHER_15_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_21_KEY, AssetManager.SOUNDS_OTHER_21_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_26_KEY, AssetManager.SOUNDS_OTHER_26_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_33_KEY, AssetManager.SOUNDS_OTHER_33_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_35_KEY, AssetManager.SOUNDS_OTHER_35_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_37_KEY, AssetManager.SOUNDS_OTHER_37_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_38_KEY, AssetManager.SOUNDS_OTHER_38_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_39_KEY, AssetManager.SOUNDS_OTHER_39_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_40_KEY, AssetManager.SOUNDS_OTHER_40_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_43_KEY, AssetManager.SOUNDS_OTHER_43_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_44_KEY, AssetManager.SOUNDS_OTHER_44_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_45_KEY, AssetManager.SOUNDS_OTHER_45_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_47_KEY, AssetManager.SOUNDS_OTHER_47_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_48_KEY, AssetManager.SOUNDS_OTHER_48_SOUND);
+        this.load.audio(AssetManager.SOUNDS_OTHER_56_KEY, AssetManager.SOUNDS_OTHER_56_SOUND);
+        this.load.audio(AssetManager.SOUNDS_PERFECT_1_KEY, AssetManager.SOUNDS_PERFECT_1_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_10_KEY, AssetManager.SOUNDS_PERFECT_10_SOUND);     
+        this.load.audio(AssetManager.SOUNDS_PERFECT_2_KEY, AssetManager.SOUNDS_PERFECT_2_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_3_KEY, AssetManager.SOUNDS_PERFECT_3_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_4_KEY, AssetManager.SOUNDS_PERFECT_4_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_5_KEY, AssetManager.SOUNDS_PERFECT_5_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_6_KEY, AssetManager.SOUNDS_PERFECT_6_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_7_KEY, AssetManager.SOUNDS_PERFECT_7_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_8_KEY, AssetManager.SOUNDS_PERFECT_8_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_PERFECT_9_KEY, AssetManager.SOUNDS_PERFECT_9_SOUND);       
+        this.load.audio(AssetManager.SOUNDS_STAR_2_KEY, AssetManager.SOUNDS_STAR_2_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TIMEOUT_KEY, AssetManager.SOUNDS_TIMEOUT_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_1_KEY, AssetManager.SOUNDS_TRUMP_1_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_2_KEY, AssetManager.SOUNDS_TRUMP_2_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_4_KEY, AssetManager.SOUNDS_TRUMP_4_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_5_KEY, AssetManager.SOUNDS_TRUMP_5_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_6_KEY, AssetManager.SOUNDS_TRUMP_6_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_8_KEY, AssetManager.SOUNDS_TRUMP_8_SOUND);
+        this.load.audio(AssetManager.SOUNDS_TRUMP_9_KEY, AssetManager.SOUNDS_TRUMP_9_SOUND);
     }
     
     // The rest of this file makes the visual loading bar work!

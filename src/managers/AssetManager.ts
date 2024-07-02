@@ -10,6 +10,8 @@ class AssetManager {
     public static readonly WHEEL_FOLDER: string = AssetManager.DUNK_SHOT_IMAGE_FOLDER + "wheel/";
     public static readonly TITLES_FOLDER: string = AssetManager.DUNK_SHOT_IMAGE_FOLDER + "titles/";
 
+    public static readonly DUNK_SHOT_SOUNDS_FOLDER: string = "assets/dunk-shot/sounds/";
+
     // Balls images
     public static readonly BASKETBALL_IMAGE: string = AssetManager.BALLS_FOLDER + "17.png"; 
     public static readonly BASKETBALL_KEY: string = "basketball";
@@ -17,6 +19,18 @@ class AssetManager {
     // Basket images
     public static readonly GOLDEN_STAR_IMAGE: string = AssetManager.BASKETS_FOLDER + "119.png";
     public static readonly GOLDEN_STAR_KEY: string = "golden star";
+
+    public static readonly SHIELD_1_IMAGE: string = AssetManager.BASKETS_FOLDER + "shield_1.png";
+    public static readonly SHIELD_1_KEY: string = "shield 1";
+
+    public static readonly SHIELD_2_IMAGE: string = AssetManager.BASKETS_FOLDER + "shield_2.png";
+    public static readonly SHIELD_2_KEY: string = "shield 2";
+
+    public static readonly SHIELD_3_IMAGE: string = AssetManager.BASKETS_FOLDER + "shield_3.png";
+    public static readonly SHIELD_3_KEY: string = "shield 3";
+
+    public static readonly SHIELD_4_IMAGE: string = AssetManager.BASKETS_FOLDER + "shield_4.png";
+    public static readonly SHIELD_4_KEY: string = "shield 4";
 
     // Masks images
     public static readonly INNER_RING_BASKET_IMAGE: string = AssetManager.MASKS_FOLDER + "48.png";
@@ -480,7 +494,7 @@ class AssetManager {
     public static readonly UI_96_IMAGE: string = AssetManager.UI_FOLDER + "96.png";
     public static readonly UI_96_KEY: string = "ui_96";
 
-    
+
     public static readonly WHEEL_128_IMAGE: string = AssetManager.WHEEL_FOLDER + "128.png";
     public static readonly WHEEL_128_KEY: string = "wheel_128";
     public static readonly WHEEL_132_IMAGE: string = AssetManager.WHEEL_FOLDER + "132.png";
@@ -502,8 +516,120 @@ class AssetManager {
 
 
     // Sounds
-    public static readonly DUNK_SHOT_SOUND_FOLDER: string = "assets/dunk-shot/sounds/";
-
+    public static readonly SOUNDS_BOUNCE_SHOT_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bounce_shot.mp3";
+    public static readonly SOUNDS_BOUNCE_SHOT_KEY: string = "sounds_bounce_shot";
+    public static readonly SOUNDS_BUBBLE_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bubble.mp3";    
+    public static readonly SOUNDS_BUBBLE_KEY: string = "sounds_bubble";
+    public static readonly SOUNDS_BUMP_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bump_1.mp3";    
+    public static readonly SOUNDS_BUMP_1_KEY: string = "sounds_bump_1";
+    public static readonly SOUNDS_BUMP_2_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bump_2.mp3";    
+    public static readonly SOUNDS_BUMP_2_KEY: string = "sounds_bump_2";
+    public static readonly SOUNDS_BUMP_3_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bump_3.mp3";    
+    public static readonly SOUNDS_BUMP_3_KEY: string = "sounds_bump_3";
+    public static readonly SOUNDS_BUMP_5_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bump_5.mp3";    
+    public static readonly SOUNDS_BUMP_5_KEY: string = "sounds_bump_5";
+    public static readonly SOUNDS_BUMP_6_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "bump_6.mp3";    
+    public static readonly SOUNDS_BUMP_6_KEY: string = "sounds_bump_6";
+    public static readonly SOUNDS_CERAMIC_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "ceramic_1.mp3";
+    public static readonly SOUNDS_CERAMIC_1_KEY: string = "sounds_ceramic_1";
+    public static readonly SOUNDS_CLICK_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "click_1.mp3";  
+    public static readonly SOUNDS_CLICK_1_KEY: string = "sounds_click_1";
+    public static readonly SOUNDS_FADE_IN_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fade_in_1.mp3";
+    public static readonly SOUNDS_FADE_IN_1_KEY: string = "sounds_fade_in_1";
+    public static readonly SOUNDS_FIRE_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fire_1.mp3";    
+    public static readonly SOUNDS_FIRE_1_KEY: string = "sounds_fire_1";
+    public static readonly SOUNDS_FIRE_2_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fire_2.mp3";    
+    public static readonly SOUNDS_FIRE_2_KEY: string = "sounds_fire_2";
+    public static readonly SOUNDS_FIRE_3_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fire_3.mp3";    
+    public static readonly SOUNDS_FIRE_3_KEY: string = "sounds_fire_3";
+    public static readonly SOUNDS_FIRE_4_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fire_4.mp3";    
+    public static readonly SOUNDS_FIRE_4_KEY: string = "sounds_fire_4";
+    public static readonly SOUNDS_FIRE_5_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "fire_5.mp3";    
+    public static readonly SOUNDS_FIRE_5_KEY: string = "sounds_fire_5";
+    public static readonly SOUNDS_GLASS_3_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "glass_3.mp3";  
+    public static readonly SOUNDS_GLASS_3_KEY: string = "sounds_glass_3";
+    public static readonly SOUNDS_GLASS_HIGH_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "glass_high.mp3";
+    public static readonly SOUNDS_GLASS_HIGH_KEY: string = "sounds_glass_high";
+    public static readonly SOUNDS_GLASS_LITE_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "glass_lite.mp3";
+    public static readonly SOUNDS_GLASS_LITE_KEY: string = "sounds_glass_lite";
+    public static readonly SOUNDS_HIT_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "hit.mp3";
+    public static readonly SOUNDS_HIT_KEY: string = "sounds_hit";
+    public static readonly SOUNDS_NET_SHOOT_HARD_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "net_shoot_hard.mp3";
+    public static readonly SOUNDS_NET_SHOOT_HARD_KEY: string = "sounds_net_shoot_hard";
+    public static readonly SOUNDS_NET_SHOOT_LITE_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "net_shoot_lite.mp3";
+    public static readonly SOUNDS_NET_SHOOT_LITE_KEY: string = "sounds_net_shoot_lite";
+    public static readonly SOUNDS_NET_SHOOT_MEDIUM_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "net_shoot_medium.mp3";
+    public static readonly SOUNDS_NET_SHOOT_MEDIUM_KEY: string = "sounds_net_shoot_medium";
+    public static readonly SOUNDS_NON_PERFECT_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "non_perfect.mp3";
+    public static readonly SOUNDS_NON_PERFECT_KEY: string = "sounds_non_perfect";
+    public static readonly SOUNDS_OTHER_15_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_15.mp3";
+    public static readonly SOUNDS_OTHER_15_KEY: string = "sounds_other_15";
+    public static readonly SOUNDS_OTHER_21_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_21.mp3";
+    public static readonly SOUNDS_OTHER_21_KEY: string = "sounds_other_21";
+    public static readonly SOUNDS_OTHER_26_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_26.mp3";
+    public static readonly SOUNDS_OTHER_26_KEY: string = "sounds_other_26";
+    public static readonly SOUNDS_OTHER_33_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_33.mp3";
+    public static readonly SOUNDS_OTHER_33_KEY: string = "sounds_other_33";
+    public static readonly SOUNDS_OTHER_35_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_35.mp3";
+    public static readonly SOUNDS_OTHER_35_KEY: string = "sounds_other_35";
+    public static readonly SOUNDS_OTHER_37_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_37.mp3";
+    public static readonly SOUNDS_OTHER_37_KEY: string = "sounds_other_37";
+    public static readonly SOUNDS_OTHER_38_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_38.mp3";
+    public static readonly SOUNDS_OTHER_38_KEY: string = "sounds_other_38";
+    public static readonly SOUNDS_OTHER_39_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_39.mp3";
+    public static readonly SOUNDS_OTHER_39_KEY: string = "sounds_other_39";
+    public static readonly SOUNDS_OTHER_40_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_40.mp3";
+    public static readonly SOUNDS_OTHER_40_KEY: string = "sounds_other_40";
+    public static readonly SOUNDS_OTHER_43_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_43.mp3";
+    public static readonly SOUNDS_OTHER_43_KEY: string = "sounds_other_43";
+    public static readonly SOUNDS_OTHER_44_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_44.mp3";
+    public static readonly SOUNDS_OTHER_44_KEY: string = "sounds_other_44";
+    public static readonly SOUNDS_OTHER_45_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_45.mp3";
+    public static readonly SOUNDS_OTHER_45_KEY: string = "sounds_other_45";
+    public static readonly SOUNDS_OTHER_47_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_47.mp3";
+    public static readonly SOUNDS_OTHER_47_KEY: string = "sounds_other_47";
+    public static readonly SOUNDS_OTHER_48_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_48.mp3";
+    public static readonly SOUNDS_OTHER_48_KEY: string = "sounds_other_48";
+    public static readonly SOUNDS_OTHER_56_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "other_56.mp3";
+    public static readonly SOUNDS_OTHER_56_KEY: string = "sounds_other_56";
+    public static readonly SOUNDS_PERFECT_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_1.mp3";
+    public static readonly SOUNDS_PERFECT_1_KEY: string = "sounds_perfect_1";
+    public static readonly SOUNDS_PERFECT_10_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_10.mp3";
+    public static readonly SOUNDS_PERFECT_10_KEY: string = "sounds_perfect_10";
+    public static readonly SOUNDS_PERFECT_2_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_2.mp3";
+    public static readonly SOUNDS_PERFECT_2_KEY: string = "sounds_perfect_2";
+    public static readonly SOUNDS_PERFECT_3_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_3.mp3";
+    public static readonly SOUNDS_PERFECT_3_KEY: string = "sounds_perfect_3";
+    public static readonly SOUNDS_PERFECT_4_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_4.mp3";
+    public static readonly SOUNDS_PERFECT_4_KEY: string = "sounds_perfect_4";
+    public static readonly SOUNDS_PERFECT_5_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_5.mp3";
+    public static readonly SOUNDS_PERFECT_5_KEY: string = "sounds_perfect_5";
+    public static readonly SOUNDS_PERFECT_6_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_6.mp3";
+    public static readonly SOUNDS_PERFECT_6_KEY: string = "sounds_perfect_6";
+    public static readonly SOUNDS_PERFECT_7_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_7.mp3";
+    public static readonly SOUNDS_PERFECT_7_KEY: string = "sounds_perfect_7";
+    public static readonly SOUNDS_PERFECT_8_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_8.mp3";
+    public static readonly SOUNDS_PERFECT_8_KEY: string = "sounds_perfect_8";
+    public static readonly SOUNDS_PERFECT_9_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "perfect_9.mp3";
+    public static readonly SOUNDS_PERFECT_9_KEY: string = "sounds_perfect_9";
+    public static readonly SOUNDS_STAR_2_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "star_2.mp3";    
+    public static readonly SOUNDS_STAR_2_KEY: string = "sounds_star_2";
+    public static readonly SOUNDS_TIMEOUT_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "timeout.mp3";  
+    public static readonly SOUNDS_TIMEOUT_KEY: string = "sounds_timeout";
+    public static readonly SOUNDS_TRUMP_1_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_1.mp3";  
+    public static readonly SOUNDS_TRUMP_1_KEY: string = "sounds_trump_1";
+    public static readonly SOUNDS_TRUMP_2_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_2.mp3";  
+    public static readonly SOUNDS_TRUMP_2_KEY: string = "sounds_trump_2";
+    public static readonly SOUNDS_TRUMP_4_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_4.mp3";  
+    public static readonly SOUNDS_TRUMP_4_KEY: string = "sounds_trump_4";
+    public static readonly SOUNDS_TRUMP_5_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_5.mp3";  
+    public static readonly SOUNDS_TRUMP_5_KEY: string = "sounds_trump_5";
+    public static readonly SOUNDS_TRUMP_6_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_6.mp3";  
+    public static readonly SOUNDS_TRUMP_6_KEY: string = "sounds_trump_6";
+    public static readonly SOUNDS_TRUMP_8_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_8.mp3";  
+    public static readonly SOUNDS_TRUMP_8_KEY: string = "sounds_trump_8";
+    public static readonly SOUNDS_TRUMP_9_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_9.mp3";  
+    public static readonly SOUNDS_TRUMP_9_KEY: string = "sounds_trump_9";
 
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";
