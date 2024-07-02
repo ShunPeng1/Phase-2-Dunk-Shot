@@ -1,6 +1,6 @@
 class AssetManager {
     // Images
-    public static readonly DUNK_SHOT_IMAGE_FOLDER: string = "assets/images/dunk-shot/";
+    public static readonly DUNK_SHOT_IMAGE_FOLDER: string = "assets/dunk-shot/images/";
     public static readonly BALLS_FOLDER: string = AssetManager.DUNK_SHOT_IMAGE_FOLDER + "balls/";
     public static readonly BASKETS_FOLDER: string = AssetManager.DUNK_SHOT_IMAGE_FOLDER + "baskets/";
     public static readonly MASKS_FOLDER: string = AssetManager.DUNK_SHOT_IMAGE_FOLDER + "masks/";
@@ -14,6 +14,9 @@ class AssetManager {
     public static readonly BASKETBALL_IMAGE: string = AssetManager.BALLS_FOLDER + "17.png"; 
     public static readonly BASKETBALL_KEY: string = "basketball";
 
+    // Basket images
+    public static readonly GOLDEN_STAR_IMAGE: string = AssetManager.BASKETS_FOLDER + "119.png";
+    public static readonly GOLDEN_STAR_KEY: string = "golden star";
 
     // Masks images
     public static readonly INNER_RING_BASKET_IMAGE: string = AssetManager.MASKS_FOLDER + "48.png";
@@ -66,7 +69,7 @@ class AssetManager {
     public static readonly SKIN_WIDE_BUTTON_KEY: string = "skin wide button";
 
     // Sounds
-    public static readonly DUNK_SHOT_SOUND_FOLDER: string = "assets/sounds/dunk-shot/";
+    public static readonly DUNK_SHOT_SOUND_FOLDER: string = "assets/dunk-shot/sounds/";
 
 
     // Scenes

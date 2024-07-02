@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import BoundaryImage from "./BoundaryImage";
+import BoundaryImage from "./boundaries/BoundaryImage";
 import BasketballHoop from "./hoops/BasketballHoop";
 import InternalHoopArcadeImage from "./hoops/InternalHoopArcadeImage";
 import RingHoopArcadeImage from "./hoops/RingHoopArcadeImage";

@@ -9,6 +9,11 @@ class LoadingScene extends Scene {
     }
 
     public preload() : void {
+
+        // Basket
+        this.load.image(AssetManager.GOLDEN_STAR_KEY, AssetManager.GOLDEN_STAR_IMAGE);
+
+        // Masks
         this.load.image(AssetManager.INNER_RING_BASKET_KEY, AssetManager.INNER_RING_BASKET_IMAGE);
         this.load.image(AssetManager.OUTER_RING_BASKET_KEY, AssetManager.OUTER_RING_BASKET_IMAGE);
         this.load.image(AssetManager.NET_BASKET_KEY, AssetManager.NET_BASKET_IMAGE);

@@ -1,6 +1,6 @@
 import { Physics } from "phaser";
-import HoopSpawner from "./hoops/HoopSpawner";
-import BasketballHoop from "./hoops/BasketballHoop";
+import HoopSpawner from "../hoops/HoopSpawner";
+import BasketballHoop from "../hoops/BasketballHoop";
 
 class LoseBoundaryImage extends Physics.Arcade.Image {
 
