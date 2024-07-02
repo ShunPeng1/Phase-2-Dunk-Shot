@@ -13,7 +13,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
 
     private bindingHoop: BasketballHoop | null = null;
     private lastBindingHoop: BasketballHoop | null = null;
-
+    private wasBlocked: boolean = false;
     
     public readonly INTERNAL_HOOP_OVERLAP_START_EVENT = "internal hoop overlapstart";
     public readonly INTERNAL_HOOP_OVERLAP_END_EVENT = "internal hoop overlapend";
@@ -21,7 +21,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly WALL_COLLIDE_EVENT = "collide with wall";
     public readonly NET_COLLIDE_EVENT = "collide with net";
 
-
+    private readonly BLOCKED_COOLDOWN = 300;
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture) {
         super(scene, x, y, texture);
@@ -78,6 +78,11 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         
         }
 
+        if (this.getWasBlocked()){
+            setTimeout(() => {
+                this.setWasBlocked(false);
+            }, this.BLOCKED_COOLDOWN);
+        }
           
     }
 
@@ -185,12 +190,12 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             return ;
         }
 
-        let touching = !ball.arcadeBody.touching.none;
-        let wasTouching = !ball.arcadeBody.wasTouching.none;
+    
+        let wasBlocked = ball.getWasBlocked();
+        
 
-        console.log("touching", touching, "was touching", wasTouching);
-        if (!wasTouching){
-
+        if (!wasBlocked){
+            ball.setWasBlocked(true);
             if (hoop instanceof RingHoopArcadeImage) {
                 ball.emit(ball.RING_HOOP_COLLIDE_EVENT, hoop);
             }
@@ -198,8 +203,16 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
                 ball.emit(ball.NET_COLLIDE_EVENT, hoop);
             }
         }
+        
     }
 
+    public setWasBlocked(blocked : boolean) : void{
+        this.wasBlocked = blocked;
+    }
+
+    public getWasBlocked() : boolean{
+        return this.wasBlocked;
+    }
 
         // Collision callback to adjust ball's bounce based on the object it collides with
     private adjustBounceOnCollidingObject(collidedObject : GameObjects.GameObject) {
