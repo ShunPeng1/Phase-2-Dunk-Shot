@@ -20,6 +20,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly RING_HOOP_COLLIDE_EVENT = "collide with ring hoop";
     public readonly WALL_COLLIDE_EVENT = "collide with wall";
     public readonly NET_COLLIDE_EVENT = "collide with net";
+    public readonly COLLECTIBLE_OVERLAP_EVENT = "collide with collectible";
 
     private readonly BLOCKED_COOLDOWN = 300;
 
@@ -204,6 +205,13 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
             }
         }
         
+    }
+
+    public collectibleOverlapCallback(ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, collectible: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
+        // You can emit an event from the ball or execute any logic here
+        if (ball instanceof Ball) {
+            ball.emit(ball.COLLECTIBLE_OVERLAP_EVENT, collectible);
+        }
     }
 
     public setWasBlocked(blocked : boolean) : void{

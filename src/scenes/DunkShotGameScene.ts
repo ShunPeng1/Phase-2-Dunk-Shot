@@ -17,6 +17,11 @@ import LoseBoundaryImage from "../entities/boundaries/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
 import ScoreManager from "../managers/ScoreManager";
 import ScorePopupText from "../entities/scores/ScorePopupText";
+import StarText from "../entities/scores/StarText";
+import CollectibleFactory from "../entities/collectibles/CollectibleFactory";
+import CollectibleSpawnInfo from "../entities/collectibles/CollectibleSpawnInfo";
+import GoldenStarCollectible from "../entities/collectibles/GoldenStarCollectible";
+import InventoryManager from "../managers/InventoryManager";
 
 class DunkShotGameScene extends Scene {
 
@@ -51,9 +56,10 @@ class DunkShotGameScene extends Scene {
 
         // Set up effects and UI
         this.setupCamera();
+        this.setupStarManagement();
         this.setupScoreManagement();
     }
-
+    
     private setupPhysics() : void {
         this.physics.world.setFPS(this.PHYSICS_FPS);
         this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
@@ -111,7 +117,7 @@ class DunkShotGameScene extends Scene {
         
 
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
-    
+        let collectibleFactory = new CollectibleFactory(this);
         let hoopSpawner = new HoopSpawner(this, this.ball, new HoopSpawnSet(
             [
                 new HoopSpawnInfo.Builder(BasketballHoop)
@@ -121,8 +127,9 @@ class DunkShotGameScene extends Scene {
                 .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 , Math.PI/4))
                 .setSpawnChance(1)
                 .build()
-            ]),
+            ], [new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)] , 0.15),
             hoopFactory,
+            collectibleFactory,
             70, 
             450);
         
@@ -190,6 +197,32 @@ class DunkShotGameScene extends Scene {
         let scorePopupText = new ScorePopupText(this, this.ball, scoreCounter);
 
     }
+
+    private setupStarManagement() : void {
+        let starText = new StarText(this, 500, 150, '1', { 
+            fontSize: 'bold 40px', 
+            fontFamily: 'Arial', // Specify a bold font family
+            color: '#f2a63b', // Example color: white
+            align: 'center' // Ensure the text is centered
+            }
+        );
+
+        starText.setScale(0.6);
+        starText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
+        starText.setScrollFactor(0, 0); // This line makes the score text follow the camera
+   
+        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_KEY));
+        
+        this.ball.on(this.ball.COLLECTIBLE_OVERLAP_EVENT, (collectible: GoldenStarCollectible) => {
+            
+            if (collectible instanceof GoldenStarCollectible) {
+                starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_KEY));
+                const collectibleEndPosition = new Phaser.Math.Vector2(starText.x + this.cameras.main.scrollX - 45, starText.y + this.cameras.main.scrollY);
+                collectible.createCollectAnimation(new Phaser.Math.Vector2(collectibleEndPosition));
+            }
+        });
+    }
+
 
     private setupLoseCondition(gameStateManager : GameStateManager ) : void {
         
