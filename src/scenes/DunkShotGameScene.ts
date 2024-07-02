@@ -201,7 +201,7 @@ class DunkShotGameScene extends Scene {
     }
 
     private setupStarManagement() : void {
-        let starText = new StarText(this, 500, 150, '1', { 
+        let starText = new StarText(this, 500, 150, '0', { 
             fontSize: 'bold 40px', 
             fontFamily: 'Arial', // Specify a bold font family
             color: '#f2a63b', // Example color: white

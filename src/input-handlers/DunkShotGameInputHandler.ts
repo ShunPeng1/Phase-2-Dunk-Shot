@@ -137,7 +137,7 @@ class DunkShotGameInputHandler {
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
         basketballHoop.disableCollision();
 
-        let duration = Math.max(this.ball.arcadeBody.speed / 8, 50);
+        let duration = Math.min(Math.max(this.ball.arcadeBody.speed / 8, 50), 150);
         let power = this.ball.arcadeBody.speed / 1000;
         //let duration = 100;
         
