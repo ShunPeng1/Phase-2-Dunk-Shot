@@ -21,6 +21,9 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.BASKETBALL_KEY, AssetManager.BASKETBALL_IMAGE);
         this.load.image(AssetManager.TRAJECTORY_KEY, AssetManager.TRAJECTORY_IMAGE);
 
+        this.load.image(AssetManager.TOP_IMPACT_KEY, AssetManager.TOP_IMPACT_IMAGE);
+        this.load.image(AssetManager.BOTTOM_IMPACT_KEY, AssetManager.BOTTOM_IMPACT_IMAGE);
+        this.load.image(AssetManager.MIDDLE_IMPACT_KEY, AssetManager.MIDDLE_IMPACT_IMAGE);
 
         // Main menu title image
         this.load.image(AssetManager.MAIN_MENU_TITLE_KEY, AssetManager.MAIN_MENU_TITLE_IMAGE);

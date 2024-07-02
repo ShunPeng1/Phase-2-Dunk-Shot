@@ -1,10 +1,7 @@
 class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
-    public readonly BOUND_WIDTH = 10; // Width of the bounds, making them thin
-    public readonly BOUND_HEIGHT = 999999999999; // Height of the bounds, making them tall
 
-
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, width: number, height: number) {
         super(scene, x, y, texture);
 
         scene.physics.add.existing(this);
@@ -12,17 +9,26 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
         this.setImmovable(true);
         (this.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
-        this.setSize(this.BOUND_WIDTH, this.BOUND_HEIGHT);
-        this.setVisible(false);
-
+        this.setSize(width, height);
 
     }
 
     public enableCollision(collider: Phaser.GameObjects.GameObject, callback?: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback): void {
 
-        this.scene.physics.add.collider(collider, this, callback, undefined, this.scene);
+        this.scene.physics.add.collider(collider, this, 
+            (object1: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, object2: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody): void => {
+                this.hit(object1);
+                
+                if (callback) {
+                    callback(object1, object2);
+                }
+            }
+            , undefined, this.scene);
     }
 
+    public hit(object1?: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody): void {
+        // Implement this method in the child class
+    }
 
 
     // private collisionCallback(other : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, bound : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) : void {

@@ -35,6 +35,16 @@ class AssetManager {
     public static readonly PAUSE_BUTTON_KEY: string = "pause button";
 
 
+    public static readonly TOP_IMPACT_IMAGE: string = AssetManager.MASKS_FOLDER + "2.png";
+    public static readonly TOP_IMPACT_KEY: string = "top impact";
+
+    public static readonly BOTTOM_IMPACT_IMAGE: string = AssetManager.MASKS_FOLDER + "1.png";
+    public static readonly BOTTOM_IMPACT_KEY: string = "bottom impact";
+
+    public static readonly MIDDLE_IMPACT_IMAGE: string = AssetManager.MASKS_FOLDER + "3.png";
+    public static readonly MIDDLE_IMPACT_KEY: string = "middle impact";
+
+
     // Title images
     public static readonly MAIN_MENU_TITLE_IMAGE: string = AssetManager.TITLES_FOLDER + "10.png";
     public static readonly MAIN_MENU_TITLE_KEY: string = "main menu title";

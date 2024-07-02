@@ -22,6 +22,7 @@ import CollectibleFactory from "../entities/collectibles/CollectibleFactory";
 import CollectibleSpawnInfo from "../entities/collectibles/CollectibleSpawnInfo";
 import GoldenStarCollectible from "../entities/collectibles/GoldenStarCollectible";
 import InventoryManager from "../managers/InventoryManager";
+import WallBoundaryImage from "../entities/boundaries/WallBoundaryImage";
 
 class DunkShotGameScene extends Scene {
 
@@ -87,14 +88,15 @@ class DunkShotGameScene extends Scene {
 
     private setupBoundaries() : void {
         
-        let leftBound = new BoundaryImage(this, 0, 0, '');
-        let rightBound = new BoundaryImage(this, 0, 0, '');
+        let leftBound = new WallBoundaryImage(this, 0, 0, true);
+        let rightBound = new WallBoundaryImage(this, 0, 0, false);
 
-        leftBound.setPosition(0, -leftBound.BOUND_HEIGHT + AssetManager.WORLD_HEIGHT*2);
-        leftBound.setOffset(leftBound.BOUND_WIDTH/2, 0);
-        rightBound.setPosition(AssetManager.WORLD_WIDTH, -rightBound.BOUND_HEIGHT + AssetManager.WORLD_HEIGHT*2);
-        rightBound.setOffset(rightBound.BOUND_WIDTH*2, 0);
-
+        
+        leftBound.setPosition(0, -WallBoundaryImage.BOUND_HEIGHT + AssetManager.WORLD_HEIGHT*2);
+        leftBound.setOffset(WallBoundaryImage.BOUND_WIDTH/2, 0);
+        rightBound.setPosition(AssetManager.WORLD_WIDTH, -WallBoundaryImage.BOUND_HEIGHT + AssetManager.WORLD_HEIGHT*2);
+        rightBound.setOffset(WallBoundaryImage.BOUND_WIDTH*2, 0);
+        
         
         leftBound.enableCollision(this.ball, this.ball.wallCollisionCallback);
         rightBound.enableCollision(this.ball,  this.ball.wallCollisionCallback);
@@ -150,7 +152,7 @@ class DunkShotGameScene extends Scene {
 
 
 
-        hoopSpawner.setCurrentHoop(hoop1);
+        hoopSpawner.setFirstHoop(hoop1);
         hoopSpawner.setNextHoop(hoop2);
 
         this.hoopSpawner = hoopSpawner;
