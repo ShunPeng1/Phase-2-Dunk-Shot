@@ -6,6 +6,7 @@ import Ball from "../Ball";
 import HoopFactory from "./HoopFactory";
 
 class HoopSpawner {
+    
     private scene : Scene;
     private ball : Ball;
     private hoopSpawnSet: HoopSpawnSet;
@@ -20,6 +21,8 @@ class HoopSpawner {
     
     private enterNextHoopSubscribers: ((hoop: BasketballHoop) => void)[] = [];
     private enterCurrentHoopSubcribers: ((hoop: BasketballHoop) => void)[] = [];
+
+    private isFirstHoopExist: boolean = false;
 
 
     constructor(scene : Scene, ball : Ball, hoopSpawnSet: HoopSpawnSet, hoopFactory : HoopFactory, leftBound: number, rightBound: number) {
@@ -132,10 +135,16 @@ class HoopSpawner {
         this.nextHoop = hoop;
     }
 
+    public setFirstHoop(hoop: BasketballHoop, ): void {
+        this.currentHoop = hoop;
+        this.isFirstHoopExist = true;
+    }
+
     public spawnNextHoop() : BasketballHoop{
         
         if (this.currentHoop) {
             this.currentHoop.destroy();
+            this.isFirstHoopExist = false;
         }
     
         this.currentHoop = this.nextHoop;
@@ -152,7 +161,16 @@ class HoopSpawner {
         return this.nextHoop;
     }
 
+    public getFirstHoopExist() : boolean {
+        return this.isFirstHoopExist;
+    }
 
+    public getFirstHoop() : BasketballHoop | null {
+        if (this.isFirstHoopExist) {
+            return this.currentHoop;
+        }
+        return null;
+    }
 }
 
 export default HoopSpawner;

@@ -11,7 +11,7 @@ import HoopFactory from "../entities/hoops/HoopFactory";
 import BoundaryImage from "../entities/boundaries/BoundaryImage";
 import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTrajectory";
-import ScoreText from "../ui/ScoreText";
+import ScoreText from "../entities/scores/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/boundaries/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
@@ -20,8 +20,11 @@ import ScorePopupText from "../entities/scores/ScorePopupText";
 
 class DunkShotGameScene extends Scene {
 
+    private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 550);
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
+
+    private hoopSpawner: HoopSpawner;
 
     private readonly PHYSICS_FPS: number = 300;
     
@@ -34,30 +37,37 @@ class DunkShotGameScene extends Scene {
         
     }
 
+
     create() {
-        //console.log("FPS",  this.physics.world.fps);
+        this.setupPhysics();
+        let gameStateManager = this.setupGameStateManager();
+        
+        // Order of setup matters
+        this.setupBall();
+        this.setupHoops();
+        this.setupInputHandler();
+        this.setupBoundaries();
+        this.setupLoseCondition(gameStateManager);
+
+        // Set up effects and UI
+        this.setupCamera();
+        this.setupScoreManagement();
+    }
+
+    private setupPhysics() : void {
         this.physics.world.setFPS(this.PHYSICS_FPS);
         this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
+    }
 
-
+    private setupGameStateManager() : GameStateManager {
+        
         let gameStateManager = new GameStateManager(this);
         gameStateManager.loadMainMenuUI();
-        
-        
-        // Create the ball with physics enabled
-        const ballSpawnPlace = new Phaser.Math.Vector2(150, 550);
-        this.ball = new Ball(this, ballSpawnPlace.x, ballSpawnPlace.y, AssetManager.BASKETBALL_KEY);
-        this.ball.setScale(0.2);
-        this.ball.setDrag(0);
-        this.ball.setFriction(0);
-        this.ball.setAngularDrag(0);
-        
-        // Create an invisible object
-        this.invisibleBallFollower = this.add.graphics();
-        this.invisibleBallFollower.setVisible(false); // Make it invisible
-        this.invisibleBallFollower.setY(600);
+        return gameStateManager;
+    }
 
-
+    private setupCamera() : void {
+    
         // Set the background color to white
         let camera = this.cameras.main;
         camera.setBackgroundColor('#e8e8e8');
@@ -66,10 +76,11 @@ class DunkShotGameScene extends Scene {
         // Camera follow settings
         camera.setPosition(0, 0);
         camera.startFollow(this.invisibleBallFollower, true, 0, 0.01, -AssetManager.WORLD_WIDTH/2 , 100);
-        
-        
-        
+            
+    }
 
+    private setupBoundaries() : void {
+        
         let leftBound = new BoundaryImage(this, 0, 0, '');
         let rightBound = new BoundaryImage(this, 0, 0, '');
 
@@ -81,8 +92,22 @@ class DunkShotGameScene extends Scene {
         
         leftBound.enableCollision(this.ball, this.ball.wallCollisionCallback);
         rightBound.enableCollision(this.ball,  this.ball.wallCollisionCallback);
-        
-        
+            
+    }
+
+    private setupBall() : void {
+        this.ball = new Ball(this, this.ballSpawnPlace.x, this.ballSpawnPlace.y, AssetManager.BASKETBALL_KEY);
+        this.ball.setScale(0.2);
+        this.ball.setDrag(0);
+        this.ball.setFriction(0);
+        this.ball.setAngularDrag(0);
+
+        this.invisibleBallFollower = this.add.graphics();
+        this.invisibleBallFollower.setVisible(false);
+        this.invisibleBallFollower.setY(600);
+    }
+
+    private setupHoops() : void {
         
 
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
@@ -120,16 +145,23 @@ class DunkShotGameScene extends Scene {
 
         hoopSpawner.setCurrentHoop(hoop1);
         hoopSpawner.setNextHoop(hoop2);
-        
+
+        this.hoopSpawner = hoopSpawner;
+    }
+
+    private setupInputHandler() : void {
         
 
         let inputHandler = new DunkShotGameInputHandler(this, this.ball, 
             new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
-        inputHandler.setCurrentHoop(hoop1);
+        inputHandler.setCurrentHoop(this.hoopSpawner.getFirstHoop()!);
 
+    }
 
+    private setupScoreManagement() : void {
+        
         ScoreManager.getInstance().resetScore();
-        const scoreCounter = new ScoreCounter(hoopSpawner, this.ball);
+        const scoreCounter = new ScoreCounter(this.hoopSpawner, this.ball);
 
         
 
@@ -157,18 +189,19 @@ class DunkShotGameScene extends Scene {
 
         let scorePopupText = new ScorePopupText(this, this.ball, scoreCounter);
 
+    }
 
-
-        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner, hoop1);
+    private setupLoseCondition(gameStateManager : GameStateManager ) : void {
+        
+        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.hoopSpawner);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
             console.log("LOSE");
             
             if (ball instanceof Ball && loseBoundaryImage instanceof LoseBoundaryImage) {
-                if (loseBoundaryImage.getIsFirstHoop()){
-                    ball.setPosition(ballSpawnPlace.x, ballSpawnPlace.y);
+                if (this.hoopSpawner.getFirstHoopExist()){
+                    ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
                 }
                 else{
-                    camera.stopFollow();
                     
                     ScoreManager.getInstance().saveHighScore();
                     
@@ -177,17 +210,14 @@ class DunkShotGameScene extends Scene {
             }
         });
 
-
     }
-
-    
 
     update() {
         this.followBall();
 
     }
 
-    private followBall() {
+    private followBall() : void {
         let ballWorldPosition = this.ball.getWorldPosition();
 
         // Update the invisible object's position to follow the ball

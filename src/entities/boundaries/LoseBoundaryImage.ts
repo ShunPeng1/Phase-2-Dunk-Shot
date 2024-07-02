@@ -5,20 +5,16 @@ import BasketballHoop from "../hoops/BasketballHoop";
 class LoseBoundaryImage extends Physics.Arcade.Image {
 
     private spawner : HoopSpawner;
-    private initialHoop : BasketballHoop;
-
-    private isFirstHoop : boolean = true;
 
     private offsetX : number;
     private offsetY : number;
     
     
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, offsetX : number, offsetY : number, spawner : HoopSpawner, initialHoop : BasketballHoop){
+    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, offsetX : number, offsetY : number, spawner : HoopSpawner){
         super(scene, x, y, '');
 
 
         this.spawner = spawner;
-        this.initialHoop = initialHoop;
 
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -46,15 +42,7 @@ class LoseBoundaryImage extends Physics.Arcade.Image {
 
 
     private onHoopEnter(hoop : BasketballHoop) : void {
-        if (hoop != this.initialHoop) {
-            this.setY(hoop.y + this.offsetY);
-            this.isFirstHoop = false;
-        }
-
-    }
-
-    public getIsFirstHoop() : boolean {
-        return this.isFirstHoop;
+        this.setY(hoop.y + this.offsetY);
     }
 
 }
