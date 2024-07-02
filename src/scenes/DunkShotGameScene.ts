@@ -16,6 +16,7 @@ import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/LoseBoundaryImage";
 import GameStateManager from "../managers/GameStateManager";
 import ScoreManager from "../managers/ScoreManager";
+import ScorePopupText from "../entities/scores/ScorePopupText";
 
 class DunkShotGameScene extends Scene {
 
@@ -152,6 +153,11 @@ class DunkShotGameScene extends Scene {
             scoreText.updateScore(totalScore);
             console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
         });
+
+
+        let scorePopupText = new ScorePopupText(this, this.ball, scoreCounter);
+
+
 
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , hoopSpawner, hoop1);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {

@@ -8,6 +8,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     private isBounceRing : boolean = false;
     private isBounceWall : boolean = false;
 
+    private bounceCount : number = 0;
     private prefectCount : number = 0;
 
     public readonly SCORE_UPDATE_EVENT : string = 'scoreUpdate';
@@ -51,7 +52,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     private resetBounceCount() : void {
         this.isBounceWall = false;
 
-    
+        this.bounceCount = 0;
     }
 
 
@@ -61,6 +62,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
 
     private setBounceWall() : void {
         this.isBounceWall = true;
+        this.bounceCount++;
     }
     
     
