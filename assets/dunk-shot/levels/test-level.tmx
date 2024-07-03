@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="61">
+ <editorsettings>
+  <export target="test-level..tmj" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="Hoop.tsx"/>
+ <objectgroup id="4" name="Object Layer 1">
+  <object id="51" gid="8" x="422" y="5397" width="196" height="113">
+   <properties>
+    <property name="IsBegin" value="1"/>
+   </properties>
+  </object>
+  <object id="52" gid="8" x="1062" y="4861" width="196" height="113"/>
+  <object id="54" gid="8" x="90" y="4425" width="196" height="113"/>
+  <object id="56" gid="8" x="634" y="3429" width="196" height="113">
+   <properties>
+    <property name="IsEnd" value="1"/>
+   </properties>
+  </object>
+  <object id="60" name="Start Position" x="486" y="5152" width="72" height="66"/>
+ </objectgroup>
+</map>

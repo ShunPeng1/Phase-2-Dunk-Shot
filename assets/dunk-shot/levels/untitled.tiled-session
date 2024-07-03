@@ -1,0 +1,25 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Hoop.tsx": {
+            "dynamicWrapping": true
+        }
+    },
+    "last.exportedFilePath": "D:/Sun Studio/Phase-2/assets/dunk-shot/levels",
+    "last.imagePath": "D:/Sun Studio/Phase-2/assets/dunk-shot/images/baskets",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}
