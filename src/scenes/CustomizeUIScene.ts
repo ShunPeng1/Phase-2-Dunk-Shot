@@ -34,7 +34,7 @@ class CustomizeUIScene extends Phaser.Scene {
         let backButton = new UiImageButton(this, 40, 15, AssetManager.MASKS_LEFT_TRIANGLE_KEY);
         backButton.setOrigin(0, 0);
         backButton.setScale(0.6);
-        backButton.setOnActiveCallback(() => {
+        backButton.addOnPressDownCallback(() => {
             console.log("Back button is active");
             this.gameStateManager.loadPreviousUI();
         });
@@ -46,7 +46,7 @@ class CustomizeUIScene extends Phaser.Scene {
 
         adButton.setScale(0.6);
 
-        adButton.setOnActiveCallback(() => {
+        adButton.addOnPressDownCallback(() => {
             console.log("Ad button is active");
         });
 

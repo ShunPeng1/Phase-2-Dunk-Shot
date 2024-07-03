@@ -20,7 +20,7 @@ class DunkShotGameUIScene extends Phaser.Scene {
     create() {
         let pauseButton = new UiImageButton(this, 50, 50, AssetManager.PAUSE_BUTTON_KEY);
         pauseButton.setScale(1);
-        pauseButton.setOnActiveCallback(() => {
+        pauseButton.addOnPressDownCallback(() => {
             this.gameStateManager.loadPauseUI();
         });
 

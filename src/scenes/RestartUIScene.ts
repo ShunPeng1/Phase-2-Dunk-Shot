@@ -35,7 +35,7 @@ class RestartUIScene extends Scene {
         
         let restartButton = new UiImageButton(this, 300, 550, AssetManager.RESTART_BUTTON_KEY);
         restartButton.setScale(0.6);
-        restartButton.setOnActiveCallback(() => {
+        restartButton.addOnPressDownCallback(() => {
             this.gameStateManager.loadGame();
         });
 

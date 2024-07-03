@@ -30,7 +30,7 @@ class PauseUIScene extends Scene{
 
         const homepageButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.HOMEPAGE_WIDE_BUTTON_KEY);
         homepageButton.setScale(0.8);
-        homepageButton.setOnActiveCallback(() => {
+        homepageButton.addOnPressDownCallback(() => {
             this.gameStateManager.loadGame();
         });
 
@@ -39,7 +39,7 @@ class PauseUIScene extends Scene{
 
         const skinButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 50, AssetManager.SKIN_WIDE_BUTTON_KEY);
         skinButton.setScale(0.8);
-        skinButton.setOnActiveCallback(() => {
+        skinButton.addOnPressDownCallback(() => {
             this.gameStateManager.loadCustomizeUI();
         });
 
@@ -48,7 +48,7 @@ class PauseUIScene extends Scene{
         
         const resumeButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 + 100 , AssetManager.RESUME_WIDE_BUTTON_KEY);
         resumeButton.setScale(0.8);
-        resumeButton.setOnActiveCallback(() => {
+        resumeButton.addOnPressDownCallback(() => {
             this.gameStateManager.loadGameUI();
         });
 

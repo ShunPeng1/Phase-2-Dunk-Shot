@@ -4,6 +4,7 @@ import UiImage from "../ultilities/ui/UiImage";
 import MainMenuInputHandler from "../input-handlers/MainMenuInputHandler";
 import GameStateManager from "../managers/GameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiTweenUtilities from "../ultilities/ui/UiTweenUtilities";
 
 class MainMenuUIScene extends Scene {
     private gameStateManager : GameStateManager;
@@ -32,21 +33,31 @@ class MainMenuUIScene extends Scene {
         
         let challengeButton = new UiImageButton(this, 350, 650, AssetManager.CHALENGES_BUTTON_KEY);
         
+        let challengeButtonText = this.add.text(challengeButton.x - 7, challengeButton.y + 40, 'CHALLENGES', { font: 'bold 20px Arial' }).setOrigin(0.5);
+        challengeButton.add(challengeButtonText);
         challengeButton.setScale(0.7);
-        challengeButton.setOnActiveCallback(() => {
+        UiTweenUtilities.applyButtonTweens(challengeButton);
+
+        challengeButton.addOnPressUpCallback(() => {
             this.gameStateManager.unloadGame();
             this.scene.start(AssetManager.CHALLENGE_MENU_SCENE);
         });
-        let challengeButtonText = this.add.text(challengeButton.x - 7, challengeButton.y + 28, 'CHALLENGES', { font: 'bold 12px Arial' }).setOrigin(0.5);
-
         
+        
+        // Create a button background
         let customizeButton = new UiImageButton(this, 500, 650, AssetManager.CUSTOMIZE_BUTTON_KEY);
+        
+
+        UiTweenUtilities.applyButtonTweens(customizeButton);
+
+        let customizeButtonText = new Phaser.GameObjects.Text(this, customizeButton.x - 7, customizeButton.y + 40, ' CUSTOMIZE', { font: 'bold 20px Arial' }).setOrigin(0.5);
+    
+        customizeButton.add(customizeButtonText);
+
         customizeButton.setScale(0.7);
-        customizeButton.setOnActiveCallback(() => {
+        customizeButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadCustomizeUI();
         });
-
-        let customizeButtonText = this.add.text(customizeButton.x - 7, customizeButton.y + 28, ' CUSTOMIZE', { font: 'bold 12px Arial' }).setOrigin(0.5);
     }
     
 }

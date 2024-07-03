@@ -31,14 +31,14 @@ class ChallengeMenuScene extends Scene{
         backButton.setScale(0.6);
         backButton.setOrigin(0, 0);
 
-        backButton.setOnActiveCallback(() => {
+        backButton.addOnPressDownCallback(() => {
             this.scene.start(AssetManager.DUNK_SHOT_GAME_SCENE);
         });
 
         
         let newBallChallengeButton = new UiImageButton(this, width/2, 150, AssetManager.MASKS_186_KEY);
         newBallChallengeButton.setScale(0.7);
-        newBallChallengeButton.setOnActiveCallback(() => {
+        newBallChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
@@ -52,28 +52,28 @@ class ChallengeMenuScene extends Scene{
 
         let limitTimeChallengeButton = new UiImageButton(this, width/2, 330, AssetManager.MASKS_186_KEY);
         limitTimeChallengeButton.setScale(0.6);
-        limitTimeChallengeButton.setOnActiveCallback(() => {
+        limitTimeChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
 
         let achievementChallengeButton = new UiImageButton(this, width/2, 330 + 130, AssetManager.MASKS_186_KEY);
         achievementChallengeButton.setScale(0.6);
-        achievementChallengeButton.setOnActiveCallback(() => {
+        achievementChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
 
         let bounceChallengeButton = new UiImageButton(this, width/2,  330 + 130 * 2, AssetManager.MASKS_186_KEY);
         bounceChallengeButton.setScale(0.6);
-        bounceChallengeButton.setOnActiveCallback(() => {
+        bounceChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
         
         let accurateChallengeButton = new UiImageButton(this, width/2,  330 + 130 * 3, AssetManager.MASKS_186_KEY);
         accurateChallengeButton.setScale(0.6);
-        accurateChallengeButton.setOnActiveCallback(() => {
+        accurateChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 

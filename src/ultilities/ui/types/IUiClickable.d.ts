@@ -1,8 +1,8 @@
 interface IUiClickable {
 
     isClicked: boolean;
-    enterActiveState(): void;
-    enterUnactiveState(): void;
+    enterPressDownState(): void;
+    enterPressUpState(): void;
 }
 
 export default IUiClickable;

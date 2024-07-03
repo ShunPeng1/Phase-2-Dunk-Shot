@@ -2,69 +2,54 @@ import UiImage from "./UiImage";
 import IUiClickable from "./types/IUiClickable";
 import IUiHoverable from "./types/IUiHoverable";
 
-
-class UiImageButton extends UiImage implements IUiClickable, IUiHoverable{
+class UiImageButton extends UiImage implements IUiClickable, IUiHoverable {
     public isClicked: boolean;
     public isHovered: boolean;
-    private onActiveCallback?: () => void;
-    private onUnactiveCallback?: () => void;
-    private onHoverCallback?: () => void;
-    private onRestCallback?: () => void;
+    private onActiveCallbacks: Array<() => void> = [];
+    private onUnactiveCallbacks: Array<() => void> = [];
+    private onHoverCallbacks: Array<() => void> = [];
+    private onRestCallbacks: Array<() => void> = [];
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined, onActiveCallback?: () => void, onUnactiveCallback?: () => void, onHoverCallback?: () => void, onRestCallback?: () => void) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, frame?: string | number | undefined) {
         super(scene, x, y, texture, frame);
         this.isClicked = false;
         this.setInteractive();
-        this.on('pointerdown', () => this.enterActiveState());
-        this.on('pointerup', () => this.enterUnactiveState());
+        this.on('pointerdown', () => this.enterPressDownState());
+        this.on('pointerup', () => this.enterPressUpState());
         this.on('pointerover', () => this.enterHoverState());
         this.on('pointerout', () => this.enterRestState());
-
-        // Store callbacks
-        this.onActiveCallback = onActiveCallback;
-        this.onUnactiveCallback = onUnactiveCallback;
-        this.onHoverCallback = onHoverCallback;
-        this.onRestCallback = onRestCallback;
     }
 
-    public enterActiveState(): void {
-        if (this.onActiveCallback) {
-            this.onActiveCallback();
-        }
+    public enterPressDownState(): void {
+        this.onActiveCallbacks.forEach(callback => callback());
     }
 
-    public enterUnactiveState(): void {
-        if (this.onUnactiveCallback) {
-            this.onUnactiveCallback();
-        }
+    public enterPressUpState(): void {
+        this.onUnactiveCallbacks.forEach(callback => callback());
     }
 
     public enterHoverState(): void {
-        if (this.onHoverCallback) {
-            this.onHoverCallback();
-        }
+        this.onHoverCallbacks.forEach(callback => callback());
     }
 
     public enterRestState(): void {
-        if (this.onRestCallback) {
-            this.onRestCallback();
-        }
+        this.onRestCallbacks.forEach(callback => callback());
     }
 
-    public setOnActiveCallback(callback: () => void): void {
-        this.onActiveCallback = callback;
+    public addOnPressDownCallback(callback: () => void): void {
+        this.onActiveCallbacks.push(callback);
     }
-    
-    public setOnUnactiveCallback(callback: () => void): void {
-        this.onUnactiveCallback = callback;
+
+    public addOnPressUpCallback(callback: () => void): void {
+        this.onUnactiveCallbacks.push(callback);
     }
-    
-    public setOnHoverCallback(callback: () => void): void {
-        this.onHoverCallback = callback;
+
+    public addOnHoverCallback(callback: () => void): void {
+        this.onHoverCallbacks.push(callback);
     }
-    
-    public setOnRestCallback(callback: () => void): void {
-        this.onRestCallback = callback;
+
+    public addOnRestCallback(callback: () => void): void {
+        this.onRestCallbacks.push(callback);
     }
 }
 
