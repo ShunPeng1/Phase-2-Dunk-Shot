@@ -16,14 +16,6 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     
     private calculateScore(hoop : BasketballHoop, perfectCount : number, bounceCount : number, isBounceWall : boolean, isBounceRing : boolean) : void {
         
-        if (isBounceRing) {
-            perfectCount = 0;
-        }
-        else{
-            perfectCount++;
-        }
-
-        
         let score = Math.min(1 + perfectCount, 10);
 
         if (isBounceWall) {
