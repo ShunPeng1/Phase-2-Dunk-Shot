@@ -136,13 +136,21 @@ class DunkShotGameInputHandler {
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
         basketballHoop.disableCollision();
         let duration = this.calculateTweenDuration();
+        let power = this.ball.arcadeBody.speed / 1000;
+
         this.ball.stableBall();
         this.ball.bindBall(basketballHoop);
         this.moveBallToHoop(worldPosition, duration, () => {
             internalHoopContainer.add(this.ball);
             this.ball.setPosition(0, 0);
             this.canShoot = true;
+
+            
+            this.resetHoop(basketballHoop, duration, power);
         });
+
+        
+
     }
 
     private calculateTweenDuration(): number {
@@ -158,7 +166,48 @@ class DunkShotGameInputHandler {
             ease: 'Power2.easeInOut',
             onComplete: onComplete
         });
+
+        
+        this.scene.tweens.add({
+            targets: this.ball.body,
+            angularVelocity: 0,
+            duration: duration, 
+            ease: 'Sine.easeOut',
+        });
     }
+
+    private resetHoop(basketballHoop: BasketballHoop, duration : number, power : number) {        
+
+        //Tween for setting hoop's rotation to 0
+        this.scene.tweens.add({
+            targets: basketballHoop,
+            values: { from : basketballHoop.getRotation(), to: 0},
+            duration: duration, // Adjust duration as needed
+            ease: 'Quad.easeOut',
+
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                basketballHoop.setRotation(value);
+            }
+        });
+
+
+        const originalScale = basketballHoop.getCurrentNetScale();
+        const maxScale = originalScale * (1+power); // Example scale factor
+
+        this.scene.tweens.add({
+            targets: basketballHoop,
+            values: { from: originalScale, to: maxScale },
+            yoyo: true, // Goes back to original scale
+            ease: 'Sine.easeInOut', // This can be adjusted for different effects
+            duration: duration, // Duration of one cycle
+            onUpdate: (tween) => {
+                const value = tween.getValue();
+                basketballHoop.setNetScale(value);
+            }
+        });
+    }
+
 
     public onHoopExit(basketballHoop : BasketballHoop): void {
         //console.log("Hoop exited");
