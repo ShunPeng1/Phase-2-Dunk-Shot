@@ -24,7 +24,6 @@ class StarText extends Phaser.GameObjects.Text {
         } else {
             // Handle the undefined case, e.g., set text to "0" or log an error
             this.setText("0"); // Default value if score is undefined
-            console.error("Attempted to updateStar with undefined score");
         }
     }
 
