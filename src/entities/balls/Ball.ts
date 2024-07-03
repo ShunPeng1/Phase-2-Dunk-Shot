@@ -21,6 +21,8 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly WALL_COLLIDE_EVENT = "collide with wall";
     public readonly NET_COLLIDE_EVENT = "collide with net";
     public readonly COLLECTIBLE_OVERLAP_EVENT = "collide with collectible";
+    public readonly BALL_PUSH_EVENT = "ball push";
+
 
     private readonly BLOCKED_COOLDOWN = 300;
 
@@ -139,6 +141,10 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     
         // Set the angular velocity. Adjust the multiplier as needed to control the rotation speed
         this.setAngularVelocity(angularVelocityDirection * Math.abs(angularForce));
+
+        // Emit the BALL_PUSH_EVENT event with relevant data
+        this.emit(this.BALL_PUSH_EVENT, force, angularForce, angle );
+
     }
 
     public stableBall(): void{

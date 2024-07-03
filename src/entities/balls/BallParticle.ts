@@ -9,8 +9,6 @@ class BallParticle extends GameObjects.GameObject {
     private fireTrail: FireTrail;
     private smokeTrail: SmokeTrail;
 
-    private perfectCount : number = 0;
-    private isBounceRing : boolean = false;
 
     constructor(scene: Phaser.Scene, type: string, ball: Ball, spawner: HoopSpawner, follower : GameObjects.Graphics){
         
@@ -34,32 +32,22 @@ class BallParticle extends GameObjects.GameObject {
 
     
 
-    private countPerfect(hoop : BasketballHoop) : void {
+    private countPerfect(hoop : BasketballHoop, perfectCount : number) : void {
         
-        if (this.isBounceRing) {
-            this.perfectCount = 0;
-        }
-        else{
-            this.perfectCount++;
-        }
 
-        if (this.perfectCount == 2) {
+        if (perfectCount == 2) {
             this.smokeTrail.start();
             
         }
-        else if (this.perfectCount > 2) {
+        else if (perfectCount > 2) {
             this.fireTrail.start();
             this.smokeTrail.stop();
         }
         
 
-        
-        this.isBounceRing = false;
     }
 
     private setBounceRing() : void {
-        this.isBounceRing = true;
-
         this.fireTrail.stop();
         this.smokeTrail.stop();
 
