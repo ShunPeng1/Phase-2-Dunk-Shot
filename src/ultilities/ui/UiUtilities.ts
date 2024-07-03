@@ -1,15 +1,16 @@
 import UiImageButton from "./UiImageButton";
 
-class UiTweenUtilities {
+class UiUtilities {
 
-    static applyButtonTweens(button: UiImageButton, scaleDownFactor: number = 0.95, duration: number = 100): void {
+    static applyButtonScaleTweens(button: UiImageButton, scaleDownFactor: number = 0.95, duration: number = 100): void {
         // Scale down on pointer down
 
-
+        let isScaled = false;
         button.addOnPressDownCallback(() => {
 
             const currentScaleX = button.container.scaleX;
             const currentScaleY = button.container.scaleY;
+            isScaled = true;
 
             button.scene.tweens.add({
                 targets: button.container,
@@ -22,9 +23,11 @@ class UiTweenUtilities {
 
         // Return to normal scale on pointer up or hover out
         const returnToNormalScale = () => {
-            
+            if (!isScaled) return;
+
             const currentScaleX = button.container.scaleX;
             const currentScaleY = button.container.scaleY;
+            isScaled = false;
 
             button.scene.tweens.add({
                 targets: button.container,
@@ -35,6 +38,8 @@ class UiTweenUtilities {
             });
         };
 
+        
+
         button.addOnPressUpCallback(returnToNormalScale);
         button.addOnRestCallback(returnToNormalScale);
     
@@ -42,4 +47,4 @@ class UiTweenUtilities {
 }
 
 
-export default UiTweenUtilities;
+export default UiUtilities;

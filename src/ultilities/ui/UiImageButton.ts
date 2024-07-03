@@ -21,18 +21,27 @@ class UiImageButton extends UiImage implements IUiClickable, IUiHoverable {
     }
 
     public enterPressDownState(): void {
+        this.isClicked = true;
         this.onActiveCallbacks.forEach(callback => callback());
     }
 
     public enterPressUpState(): void {
+        if (!this.isClicked) return;
+
+        this.isClicked = false;
         this.onUnactiveCallbacks.forEach(callback => callback());
     }
 
     public enterHoverState(): void {
+        this.isHovered = true;
         this.onHoverCallbacks.forEach(callback => callback());
     }
 
     public enterRestState(): void {
+        if (!this.isHovered) return;
+
+        this.isHovered = false;
+
         this.onRestCallbacks.forEach(callback => callback());
     }
 

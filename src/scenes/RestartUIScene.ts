@@ -4,6 +4,7 @@ import AssetManager from "../managers/AssetManager";
 import ScoreManager from "../managers/ScoreManager";
 import GameStateManager from "../managers/GameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiUtilities from "../ultilities/ui/UiUtilities";
 
 class RestartUIScene extends Scene {
     private gameStateManager: GameStateManager;
@@ -32,12 +33,14 @@ class RestartUIScene extends Scene {
 
         
 
-        
+    
         let restartButton = new UiImageButton(this, 300, 550, AssetManager.RESTART_BUTTON_KEY);
         restartButton.setScale(0.6);
-        restartButton.addOnPressDownCallback(() => {
+        restartButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadGame();
         });
+
+        UiUtilities.applyButtonScaleTweens(restartButton);
 
 
 

@@ -4,7 +4,7 @@ import UiImage from "../ultilities/ui/UiImage";
 import MainMenuInputHandler from "../input-handlers/MainMenuInputHandler";
 import GameStateManager from "../managers/GameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
-import UiTweenUtilities from "../ultilities/ui/UiTweenUtilities";
+import UiUtilities from "../ultilities/ui/UiUtilities";
 
 class MainMenuUIScene extends Scene {
     private gameStateManager : GameStateManager;
@@ -36,7 +36,7 @@ class MainMenuUIScene extends Scene {
         let challengeButtonText = this.add.text(challengeButton.x - 7, challengeButton.y + 40, 'CHALLENGES', { font: 'bold 20px Arial' }).setOrigin(0.5);
         challengeButton.add(challengeButtonText);
         challengeButton.setScale(0.7);
-        UiTweenUtilities.applyButtonTweens(challengeButton);
+        UiUtilities.applyButtonScaleTweens(challengeButton);
 
         challengeButton.addOnPressUpCallback(() => {
             this.gameStateManager.unloadGame();
@@ -48,7 +48,7 @@ class MainMenuUIScene extends Scene {
         let customizeButton = new UiImageButton(this, 500, 650, AssetManager.CUSTOMIZE_BUTTON_KEY);
         
 
-        UiTweenUtilities.applyButtonTweens(customizeButton);
+        UiUtilities.applyButtonScaleTweens(customizeButton);
 
         let customizeButtonText = new Phaser.GameObjects.Text(this, customizeButton.x - 7, customizeButton.y + 40, ' CUSTOMIZE', { font: 'bold 20px Arial' }).setOrigin(0.5);
     

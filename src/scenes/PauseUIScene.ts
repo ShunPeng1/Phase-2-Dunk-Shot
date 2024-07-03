@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
 import GameStateManager from "../managers/GameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiUtilities from "../ultilities/ui/UiUtilities";
 
 class PauseUIScene extends Scene{
     private gameStateManager: GameStateManager;
@@ -29,31 +30,35 @@ class PauseUIScene extends Scene{
 
 
         const homepageButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.HOMEPAGE_WIDE_BUTTON_KEY);
-        homepageButton.setScale(0.8);
-        homepageButton.addOnPressDownCallback(() => {
+        homepageButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadGame();
         });
 
-        const homepageText = this.add.text(Number(width) / 2 + 30, Number(height) / 2 - 200, 'HOMEPAGE', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
-
+        const homepageText = this.add.text(homepageButton.x + 30, homepageButton.y, 'HOMEPAGE', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
+        homepageButton.add(homepageText);
+        homepageButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(homepageButton);
+        
 
         const skinButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 50, AssetManager.SKIN_WIDE_BUTTON_KEY);
-        skinButton.setScale(0.8);
-        skinButton.addOnPressDownCallback(() => {
+        skinButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadCustomizeUI();
         });
 
-        const skinText = this.add.text(Number(width) / 2 + 30, Number(height) / 2 - 50, 'SKIN', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
+        const skinText = this.add.text(skinButton.x + 30, skinButton.y, 'SKIN', { font: 'bold 30px Arial', color: '#ffffff' }).setOrigin(0.5);
+        skinButton.add(skinText);
+        skinButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(skinButton);
 
-        
-        const resumeButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 + 100 , AssetManager.RESUME_WIDE_BUTTON_KEY);
-        resumeButton.setScale(0.8);
-        resumeButton.addOnPressDownCallback(() => {
+        const resumeButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 + 100, AssetManager.RESUME_WIDE_BUTTON_KEY);
+        resumeButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadGameUI();
         });
 
-        const resumeText = this.add.text(Number(width) / 2 + 30, Number(height) / 2 + 100, 'RESSUME', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
-
+        const resumeText = this.add.text(resumeButton.x + 30, resumeButton.y, 'RESUME', { font: 'bold 30px Arial', color: '#ffffff' }).setOrigin(0.5);
+        resumeButton.add(resumeText);
+        resumeButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(resumeButton);
 
 
     }
