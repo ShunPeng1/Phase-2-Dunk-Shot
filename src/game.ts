@@ -6,6 +6,7 @@ import DunkShotGameUIScene from "./scenes/DunkShotGameUIScene";
 import PauseUIScene from "./scenes/PauseUIScene";
 import CustomizeState from "./managers/game-states/CustomizeState";
 import CustomizeUIScene from "./scenes/CustomizeUIScene";
+import ChallengeMenuScene from "./scenes/ChallengeMenuScene";
 
 
 class Game {
@@ -24,7 +25,16 @@ class Game {
                 width: gameWidth,
                 height: gameHeight
             },
-            scene: [LoadingScene, DunkShotGameScene, MainMenuUIScene, RestartUIScene, DunkShotGameUIScene, PauseUIScene, CustomizeUIScene],
+            scene: [
+                LoadingScene, 
+                DunkShotGameScene, 
+                MainMenuUIScene, 
+                RestartUIScene, 
+                DunkShotGameUIScene, 
+                PauseUIScene, 
+                CustomizeUIScene,
+                ChallengeMenuScene
+            ],
             physics: {
                 default: 'arcade',
                 arcade: {

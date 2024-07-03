@@ -39,7 +39,7 @@ class DunkShotGameScene extends Scene {
     
     
     constructor() {
-        super({ key: AssetManager.GAME_SCENE });
+        super({ key: AssetManager.DUNK_SHOT_GAME_SCENE });
     }
 
     preload() {

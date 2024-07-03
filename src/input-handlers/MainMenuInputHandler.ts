@@ -13,7 +13,7 @@ class MainMenuInputHandler {
     constructor(scene: Scene, gameStateManager: GameStateManager) {
         
         this.scene = scene;
-        this.gameScene = this.scene.scene.get(AssetManager.GAME_SCENE);
+        this.gameScene = this.scene.scene.get(AssetManager.DUNK_SHOT_GAME_SCENE);
         this.gameStateManager = gameStateManager;
 
         this.onPointerDownInMainMenuScene = () => this.stopMainMenuUI(); // Initialize the event handler

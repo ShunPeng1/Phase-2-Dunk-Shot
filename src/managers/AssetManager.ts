@@ -633,7 +633,7 @@ class AssetManager {
 
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";
-    public static readonly GAME_SCENE: string = "GameScene";
+    public static readonly DUNK_SHOT_GAME_SCENE: string = "DunkShotGameScene";
 
 
     public static readonly MAIN_MENU_UI_SCENE: string = "MainMenuUIScene";
@@ -641,6 +641,8 @@ class AssetManager {
     public static readonly DUNK_SHOT_GAME_UI_SCENE: string = "GameUIScene";
     public static readonly PAUSE_UI_SCENE: string = "PauseUIScene";
     public static readonly CUSTOMIZE_UI_SCENE: string = "CustomizeUIScene";
+
+    public static readonly CHALLENGE_MENU_SCENE: string = "ChallengeMenuScene";
     
     // Inventory keys
     public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";

@@ -45,10 +45,13 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
 
     public loadGame() {
         this.loadMainMenuUI();
-        this.scene.scene.stop(AssetManager.GAME_SCENE); // Stop the current game scene
-        this.scene.scene.start(AssetManager.GAME_SCENE); // Start the game scene again, effectively restarting it
+        this.scene.scene.stop(AssetManager.DUNK_SHOT_GAME_SCENE); // Stop the current game scene
+        this.scene.scene.start(AssetManager.DUNK_SHOT_GAME_SCENE); // Start the game scene again, effectively restarting it
     }
     
+    public unloadGame() {
+        this.scene.scene.stop(AssetManager.DUNK_SHOT_GAME_SCENE);
+    }
 
     public loadMainMenuUI(): void {
         this.stateMachine.setToState(this.mainMenuState, null);

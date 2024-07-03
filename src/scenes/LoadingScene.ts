@@ -371,7 +371,7 @@ class LoadingScene extends Scene {
     }
 
     private nextScene() : void {
-        this.scene.start(AssetManager.GAME_SCENE);
+        this.scene.start(AssetManager.DUNK_SHOT_GAME_SCENE);
     }
 }
 

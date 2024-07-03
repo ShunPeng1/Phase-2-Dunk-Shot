@@ -34,7 +34,8 @@ class MainMenuUIScene extends Scene {
         
         challengeButton.setScale(0.7);
         challengeButton.setOnActiveCallback(() => {
-            console.log("Challenge button is active");
+            this.gameStateManager.unloadGame();
+            this.scene.start(AssetManager.CHALLENGE_MENU_SCENE);
         });
         let challengeButtonText = this.add.text(challengeButton.x - 7, challengeButton.y + 28, 'CHALLENGES', { font: 'bold 12px Arial' }).setOrigin(0.5);
 
@@ -42,7 +43,6 @@ class MainMenuUIScene extends Scene {
         let customizeButton = new UiImageButton(this, 500, 650, AssetManager.CUSTOMIZE_BUTTON_KEY);
         customizeButton.setScale(0.7);
         customizeButton.setOnActiveCallback(() => {
-            console.log("Customize button is active");
             this.gameStateManager.loadCustomizeUI();
         });
 
