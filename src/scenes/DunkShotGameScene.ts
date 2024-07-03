@@ -3,7 +3,7 @@ import AssetManager from "../managers/AssetManager";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 
 import DunkShotGameInputHandler from "../input-handlers/DunkShotGameInputHandler";
-import Ball from "../entities/Ball";
+import Ball from "../entities/balls/Ball";
 import HoopSpawner from "../entities/hoops/HoopSpawner";
 import HoopSpawnSet from "../entities/hoops/HoopSpawnSet";
 import HoopSpawnInfo from "../entities/hoops/HoopSpawnInfo";
@@ -23,6 +23,8 @@ import CollectibleSpawnInfo from "../entities/collectibles/CollectibleSpawnInfo"
 import GoldenStarCollectible from "../entities/collectibles/GoldenStarCollectible";
 import InventoryManager from "../managers/InventoryManager";
 import WallBoundaryImage from "../entities/boundaries/WallBoundaryImage";
+import FireTrail from "../entities/particles/FireTrail";
+import BallParticle from "../entities/balls/BallParticle";
 
 class DunkShotGameScene extends Scene {
 
@@ -59,7 +61,9 @@ class DunkShotGameScene extends Scene {
         this.setupCamera();
         this.setupStarManagement();
         this.setupScoreManagement();
+        this.setupParticle();
     }
+
     
     private setupPhysics() : void {
         this.physics.world.setFPS(this.PHYSICS_FPS);
@@ -79,6 +83,7 @@ class DunkShotGameScene extends Scene {
         let camera = this.cameras.main;
         camera.setBackgroundColor('#e8e8e8');
         camera.zoom = camera.width / AssetManager.WORLD_WIDTH;
+        //camera.zoom = 0.5
 
         // Camera follow settings
         camera.setPosition(0, 0);
@@ -113,6 +118,9 @@ class DunkShotGameScene extends Scene {
         this.invisibleBallFollower = this.add.graphics();
         this.invisibleBallFollower.setVisible(false);
         this.invisibleBallFollower.setY(600);
+
+
+       
     }
 
     private setupHoops() : void {
@@ -267,6 +275,12 @@ class DunkShotGameScene extends Scene {
             }
         });
 
+    }
+
+    private setupParticle() : void {
+        let ballParticle = new BallParticle(this,"", this.ball, this.hoopSpawner, this.invisibleBallFollower);
+        
+        this.add.existing(ballParticle);
     }
 
     update() {

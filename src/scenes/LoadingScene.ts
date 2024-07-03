@@ -163,7 +163,7 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.MASKS_200_KEY, AssetManager.MASKS_200_IMAGE);
         this.load.image(AssetManager.MASKS_201_KEY, AssetManager.MASKS_201_IMAGE);
         this.load.image(AssetManager.MASKS_209_KEY, AssetManager.MASKS_209_IMAGE);
-        this.load.image(AssetManager.MASKS_21_KEY, AssetManager.MASKS_21_IMAGE);
+        this.load.image(AssetManager.MASKS_FIRE_KEY, AssetManager.MASKS_FIRE_IMAGE);
         this.load.image(AssetManager.MASKS_210_KEY, AssetManager.MASKS_210_IMAGE);
         this.load.image(AssetManager.MASKS_212_KEY, AssetManager.MASKS_212_IMAGE);
         this.load.image(AssetManager.MASKS_220_KEY, AssetManager.MASKS_220_IMAGE);
@@ -171,12 +171,12 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.MASKS_23_KEY, AssetManager.MASKS_23_IMAGE);
         this.load.image(AssetManager.MASKS_27_KEY, AssetManager.MASKS_27_IMAGE);
         this.load.image(AssetManager.MASKS_37_KEY, AssetManager.MASKS_37_IMAGE);
-        this.load.image(AssetManager.MASKS_39_KEY, AssetManager.MASKS_39_IMAGE);
+        this.load.image(AssetManager.MASKS_BIG_SMOKE_KEY, AssetManager.MASKS_BIG_SMOKE_IMAGE);
         this.load.image(AssetManager.MASKS_42_KEY, AssetManager.MASKS_42_IMAGE);
         this.load.image(AssetManager.MASKS_5_KEY, AssetManager.MASKS_5_IMAGE);
         this.load.image(AssetManager.MASKS_50_KEY, AssetManager.MASKS_50_IMAGE);
         this.load.image(AssetManager.MASKS_53_KEY, AssetManager.MASKS_53_IMAGE);
-        this.load.image(AssetManager.MASKS_59_KEY, AssetManager.MASKS_59_IMAGE);
+        this.load.image(AssetManager.MASKS_SMALL_SMOKE_KEY, AssetManager.MASKS_SMALL_SMOKE_IMAGE);
         this.load.image(AssetManager.MASKS_6_KEY, AssetManager.MASKS_6_IMAGE);
         this.load.image(AssetManager.MASKS_63_KEY, AssetManager.MASKS_63_IMAGE);
         this.load.image(AssetManager.MASKS_65_KEY, AssetManager.MASKS_65_IMAGE);

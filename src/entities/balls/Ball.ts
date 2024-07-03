@@ -1,9 +1,9 @@
 import { GameObjects } from "phaser";
-import BoundaryImage from "./boundaries/BoundaryImage";
-import BasketballHoop from "./hoops/BasketballHoop";
-import InternalHoopArcadeImage from "./hoops/InternalHoopArcadeImage";
-import RingHoopArcadeImage from "./hoops/RingHoopArcadeImage";
-import NetArcadeImage from "./hoops/NetArcardImage";
+import BoundaryImage from "../boundaries/BoundaryImage";
+import BasketballHoop from "../hoops/BasketballHoop";
+import InternalHoopArcadeImage from "../hoops/InternalHoopArcadeImage";
+import RingHoopArcadeImage from "../hoops/RingHoopArcadeImage";
+import NetArcadeImage from "../hoops/NetArcardImage";
 
 class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly arcadeBody: Phaser.Physics.Arcade.Body;

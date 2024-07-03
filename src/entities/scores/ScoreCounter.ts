@@ -1,5 +1,5 @@
 import ScoreManager from "../../managers/ScoreManager";
-import Ball from "../Ball";
+import Ball from "../balls/Ball";
 import BasketballHoop from "../hoops/BasketballHoop";
 import HoopSpawner from "../hoops/HoopSpawner";
 
@@ -9,7 +9,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     private isBounceWall : boolean = false;
 
     private bounceCount : number = 0;
-    private prefectCount : number = 0;
+    private perfectCount : number = 0;
 
     public readonly SCORE_UPDATE_EVENT : string = 'scoreUpdate';
 
@@ -25,14 +25,14 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
     private calculateScore(hoop : BasketballHoop) : void {
         
         if (this.isBounceRing) {
-            this.prefectCount = 0;
+            this.perfectCount = 0;
         }
         else{
-            this.prefectCount++;
+            this.perfectCount++;
         }
 
         
-        let score = Math.min(1 + this.prefectCount, 10);
+        let score = Math.min(1 + this.perfectCount, 10);
 
         if (this.isBounceWall) {
             score = score * 2;
@@ -42,7 +42,7 @@ class ScoreCounter extends Phaser.Events.EventEmitter {
 
         let totalScore = ScoreManager.getInstance().getScore();
         
-        this.emit(this.SCORE_UPDATE_EVENT, totalScore, score, this.prefectCount, this.isBounceWall);
+        this.emit(this.SCORE_UPDATE_EVENT, totalScore, score, this.perfectCount, this.isBounceWall);
     
         
         this.isBounceRing = false;

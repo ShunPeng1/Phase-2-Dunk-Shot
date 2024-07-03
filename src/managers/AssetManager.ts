@@ -321,8 +321,8 @@ class AssetManager {
     public static readonly MASKS_201_KEY: string = "masks_201";
     public static readonly MASKS_209_IMAGE: string = AssetManager.MASKS_FOLDER + "209.png";
     public static readonly MASKS_209_KEY: string = "masks_209";
-    public static readonly MASKS_21_IMAGE: string = AssetManager.MASKS_FOLDER + "21.png";
-    public static readonly MASKS_21_KEY: string = "masks_21";
+    public static readonly MASKS_FIRE_IMAGE: string = AssetManager.MASKS_FOLDER + "21.png";
+    public static readonly MASKS_FIRE_KEY: string = "masks_21";
     public static readonly MASKS_210_IMAGE: string = AssetManager.MASKS_FOLDER + "210.png";
     public static readonly MASKS_210_KEY: string = "masks_210";
     public static readonly MASKS_212_IMAGE: string = AssetManager.MASKS_FOLDER + "212.png";
@@ -337,8 +337,8 @@ class AssetManager {
     public static readonly MASKS_27_KEY: string = "masks_27";
     public static readonly MASKS_37_IMAGE: string = AssetManager.MASKS_FOLDER + "37.png";
     public static readonly MASKS_37_KEY: string = "masks_37";
-    public static readonly MASKS_39_IMAGE: string = AssetManager.MASKS_FOLDER + "39.png";
-    public static readonly MASKS_39_KEY: string = "masks_39";
+    public static readonly MASKS_BIG_SMOKE_IMAGE: string = AssetManager.MASKS_FOLDER + "39.png";
+    public static readonly MASKS_BIG_SMOKE_KEY: string = "masks_39";
     public static readonly MASKS_42_IMAGE: string = AssetManager.MASKS_FOLDER + "42.png";
     public static readonly MASKS_42_KEY: string = "masks_42";
     public static readonly MASKS_5_IMAGE: string = AssetManager.MASKS_FOLDER + "5.png";
@@ -347,8 +347,8 @@ class AssetManager {
     public static readonly MASKS_50_KEY: string = "masks_50";
     public static readonly MASKS_53_IMAGE: string = AssetManager.MASKS_FOLDER + "53.png";
     public static readonly MASKS_53_KEY: string = "masks_53";
-    public static readonly MASKS_59_IMAGE: string = AssetManager.MASKS_FOLDER + "59.png";
-    public static readonly MASKS_59_KEY: string = "masks_59";
+    public static readonly MASKS_SMALL_SMOKE_IMAGE: string = AssetManager.MASKS_FOLDER + "59.png";
+    public static readonly MASKS_SMALL_SMOKE_KEY: string = "masks_59";
     public static readonly MASKS_6_IMAGE: string = AssetManager.MASKS_FOLDER + "6.png";
     public static readonly MASKS_6_KEY: string = "masks_6";
     public static readonly MASKS_63_IMAGE: string = AssetManager.MASKS_FOLDER + "63.png";

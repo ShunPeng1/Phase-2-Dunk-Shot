@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import BasketballHoop from "./BasketballHoop";
 import HoopSpawnInfo from "./HoopSpawnInfo";
 import HoopSpawnSet from "./HoopSpawnSet";
-import Ball from "../Ball";
+import Ball from "../balls/Ball";
 import HoopFactory from "./HoopFactory";
 import Collectible from "../collectibles/Collectible";
 import CollectibleFactory from "../collectibles/CollectibleFactory";

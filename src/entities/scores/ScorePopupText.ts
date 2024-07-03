@@ -1,4 +1,4 @@
-import Ball from "../Ball";
+import Ball from "../balls/Ball";
 import ScoreCounter from "./ScoreCounter";
 
 class ScorePopupText {

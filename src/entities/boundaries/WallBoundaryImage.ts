@@ -1,5 +1,5 @@
 import AssetManager from "../../managers/AssetManager";
-import Ball from "../Ball";
+import Ball from "../balls/Ball";
 import BoundaryImage from "./BoundaryImage";
 
 class WallBoundaryImage extends BoundaryImage {

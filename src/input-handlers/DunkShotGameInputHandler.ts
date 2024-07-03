@@ -1,4 +1,4 @@
-import Ball from "../entities/Ball";
+import Ball from "../entities/balls/Ball";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 import ITrajectory from "../entities/trajectories/ITrajectory";
 import DunkShotGameScene from "../scenes/DunkShotGameScene";
