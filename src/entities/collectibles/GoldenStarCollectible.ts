@@ -13,7 +13,7 @@ class GoldenStarCollectible extends Collectible {
     
 
     public collect(collector? : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
-        InventoryManager.getInstance().addItem(AssetManager.GOLDEN_STAR_KEY, 1);
+        InventoryManager.getInstance().addItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY, 1);
         this.disableOverlap();
     }
 

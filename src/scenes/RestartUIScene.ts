@@ -1,10 +1,9 @@
 import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
-import UiImage from "../ui/UiImage";
-import UiImageButton from "../ui/UiImageButton";
-import MainMenuInputHandler from "../input-handlers/MainMenuInputHandler";
+
 import ScoreManager from "../managers/ScoreManager";
 import GameStateManager from "../managers/GameStateManager";
+import UiImageButton from "../ultilities/ui/UiImageButton";
 
 class RestartUIScene extends Scene {
     private gameStateManager: GameStateManager;

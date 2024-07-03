@@ -475,8 +475,8 @@ class AssetManager {
     public static readonly UI_44_KEY: string = "ui_44";
     public static readonly UI_62_IMAGE: string = AssetManager.UI_FOLDER + "62.png";
     public static readonly UI_62_KEY: string = "ui_62";
-    public static readonly UI_75_IMAGE: string = AssetManager.UI_FOLDER + "75.png";
-    public static readonly UI_75_KEY: string = "ui_75";
+    public static readonly UI_AD_WIDE_IMAGE: string = AssetManager.UI_FOLDER + "75.png";
+    public static readonly UI_AD_WIDE_KEY: string = "ui_75";
     public static readonly UI_77_IMAGE: string = AssetManager.UI_FOLDER + "77.png";
     public static readonly UI_77_KEY: string = "ui_77";
     public static readonly UI_8_IMAGE: string = AssetManager.UI_FOLDER + "8.png";
@@ -642,6 +642,11 @@ class AssetManager {
     public static readonly PAUSE_UI_SCENE: string = "PauseUIScene";
     public static readonly CUSTOMIZE_UI_SCENE: string = "CustomizeUIScene";
     
+    // Inventory keys
+    public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";
+    public static readonly BALL_SKIN_INVENTORY_KEY: string = "ball skin";
+
+
 
     // WORLD RESOLUTION
     

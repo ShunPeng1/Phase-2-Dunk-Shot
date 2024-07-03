@@ -1,6 +1,7 @@
 import AssetManager from "../managers/AssetManager";
 import GameStateManager from "../managers/GameStateManager";
-import UiImageButton from "../ui/UiImageButton";
+import UiImageButton from "../ultilities/ui/UiImageButton";
+
 
 class DunkShotGameUIScene extends Phaser.Scene {
     private gameStateManager: GameStateManager;

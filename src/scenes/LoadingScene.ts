@@ -241,7 +241,7 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.UI_4_KEY, AssetManager.UI_4_IMAGE);
         this.load.image(AssetManager.UI_44_KEY, AssetManager.UI_44_IMAGE);
         this.load.image(AssetManager.UI_62_KEY, AssetManager.UI_62_IMAGE);
-        this.load.image(AssetManager.UI_75_KEY, AssetManager.UI_75_IMAGE);
+        this.load.image(AssetManager.UI_AD_WIDE_KEY, AssetManager.UI_AD_WIDE_IMAGE);
         this.load.image(AssetManager.UI_77_KEY, AssetManager.UI_77_IMAGE);
         this.load.image(AssetManager.UI_8_KEY, AssetManager.UI_8_IMAGE);
         this.load.image(AssetManager.UI_84_KEY, AssetManager.UI_84_IMAGE);

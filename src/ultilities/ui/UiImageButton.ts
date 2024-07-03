@@ -2,6 +2,7 @@ import UiImage from "./UiImage";
 import IUiClickable from "./types/IUiClickable";
 import IUiHoverable from "./types/IUiHoverable";
 
+
 class UiImageButton extends UiImage implements IUiClickable, IUiHoverable{
     public isClicked: boolean;
     public isHovered: boolean;

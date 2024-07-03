@@ -223,12 +223,12 @@ class DunkShotGameScene extends Scene {
         starText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
         starText.setScrollFactor(0, 0); // This line makes the score text follow the camera
    
-        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_KEY));
+        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
         
         this.ball.on(this.ball.COLLECTIBLE_OVERLAP_EVENT, (collectible: GoldenStarCollectible) => {
             
             if (collectible instanceof GoldenStarCollectible) {
-                starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_KEY));
+                starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
                 const collectibleEndPosition = new Phaser.Math.Vector2(starText.x + this.cameras.main.scrollX - 45, starText.y + this.cameras.main.scrollY);
                 collectible.createCollectAnimation(new Phaser.Math.Vector2(collectibleEndPosition));
             }

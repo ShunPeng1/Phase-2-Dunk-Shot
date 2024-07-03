@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
-import UiImageButton from "../ui/UiImageButton";
 import AssetManager from "../managers/AssetManager";
 import GameStateManager from "../managers/GameStateManager";
+import UiImageButton from "../ultilities/ui/UiImageButton";
 
 class PauseUIScene extends Scene{
     private gameStateManager: GameStateManager;
