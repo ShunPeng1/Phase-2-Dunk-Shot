@@ -25,6 +25,7 @@ import InventoryManager from "../managers/InventoryManager";
 import WallBoundaryImage from "../entities/boundaries/WallBoundaryImage";
 import FireTrail from "../entities/particles/FireTrail";
 import BallParticle from "../entities/balls/BallParticle";
+import BallSpeaker from "../entities/sounds/BallSpeaker";
 
 class DunkShotGameScene extends Scene {
 
@@ -62,6 +63,7 @@ class DunkShotGameScene extends Scene {
         this.setupStarManagement();
         this.setupScoreManagement();
         this.setupParticle();
+        this.setupSound();
     }
 
     
@@ -281,6 +283,12 @@ class DunkShotGameScene extends Scene {
         let ballParticle = new BallParticle(this,"", this.ball, this.hoopSpawner, this.invisibleBallFollower);
         
         this.add.existing(ballParticle);
+    }
+
+    private setupSound() : void {
+        let ballSpeaker = new BallSpeaker(this, this.ball, this.hoopSpawner);
+
+
     }
 
     update() {

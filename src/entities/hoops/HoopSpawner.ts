@@ -21,12 +21,19 @@ class HoopSpawner {
     private currentHoop: BasketballHoop | null = null;
     private nextHoop: BasketballHoop | null = null;
     
-    private enterNextHoopSubscribers: ((hoop: BasketballHoop) => void)[] = [];
+    private enterNextHoopSubscribers: ((hoop: BasketballHoop, perfectCount : number, bounceCount : number, isBounceWall : boolean, isBounceRing : boolean) => void)[] = [];
     private enterCurrentHoopSubcribers: ((hoop: BasketballHoop) => void)[] = [];
 
     private isFirstHoopExist: boolean = false;
     private collectibleFactory: CollectibleFactory;
 
+
+    // Collision calculation variables
+    private isBounceRing : boolean = false;
+    private isBounceWall : boolean = false;
+
+    private bounceCount : number = 0;
+    private perfectCount : number = 0;
 
     constructor(scene : Scene, ball : Ball, hoopSpawnSet: HoopSpawnSet, hoopFactory : HoopFactory, collectibleFactory : CollectibleFactory, leftBound: number, rightBound: number) {
         this.scene = scene;
@@ -40,27 +47,45 @@ class HoopSpawner {
         this.middleBound = (leftBound + rightBound) / 2;
 
 
-        this.ball.on("internal hoop overlapstart", this.checkEnterNextHoop, this)
+        ball.on(ball.INTERNAL_HOOP_OVERLAP_START_EVENT, this.checkEnterNextHoop, this)
+        ball.on(ball.RING_HOOP_COLLIDE_EVENT, this.setBounceRing.bind(this));
+        ball.on(ball.WALL_COLLIDE_EVENT, this.setBounceWall.bind(this));
     }
 
     private checkEnterNextHoop(enterHoop : BasketballHoop) : void {
         if (this.nextHoop === enterHoop) {
-            this.enterNextHoopSubscribers.forEach(subscriber => subscriber(enterHoop));
+                
+            if (this.isBounceRing) {
+                this.perfectCount = 0;
+            }
+            else{
+                this.perfectCount++;
+            }
             
+            this.enterNextHoopSubscribers.forEach(subscriber => subscriber(enterHoop, this.perfectCount, this.bounceCount, this.isBounceWall, this.isBounceRing));
+            
+            this.isBounceRing = false;
+            this.isBounceWall = false;
+
             this.spawnNextHoop();
             
         }
         else{
+            this.isBounceWall = false;
+
+            this.bounceCount = 0;
+
+
             this.enterCurrentHoopSubcribers.forEach(subscriber => subscriber(enterHoop));
         
         }
     }
     
-    public subscribeToEnterNextHoop(subscriber: (hoop: BasketballHoop) => void): void {
+    public subscribeToEnterNextHoop(subscriber: (hoop: BasketballHoop, perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean) => void): void {
         this.enterNextHoopSubscribers.push(subscriber);
     }
 
-    public unsubscribeFromEnterNextHoop(subscriber: (hoop: BasketballHoop) => void): void {
+    public unsubscribeFromEnterNextHoop(subscriber: (hoop: BasketballHoop, perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean) => void): void {
         this.enterNextHoopSubscribers = this.enterNextHoopSubscribers.filter(sub => sub !== subscriber);
     }
 
@@ -206,6 +231,24 @@ class HoopSpawner {
         }
         return null;
     }
+
+
+    private resetBounceCount() : void {
+        this.isBounceWall = false;
+
+        this.bounceCount = 0;
+    }
+
+
+    private setBounceRing() : void {
+        this.isBounceRing = true;
+    }
+
+    private setBounceWall() : void {
+        this.isBounceWall = true;
+        this.bounceCount++;
+    }
+    
 }
 
 export default HoopSpawner;
