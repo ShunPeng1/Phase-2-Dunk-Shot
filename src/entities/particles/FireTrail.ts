@@ -30,13 +30,17 @@ class FireTrail extends Phaser.GameObjects.GameObject {
         // Smoke emitter configuration
         this.smokeEmitter = new Phaser.GameObjects.Particles.ParticleEmitter(scene, x, y,  AssetManager.MASKS_BIG_SMOKE_KEY,{
             color: [0x555555],
-            lifespan: 3000,
+            lifespan: 1000,
+            x: { min: -5, max: 5 },
+            y: { min: -5, max: 5 },
             angle: { min: -110, max: -70 },
-            scale: { start: 0.15, end: 0, ease: 'Expo.out' },
+            scale: { start: 0.15, end: 0, ease: 'Back.in' },
             alpha: { start: 0.5, end: 0 },
-            speed: 50,
+            speed: 140,
             quantity: 1,
             follow: follow,
+
+            frequency: 70,
             //blendMode: 'MULTIPLY'
         });
 
