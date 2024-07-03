@@ -28,17 +28,15 @@ class DunkShotGameInputHandler {
 
         this.dragStartPoint = new Phaser.Math.Vector2();
 
-        // Mouse down event
-        this.scene.input.on('pointerdown', this.onPointerDown.bind(this));
-
-        // Mouse move event
-        this.scene.input.on('pointermove', this.onPointerMove.bind(this));
-
-        // Mouse up event
-        this.scene.input.on('pointerup', this.onPointerUp.bind(this));
-
-        // Overlap events
         
+        this.registerInputEvents();
+    
+    }
+
+    private registerInputEvents() {
+        this.scene.input.on('pointerdown', this.onPointerDown.bind(this));
+        this.scene.input.on('pointermove', this.onPointerMove.bind(this));
+        this.scene.input.on('pointerup', this.onPointerUp.bind(this));
         this.ball.on(this.ball.INTERNAL_HOOP_OVERLAP_START_EVENT, this.onHoopEnter.bind(this));
         this.ball.on(this.ball.INTERNAL_HOOP_OVERLAP_END_EVENT, this.onHoopExit.bind(this));
     }
@@ -56,22 +54,10 @@ class DunkShotGameInputHandler {
         // Scale logic
         let dragDistance = this.calculateScaledDistance();
 
-        // Net scale logic
-        this.currentHoop.setNetScale(dragDistance + 1);
-
-        // Rotation logic
-        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y);
-        this.currentHoop.setRotation(angle  - Math.PI / 2);
-
-        // Draw trajectory
-
-        if (this.MIN_REQUIRED_SCALED_DISTANCE > dragDistance) {
-            this.trajectory.clear();
-            return;
-        }
-
-        const ballWorldPosition = this.ball.getWorldPosition();
-        this.trajectory.draw(ballWorldPosition, this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
+        this.adjustHoopAppearance(dragDistance, pointer);
+      
+        this.updateTrajectory(dragDistance, pointer);
+    
     }
 
     private onPointerUp(pointer: Phaser.Input.Pointer) {
@@ -84,37 +70,42 @@ class DunkShotGameInputHandler {
         this.isDragging = false;
         this.trajectory.clear();
 
-        if (this.MIN_REQUIRED_SCALED_DISTANCE > distance) {
+        if (distance > this.MIN_REQUIRED_SCALED_DISTANCE) {
+            this.launchBall(distance, pointer);
+        }
+    }
+
+    private adjustHoopAppearance(dragDistance: number, pointer: Phaser.Input.Pointer) {
+        this.currentHoop.setNetScale(dragDistance + 1);
+        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y);
+        this.currentHoop.setRotation(angle - Math.PI / 2);
+    }
+
+    private updateTrajectory(dragDistance: number, pointer: Phaser.Input.Pointer) {
+        if (dragDistance < this.MIN_REQUIRED_SCALED_DISTANCE) {
+            this.trajectory.clear();
             return;
         }
+        const ballWorldPosition = this.ball.getWorldPosition();
+        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y);
+        this.trajectory.draw(ballWorldPosition, this.calculateForceFromScaleDistance(dragDistance), angle + Math.PI);
+    }
 
-        // Add ball force
+    private launchBall(distance: number, pointer: Phaser.Input.Pointer) {
         let force = this.calculateForceFromScaleDistance(distance);
-        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, this.scene.input.activePointer.x, this.scene.input.activePointer.y) + Math.PI;
-        
-        
+        let angle = Phaser.Math.Angle.Between(this.dragStartPoint.x, this.dragStartPoint.y, pointer.x, pointer.y) + Math.PI;
+        this.animateNetScalingBack(() => {
+            this.applyBallForce(force, angle);
+        });
+    }
 
-        // Tween for net scale
+    private animateNetScalingBack(onComplete: () => void) {
         this.scene.tweens.add({
-            targets: this.currentHoop, 
-            value: { from: this.currentHoop.getCurrentNetScale(), to: 1 }, // Dynamically scale from current to 1
-            duration: 100, // Duration of the tween in milliseconds
-            ease: 'Sine.easeInOut', // Easing function
-            onComplete: () => {
-                // Once the tween is complete, push the ball
-                
-                const internalHoopContainer = this.currentHoop.getInternalHoopContainer();
-                internalHoopContainer.remove(this.ball);
-
-                this.ball.unbindBall();
-        
-                // Reset Position of ball
-                let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
-                this.ball.x = worldPosition.x;
-                this.ball.y = worldPosition.y;
-                
-                this.ball.pushBall(force, force * 2, angle);
-            },
+            targets: this.currentHoop,
+            value: { from: this.currentHoop.getCurrentNetScale(), to: 1 },
+            duration: 100,
+            ease: 'Sine.easeInOut',
+            onComplete: onComplete,
             onUpdate: (tween) => {
                 const value = tween.getValue();
                 this.currentHoop.setNetScale(value);
@@ -122,93 +113,51 @@ class DunkShotGameInputHandler {
         });
     }
 
+    private applyBallForce(force: number, angle: number) {
+        const internalHoopContainer = this.currentHoop.getInternalHoopContainer();
+        internalHoopContainer.remove(this.ball);
+        this.ball.unbindBall();
+        let worldPosition = this.currentHoop.getInternalHoopWorldPosition();
+        this.ball.setPosition(worldPosition.x, worldPosition.y);
+        this.ball.pushBall(force, force * 2, angle);
+    }
+
     public setCurrentHoop(hoop: BasketballHoop): void {
         this.currentHoop = hoop;
     }
 
     private onHoopEnter(basketballHoop : BasketballHoop): void {
-        
         this.currentHoop = basketballHoop;
+        this.prepareBallForShot(basketballHoop);
+    }
 
-        //console.log("Hoop entered" , this.ball.x, this.ball.y, this.ball.getIsBinded());
-        // Calculate world position of the hoop
+    private prepareBallForShot(basketballHoop: BasketballHoop) {
         let worldPosition = basketballHoop.getInternalHoopWorldPosition();
-        
         const internalHoopContainer = basketballHoop.getInternalHoopContainer();
         basketballHoop.disableCollision();
-
-        let duration = Math.min(Math.max(this.ball.arcadeBody.speed / 8, 50), 150);
-        let power = this.ball.arcadeBody.speed / 1000;
-        //let duration = 100;
-        
-        //console.log("Duration", duration, this.ball.arcadeBody.speed, power );
-
-        
+        let duration = this.calculateTweenDuration();
         this.ball.stableBall();
         this.ball.bindBall(basketballHoop);
+        this.moveBallToHoop(worldPosition, duration, () => {
+            internalHoopContainer.add(this.ball);
+            this.ball.setPosition(0, 0);
+            this.canShoot = true;
+        });
+    }
 
-        // Tween for moving ball to the hoop's world position
+    private calculateTweenDuration(): number {
+        return Math.min(Math.max(this.ball.arcadeBody.speed / 8, 50), 150);
+    }
+
+    private moveBallToHoop(worldPosition: Phaser.Math.Vector2, duration: number, onComplete: () => void) {
         this.scene.tweens.add({
             targets: this.ball,
-            x: {from: this.ball.x, to : worldPosition.x},
-            y: {from: this.ball.y, to : worldPosition.y},
-            duration: duration, // Adjust duration as needed
+            x: { from: this.ball.x, to: worldPosition.x },
+            y: { from: this.ball.y, to: worldPosition.y },
+            duration: duration,
             ease: 'Power2.easeInOut',
-            onComplete: () => {
-                // Once the ball reaches the hoop, add it to the internal hoop container
-                //console.log("Ball reached hoop");
-
-                internalHoopContainer.add(this.ball);
-                this.ball.x = 0;
-                this.ball.y = 0;
-
-                
-                
-                this.canShoot = true;
-            },
-            onUpdate: (tween) => {
-                const value = tween.getValue();
-                
-            }
+            onComplete: onComplete
         });
-
-        //Tween for reducing ball's angular velocity to 0
-        this.scene.tweens.add({
-            targets: this.ball.body,
-            angularVelocity: 0,
-            duration: duration, // Adjust duration as needed
-            ease: 'Sine.easeOut',
-        });
-
-        //Tween for setting hoop's rotation to 0
-        this.scene.tweens.add({
-            targets: basketballHoop,
-            values: { from : basketballHoop.getRotation(), to: 0},
-            duration: duration, // Adjust duration as needed
-            ease: 'Quad.easeOut',
-
-            onUpdate: (tween) => {
-                const value = tween.getValue();
-                basketballHoop.setRotation(value);
-            }
-        });
-
-        const originalScale = basketballHoop.getCurrentNetScale();
-        const maxScale = originalScale * (1+power); // Example scale factor
-
-        this.scene.tweens.add({
-            targets: basketballHoop,
-            values: { from: originalScale, to: maxScale },
-            yoyo: true, // Goes back to original scale
-            ease: 'Sine.easeInOut', // This can be adjusted for different effects
-            duration: duration, // Duration of one cycle
-            onUpdate: (tween) => {
-                const value = tween.getValue();
-                basketballHoop.setNetScale(value);
-            }
-        });
-        
-
     }
 
     public onHoopExit(basketballHoop : BasketballHoop): void {
