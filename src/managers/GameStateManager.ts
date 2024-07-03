@@ -5,6 +5,8 @@ import { DunkShotGameState } from "./game-states/DunkShotGameState";
 import { RestartState } from "./game-states/RestartState";
 import { MainMenuState } from "./game-states/MainMenuState";
 import AssetManager from "./AssetManager";
+import CustomizeState from "./game-states/CustomizeState";
+import DunkShotStateMementoStrategy from "./game-states/DunkShotStateMementoStrategy";
 
 export class GameStateManager extends Phaser.Events.EventEmitter {
     private scene : Scene;
@@ -14,7 +16,7 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
     private mainMenuState: MainMenuState;
     private restartState: RestartState;
     private pauseState: PauseState;
-
+    private customizeState: CustomizeState;
 
 
     constructor(scene: Scene) {
@@ -26,15 +28,18 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
         this.mainMenuState = new MainMenuState(scene, this);
         this.restartState = new RestartState(scene, this);
         this.pauseState = new PauseState(scene, this);
+        this.customizeState = new CustomizeState(scene, this);
 
         this.stateMachine = new BaseStateMachine.Builder()
             .withInitialState(this.mainMenuState, true)
+            .withHistoryStrategy(new DunkShotStateMementoStrategy())
             .build();
 
         this.stateMachine.addOrOverwriteState(this.dunkShotGameState);
         this.stateMachine.addOrOverwriteState(this.mainMenuState);
         this.stateMachine.addOrOverwriteState(this.restartState);
         this.stateMachine.addOrOverwriteState(this.pauseState);
+        this.stateMachine.addOrOverwriteState(this.customizeState);
 
     }
 
@@ -59,6 +64,14 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
 
     public loadPauseUI(): void {
         this.stateMachine.setToState(this.pauseState, null);
+    }
+
+    public loadCustomizeUI(): void {
+        this.stateMachine.setToState(this.customizeState, null);
+    }
+
+    public loadPreviousUI(): void {
+        this.stateMachine.restoreState();
     }
 
 }

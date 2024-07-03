@@ -172,13 +172,13 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.MASKS_27_KEY, AssetManager.MASKS_27_IMAGE);
         this.load.image(AssetManager.MASKS_37_KEY, AssetManager.MASKS_37_IMAGE);
         this.load.image(AssetManager.MASKS_BIG_SMOKE_KEY, AssetManager.MASKS_BIG_SMOKE_IMAGE);
-        this.load.image(AssetManager.MASKS_42_KEY, AssetManager.MASKS_42_IMAGE);
+        this.load.image(AssetManager.MASKS_TOP_WAVY_KEY, AssetManager.MASKS_TOP_WAVY_IMAGE);
         this.load.image(AssetManager.MASKS_5_KEY, AssetManager.MASKS_5_IMAGE);
         this.load.image(AssetManager.MASKS_50_KEY, AssetManager.MASKS_50_IMAGE);
         this.load.image(AssetManager.MASKS_53_KEY, AssetManager.MASKS_53_IMAGE);
         this.load.image(AssetManager.MASKS_SMALL_SMOKE_KEY, AssetManager.MASKS_SMALL_SMOKE_IMAGE);
         this.load.image(AssetManager.MASKS_6_KEY, AssetManager.MASKS_6_IMAGE);
-        this.load.image(AssetManager.MASKS_63_KEY, AssetManager.MASKS_63_IMAGE);
+        this.load.image(AssetManager.MASKS_LEFT_TRIANGLE_KEY, AssetManager.MASKS_LEFT_TRIANGLE_IMAGE);
         this.load.image(AssetManager.MASKS_65_KEY, AssetManager.MASKS_65_IMAGE);
         this.load.image(AssetManager.MASKS_76_KEY, AssetManager.MASKS_76_IMAGE);
         this.load.image(AssetManager.MASKS_80_KEY, AssetManager.MASKS_80_IMAGE); 

@@ -4,6 +4,8 @@ import DunkShotGameScene from "./scenes/DunkShotGameScene";
 import RestartUIScene from "./scenes/RestartUIScene";
 import DunkShotGameUIScene from "./scenes/DunkShotGameUIScene";
 import PauseUIScene from "./scenes/PauseUIScene";
+import CustomizeState from "./managers/game-states/CustomizeState";
+import CustomizeUIScene from "./scenes/CustomizeUIScene";
 
 
 class Game {
@@ -13,19 +15,6 @@ class Game {
         
         let gameWidth = 600, gameHeight = gameWidth / aspectRatio;
 
-        // // Check if the device is a mobile phone
-        // if (/Mobi|Android/i.test(navigator.userAgent)) {
-        //     // For phones, use full screen
-        //     gameHeight = window.innerHeight;
-        //     gameWidth = window.innerWidth;
-        // } else {
-        //     // For computers, use max height and calculate width to maintain aspect ratio
-        //     gameHeight = Math.min(window.innerHeight, 1800); // Example max height
-        //     gameWidth = gameHeight * aspectRatio;
-        // }
-
-        // // Ensure the game does not exceed the window's width on computers
-        // gameWidth = Math.min(gameWidth, window.innerWidth);
 
         const config = {
             type: Phaser.AUTO,
@@ -35,7 +24,7 @@ class Game {
                 width: gameWidth,
                 height: gameHeight
             },
-            scene: [LoadingScene, DunkShotGameScene, MainMenuUIScene, RestartUIScene, DunkShotGameUIScene, PauseUIScene],
+            scene: [LoadingScene, DunkShotGameScene, MainMenuUIScene, RestartUIScene, DunkShotGameUIScene, PauseUIScene, CustomizeUIScene],
             physics: {
                 default: 'arcade',
                 arcade: {

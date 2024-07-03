@@ -1,5 +1,5 @@
 import IState from "./IState";
-import IStateMomentoStrategy from "./IStateMomentoStrategy";
+import IStateMementoStrategy from "./IStateMementoStrategy";
 import IStatePredicate from "./IStatePredicate";
 import IStateTransition from "./IStateTransition";
 import IStateTransitionData from "./IStateTransitionData";
@@ -12,17 +12,10 @@ class BaseStateMachine {
     private nodes: Map<any, StateNode> = new Map();
     private anyStateTransitions: Set<IStateTransition> = new Set();
 
-    protected stateHistoryStrategy: IStateMomentoStrategy;
+    protected stateHistoryStrategy: IStateMementoStrategy;
 
-    protected constructor(initialStateNode: StateNode | null = null, onEnterCall: boolean = false, enterData: IStateTransitionData | null = null) {
-        if (!initialStateNode) return;
-        
-        this.nodes.set(initialStateNode.state.constructor, initialStateNode);
-        this.currentState = initialStateNode;
+    protected constructor() {
 
-        if (onEnterCall) {
-            initialStateNode.state.enterState(enterData);
-        }
     }
 
     public setInitialState(initialState: IState, onEnterCall: boolean, enterData: IStateTransitionData | null = null): void  {
@@ -37,6 +30,8 @@ class BaseStateMachine {
         
         this.currentState = initialStateNode;
 
+        this.stateHistoryStrategy?.save(initialStateNode.state, enterData);
+
         if (onEnterCall) {
             initialStateNode.state.enterState(enterData);
         }
@@ -47,11 +42,15 @@ class BaseStateMachine {
         private initialStateNode: StateNode | null = null;
         private onEnterCall: boolean = false;
         private enterData: IStateTransitionData | null = null;
-        private stateHistoryStrategy: IStateMomentoStrategy;
+        private stateHistoryStrategy: IStateMementoStrategy;
 
         public build(): BaseStateMachine {
-            const stateMachine = new BaseStateMachine(this.initialStateNode, this.onEnterCall, this.enterData);
+            const stateMachine = new BaseStateMachine();
             stateMachine.stateHistoryStrategy = this.stateHistoryStrategy;
+
+            if (this.initialStateNode) {
+                stateMachine.setInitialState(this.initialStateNode.state, this.onEnterCall, this.enterData);
+            }
             return stateMachine;
         }
 
@@ -62,7 +61,7 @@ class BaseStateMachine {
             return this;
         }
 
-        public withHistoryStrategy(historyStrategy: IStateMomentoStrategy): this {
+        public withHistoryStrategy(historyStrategy: IStateMementoStrategy): this {
             this.stateHistoryStrategy = historyStrategy;
             return this;
         }

@@ -43,6 +43,7 @@ class MainMenuUIScene extends Scene {
         customizeButton.setScale(0.7);
         customizeButton.setOnActiveCallback(() => {
             console.log("Customize button is active");
+            this.gameStateManager.loadCustomizeUI();
         });
 
         let customizeButtonText = this.add.text(customizeButton.x - 7, customizeButton.y + 28, ' CUSTOMIZE', { font: 'bold 12px Arial' }).setOrigin(0.5);

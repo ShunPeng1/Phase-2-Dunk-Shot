@@ -339,8 +339,8 @@ class AssetManager {
     public static readonly MASKS_37_KEY: string = "masks_37";
     public static readonly MASKS_BIG_SMOKE_IMAGE: string = AssetManager.MASKS_FOLDER + "39.png";
     public static readonly MASKS_BIG_SMOKE_KEY: string = "masks_39";
-    public static readonly MASKS_42_IMAGE: string = AssetManager.MASKS_FOLDER + "42.png";
-    public static readonly MASKS_42_KEY: string = "masks_42";
+    public static readonly MASKS_TOP_WAVY_IMAGE: string = AssetManager.MASKS_FOLDER + "42.png";
+    public static readonly MASKS_TOP_WAVY_KEY: string = "masks_42";
     public static readonly MASKS_5_IMAGE: string = AssetManager.MASKS_FOLDER + "5.png";
     public static readonly MASKS_5_KEY: string = "masks_5";
     public static readonly MASKS_50_IMAGE: string = AssetManager.MASKS_FOLDER + "50.png";
@@ -351,8 +351,8 @@ class AssetManager {
     public static readonly MASKS_SMALL_SMOKE_KEY: string = "masks_59";
     public static readonly MASKS_6_IMAGE: string = AssetManager.MASKS_FOLDER + "6.png";
     public static readonly MASKS_6_KEY: string = "masks_6";
-    public static readonly MASKS_63_IMAGE: string = AssetManager.MASKS_FOLDER + "63.png";
-    public static readonly MASKS_63_KEY: string = "masks_63";
+    public static readonly MASKS_LEFT_TRIANGLE_IMAGE: string = AssetManager.MASKS_FOLDER + "63.png";
+    public static readonly MASKS_LEFT_TRIANGLE_KEY: string = "masks_63";
     public static readonly MASKS_65_IMAGE: string = AssetManager.MASKS_FOLDER + "65.png";
     public static readonly MASKS_65_KEY: string = "masks_65";
     public static readonly MASKS_76_IMAGE: string = AssetManager.MASKS_FOLDER + "76.png";
@@ -640,6 +640,7 @@ class AssetManager {
     public static readonly RESTART_UI_SCENE: string = "RestartUIScene";
     public static readonly DUNK_SHOT_GAME_UI_SCENE: string = "GameUIScene";
     public static readonly PAUSE_UI_SCENE: string = "PauseUIScene";
+    public static readonly CUSTOMIZE_UI_SCENE: string = "CustomizeUIScene";
     
 
     // WORLD RESOLUTION

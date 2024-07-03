@@ -40,7 +40,7 @@ class PauseUIScene extends Scene{
         const skinButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 50, AssetManager.SKIN_WIDE_BUTTON_KEY);
         skinButton.setScale(0.8);
         skinButton.setOnActiveCallback(() => {
-            //this.gameStateManager.loadMainMenuUI();
+            this.gameStateManager.loadCustomizeUI();
         });
 
         const skinText = this.add.text(Number(width) / 2 + 30, Number(height) / 2 - 50, 'SKIN', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
