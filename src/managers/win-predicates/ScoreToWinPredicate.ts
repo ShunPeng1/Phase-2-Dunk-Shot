@@ -11,6 +11,10 @@ class ScoreToWinPredicate implements IGoalPredicate {
         this.getCurrentScore = getCurrentScore;
     }
 
+    public getGoalValue(): number {
+        return this.targetScore;
+    }
+
     public checkGoalAchieved(): boolean {
         return this.getCurrentScore() >= this.targetScore;
     }

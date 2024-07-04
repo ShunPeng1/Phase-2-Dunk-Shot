@@ -48,12 +48,51 @@ class ChallengeGameScene extends DunkShotGameScene {
 
     
     protected setupGameUI() : void {
+        this.setupTopBanner();
         this.setupScoreBackgroundText();
         this.setupHoopCountText();
     }
 
+    protected setupTopBanner(){
+        let topBanner = this.add.image(0, 50, AssetManager.MASKS_210_KEY);
+        topBanner.setOrigin(0, 0);
+        topBanner.setScrollFactor(0);
+        topBanner.setScale(5, 1);
+        topBanner.setTint(0x37d133);
+        topBanner.setDepth(10);
+
+        let challengeText = this.add.text(150, 90, "CHALLENGE", { fontFamily: 'Arial', fontSize: 18, color: '#ffffff' }).setOrigin(0.5);
+        challengeText.setScale(1.1,1)
+        challengeText.setScrollFactor(0);
+        challengeText.setDepth(11);
+
+        let numberText = this.add.text(150, 110, "1", { fontFamily: 'Arial', fontSize: 18, color: '#ffffff' }).setOrigin(0.5);
+
+        numberText.setScrollFactor(0);
+        numberText.setDepth(11);
+
+
+        let icon = this.add.image(265, 100, AssetManager.MASKS_111_KEY);
+        icon.setScale(0.5, 0.7);
+        icon.setScrollFactor(0);
+        icon.setDepth(11);
+
+        let scoreText = this.add.text(315, 100, "0/"+ + this.winCondition.getGoalValue().toString(), { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' }).setOrigin(0.5);
+
+        scoreText.setScrollFactor(0);
+        scoreText.setDepth(11);
+
+        
+        this.scoreCounter.on(this.scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
+            scoreText.setText(totalScore + "/" + this.winCondition.getGoalValue().toString());
+            console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
+        });
+
+        
+    }
+
     protected setupHoopCountText() {
-        let hoopCountText = this.add.text(550, 160, "0/"+ (this.orderHoops.length -1) + " Baskets", { fontFamily: 'Arial', fontSize: 24, color: '#000000' }).setOrigin(1);
+        let hoopCountText = this.add.text(550, 160, "0/"+ (this.orderHoops.length -1) + " Baskets", { fontFamily: 'Arial', fontSize: 24, color: '#939596' }).setOrigin(1);
         hoopCountText.setScrollFactor(0);
         console.log("setupHoopCountText");
         let currentCount = 0;
