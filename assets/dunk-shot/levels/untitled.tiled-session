@@ -9,6 +9,14 @@
     "fileStates": {
         "Hoop.tsx": {
             "dynamicWrapping": true
+        },
+        "test-level.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 50.666666666666686,
+                "y": 5224.666666666666
+            }
         }
     },
     "last.exportedFilePath": "D:/Sun Studio/Phase-2/assets/dunk-shot/levels",
@@ -19,7 +27,9 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "test-level.tmx"
     ],
+    "resizeMap.removeObjects": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1
 }

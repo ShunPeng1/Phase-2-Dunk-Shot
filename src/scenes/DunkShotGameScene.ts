@@ -74,7 +74,7 @@ class DunkShotGameScene extends Scene {
 
     protected setupGameStyle() : void {
         this.setupGameStateManager();
-        this.setupRandomSpawnHoops();
+        this.setupHoops();
     }
     
     private setupPhysics() : void {
@@ -92,9 +92,8 @@ class DunkShotGameScene extends Scene {
         //camera.zoom = 0.5
 
         // Camera follow settings
-        camera.setPosition(0, 0);
         camera.startFollow(this.invisibleBallFollower, true, 0, 0.01, -AssetManager.WORLD_WIDTH/2 , 100);
-            
+        
     }
 
     private setupBoundaries() : void {
@@ -218,7 +217,7 @@ class DunkShotGameScene extends Scene {
     }
 
     
-    protected setupRandomSpawnHoops() : void {
+    protected setupHoops() : void {
         
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
         let collectibleFactory = new CollectibleFactory(this);
@@ -265,6 +264,13 @@ class DunkShotGameScene extends Scene {
             this.ballInteraction.advanceNextHoop(nextHoop);
         });
 
+    }
+
+    protected initializeHoop(hoop : BasketballHoop): void{
+        hoop.setRingTint(0xea4214);
+        hoop.setScale(0.5);
+        hoop.enableOverlap(this.ball, this.ball.internalHoopOverlapCallback);
+        hoop.enableCollision(this.ball, this.ball.hoopCollisionCallback);
     }
     
     protected setupGameStateManager(){

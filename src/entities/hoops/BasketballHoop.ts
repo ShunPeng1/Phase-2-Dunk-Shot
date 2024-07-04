@@ -5,8 +5,20 @@ import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContaine
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
 import NetLinePhysicGroupContainer from "../physics/NetLinePhysicGroupContainer";
 
-class BasketballHoop extends Phaser.GameObjects.GameObject{
+class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.GameObjects.Components.Transform, Phaser.GameObjects.Components.Texture {
     
+    public hasTransformComponent: boolean; // Tileset variable initial set
+    public x: number; // Tileset variable initial set
+    public y: number; // Tileset variable initial set
+    public z: number; // Tileset variable initial set
+    public w: number; // Tileset variable initial set
+    public scale: number; // Tileset variable initial set
+    public scaleX: number; // Tileset variable initial set
+    public scaleY: number; // Tileset variable initial set
+    public angle: number; // Tileset variable initial set
+    public rotation: number; // Tileset variable initial set
+    public texture: Phaser.Textures.Texture | Phaser.Textures.CanvasTexture; // Tileset variable initial set
+    public frame: Phaser.Textures.Frame; // Tileset variable initial set
     
     private isInitialized: boolean = false;
 
@@ -62,15 +74,50 @@ class BasketballHoop extends Phaser.GameObjects.GameObject{
         this.updateComponentPosition();
     
     }
+    copyPosition(source: Phaser.Types.Math.Vector2Like | Phaser.Types.Math.Vector3Like | Phaser.Types.Math.Vector4Like): this {
+        throw new Error("Method not implemented.");
+    }
+    setRandomPosition(x?: number | undefined, y?: number | undefined, width?: number | undefined, height?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    setAngle(degrees?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    setX(value?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    setY(value?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    setZ(value?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    setW(value?: number | undefined): this {
+        throw new Error("Method not implemented.");
+    }
+    getLocalTransformMatrix(tempMatrix?: Phaser.GameObjects.Components.TransformMatrix | undefined): Phaser.GameObjects.Components.TransformMatrix {
+        throw new Error("Method not implemented.");
+    }
+    getLocalPoint(x: number, y: number, point?: Phaser.Math.Vector2 | undefined, camera?: Phaser.Cameras.Scene2D.Camera | undefined): Phaser.Math.Vector2 {
+        throw new Error("Method not implemented.");
+    }
+    getParentRotation(): number {
+        throw new Error("Method not implemented.");
+    }
+    setFrame(frame: string | number | Phaser.Textures.Frame, updateSize?: boolean | undefined, updateOrigin?: boolean | undefined): this {
+        throw new Error("Method not implemented.");
+    }
 
     private initImageComponents(scene: Scene, x: number, y: number): void {
         // Load images
         this.innerRing = scene.add.image(x , y , AssetManager.INNER_RING_BASKET_KEY);
         this.innerRing.setDepth(-1);
+        this.innerRing.setTint(0xea4214);
         
 
         this.outerRing = scene.add.image(x , y , AssetManager.OUTER_RING_BASKET_KEY);
         this.outerRing.setDepth(2);
+        this.outerRing.setTint(0xea4214);
 
         this.net = scene.add.image(x, y + this.NET_OFFSET_Y , AssetManager.NET_BASKET_KEY);
         this.net.setDepth(1);
@@ -193,6 +240,15 @@ class BasketballHoop extends Phaser.GameObjects.GameObject{
     public setTexture(texture: string) : this {
         // Ignore
         return this;
+    }
+
+    public setFlip(x: boolean, y: boolean) : this {
+        // Ignore
+        return this;
+    }
+
+    public getPosition() : Phaser.Math.Vector2 {
+        return new Phaser.Math.Vector2(this.hoopContainer.x, this.hoopContainer.y);
     }
 
     public getRotation() : number {
