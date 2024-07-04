@@ -15,6 +15,7 @@ class RestartState extends GameState {
         this.scene.cameras.main.stopFollow();
 
         this.scene.scene.launch(this.sceneName, this.gameStateManager);
+        this.scene.scene.bringToTop(this.sceneName);
     }
 }
 

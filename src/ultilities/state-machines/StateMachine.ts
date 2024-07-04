@@ -11,11 +11,11 @@ class BaseStateMachine {
     private currentState: StateNode;
     private nodes: Map<any, StateNode> = new Map();
     private anyStateTransitions: Set<IStateTransition> = new Set();
-
+    private emptyState: EmptyState = new EmptyState();
     protected stateHistoryStrategy: IStateMementoStrategy;
 
     protected constructor() {
-
+        this.addOrOverwriteState(this.emptyState);
     }
 
     public setInitialState(initialState: IState, onEnterCall: boolean, enterData: IStateTransitionData | null = null): void  {
@@ -157,6 +157,10 @@ class BaseStateMachine {
         return this.currentState?.state;
     }
 
+    public setToEmptyState(): void {
+        this.setToState(this.emptyState);
+    }
+
     public getCurrentStateType(): any {
         return this.currentState?.state.constructor;
     }
@@ -206,6 +210,16 @@ class StateNode {
                 this.transitions.delete(transition);
             }
         });
+    }
+}
+
+class EmptyState implements IState {
+    public enterState(enterTransitionData: IStateTransitionData | null): void {
+    }
+    public exitState(exitTransitionData: IStateTransitionData | null): void {
+    }
+    public update(deltaTime: number, transitionData: IStateTransitionData | null): void {
+        // Do nothing
     }
 }
 

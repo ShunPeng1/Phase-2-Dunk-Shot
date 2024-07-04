@@ -14,6 +14,7 @@ class PauseState extends GameState {
         this.scene.scene.pause(this.scene);
 
         this.scene.scene.launch(this.sceneName, this.gameStateManager);
+        this.scene.scene.bringToTop(this.sceneName);
     }
     public exitState(exitTransitionData: IStateTransitionData | null): void {
         this.scene.scene.stop(this.sceneName);
