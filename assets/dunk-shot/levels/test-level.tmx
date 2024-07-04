@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="17" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="79">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="17" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="82">
  <editorsettings>
   <export target="test-level.json" format="json"/>
  </editorsettings>
@@ -11,5 +11,12 @@
   <object id="75" gid="8" x="243" y="5322.58" width="98" height="53.5" rotation="13"/>
   <object id="76" name="End Hoop" gid="8" x="412.333" y="4994.58" width="98" height="53.5"/>
   <object id="78" gid="8" x="64.3333" y="5114.58" width="98" height="53.5" rotation="40"/>
+  <object id="79" name="Configure" x="194.667" y="4785.33" width="177.333" height="138.667">
+   <properties>
+    <property name="ScoreToWin" value="10"/>
+    <property name="Theme" value="GREEN"/>
+    <property name="WinCondition" value="SCORE"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

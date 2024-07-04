@@ -62,7 +62,7 @@ class DunkShotGameStateManager extends Phaser.Events.EventEmitter {
         this.stateMachine.setToState(this.startState, null);
     }
 
-    public loadRestartUI(): void {
+    public loadLoseUI(): void {
         this.stateMachine.setToState(this.restartState, null);
     }
 

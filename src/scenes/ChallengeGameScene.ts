@@ -25,11 +25,61 @@ import ScoreManager from "../managers/ScoreManager";
 import DunkShotGameScene from "./DunkShotGameScene";
 import BallInteraction from "../entities/balls/BallInteraction";
 import ChallengeGameStateManager from "../managers/ChallengeGameStateManager";
+import ScoreToWinPredicate from "../managers/win-predicates/ScoreToWinPredicate";
+import IGoalPredicate from "../managers/win-predicates/types/IGoalPredicate";
 
 class ChallengeGameScene extends DunkShotGameScene {
 
+    private winCondition: IGoalPredicate;
+
     constructor() {
         super(AssetManager.CHALLENGE_GAME_SCENE);
+    }
+
+    protected setupGameStyle() : void {
+        this.setupWinCondition();
+        this.setupGameStateManager();
+        this.setupHoops();
+    }
+
+    protected setupWinCondition() {
+        var map = this.make.tilemap({
+            key: AssetManager.LEVELS_TEST_LEVEL_KEY ,
+            tileWidth: 16,
+            tileHeight: 16
+        });
+
+        const configure = map.findObject("Object Layer 1", obj => obj.name === "Configure") as any;
+  
+        if (!configure  || !configure.properties) {
+            throw new Error("No configuration object found in the level");
+        }
+
+        // Utility function to find a property value by name
+        const findPropertyValue = (properties: any[], propertyName: string): string | undefined => {
+            const property = properties.find(prop => prop.name === propertyName);
+            return property ? property.value : undefined;
+        };
+
+        let winCondition: string = findPropertyValue(configure.properties, "WinCondition")!;
+
+    
+
+        let goalPredicate: IGoalPredicate;
+
+        switch (winCondition) {
+            case "SCORE":
+                let scoreToWin = parseInt(findPropertyValue(configure.properties, "ScoreToWin")!);
+                
+
+                goalPredicate = new ScoreToWinPredicate(scoreToWin, () => ScoreManager.getInstance().getScore());
+                break;
+            default:
+                throw new Error("Invalid win condition");
+        }
+
+        this.winCondition = goalPredicate;
+
     }
 
     protected setupHoops(): void {
@@ -85,6 +135,7 @@ class ChallengeGameScene extends DunkShotGameScene {
         // Set the first and next hoop for the ball interaction
         this.ballInteraction.setFirstHoop(orderHoops[0]);
         this.ballInteraction.setNextHoop(orderHoops[1]);
+        this.ballInteraction.setGoalHoop(orderHoops[orderHoops.length - 1]);
 
         let currentHoopIndex = 1;
 
@@ -101,6 +152,8 @@ class ChallengeGameScene extends DunkShotGameScene {
             }
             
         });
+
+        
 
     }
 
@@ -140,13 +193,25 @@ class ChallengeGameScene extends DunkShotGameScene {
                     loseBoundaryImage.disableBody();
                     ScoreManager.getInstance().saveHighScore();
                     
-                    gameStateManager.loadRestartUI();
+                    gameStateManager.loadLoseUI();
                 }
             }
         });
 
+
+        
+        this.ballInteraction.on(BallInteraction.ENTER_GOAL_HOOP_EVENT, (enterHoop: BasketballHoop) => {
+            if (this.winCondition.checkGoalAchieved()) {
+                gameStateManager.loadWinUI();
+            }
+            else{
+                gameStateManager.loadLoseUI();
+            }
+        });
     }
 
 }
+
+
 
 export default ChallengeGameScene;

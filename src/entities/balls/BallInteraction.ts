@@ -70,6 +70,10 @@ class BallInteraction extends Phaser.Events.EventEmitter {
         this.currentHoop = hoop;
         this.isFirstHoopExist = true;
     }
+    
+    public setGoalHoop(hoop: BasketballHoop): void {
+        this.goalHoop = hoop;
+    }
 
     public advanceNextHoop(hoop: BasketballHoop): void {
         this.currentHoop = this.nextHoop;

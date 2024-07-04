@@ -77,6 +77,33 @@
                  "width":98,
                  "x":64.3333,
                  "y":5114.58
+                }, 
+                {
+                 "height":138.666666666666,
+                 "id":79,
+                 "name":"Configure",
+                 "properties":[
+                        {
+                         "name":"ScoreToWin",
+                         "type":"string",
+                         "value":"10"
+                        }, 
+                        {
+                         "name":"Theme",
+                         "type":"string",
+                         "value":"GREEN"
+                        }, 
+                        {
+                         "name":"WinCondition",
+                         "type":"string",
+                         "value":"SCORE"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":177.333333333333,
+                 "x":194.666666666667,
+                 "y":4785.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -85,7 +112,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":79,
+ "nextobjectid":82,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",

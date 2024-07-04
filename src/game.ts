@@ -10,6 +10,7 @@ import ChallengeGameScene from "./scenes/ChallengeGameScene";
 import ChallengeStartUIScene from "./scenes/ChallengeStartUIScene";
 import ChallengeLoseUIScene from "./scenes/ChallengeLoseUIScene";
 import ChallengePauseUIScene from "./scenes/ChallengePauseUIScene";
+import ChallengeWinUIScene from "./scenes/ChallengeWinUIScene";
 
 
 class Game {
@@ -41,6 +42,7 @@ class Game {
                 ChallengeGameScene,
                 ChallengeStartUIScene,
                 ChallengeLoseUIScene,
+                ChallengeWinUIScene,
                 ChallengePauseUIScene
             ],
             physics: {

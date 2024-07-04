@@ -47,9 +47,9 @@ class DunkShotGameScene extends Scene {
 
         // Configure the game UI and style
         
+        this.setupGameStyle();
         this.setupGameFeel();
         this.setupGameUI();
-        this.setupGameStyle();
     }
 
     private setupGame() : void {
@@ -311,7 +311,7 @@ class DunkShotGameScene extends Scene {
                     loseBoundaryImage.disableBody();
                     ScoreManager.getInstance().saveHighScore();
                     
-                    gameStateManager.loadRestartUI();
+                    gameStateManager.loadLoseUI();
                 }
             }
         });

@@ -11,8 +11,10 @@ import GameState from "./game-states/GameState";
 import ChallengeLoseState from "./game-states/ChallengeLoseState";
 import AssetManager from "./AssetManager";
 import ChallengePauseState from "./game-states/ChallengePauseState";
+import ChallengeWinState from "./game-states/ChallengeWinState";
 
 class ChallengeGameStateManager extends DunkShotGameStateManager {
+    
     private challengeWinState: GameState;
 
     constructor(scene: Scene) {
@@ -27,7 +29,7 @@ class ChallengeGameStateManager extends DunkShotGameStateManager {
         this.restartState = new ChallengeLoseState(this.scene, this);
         this.pauseState = new ChallengePauseState(this.scene, this);
         this.customizeState = new CustomizeState(this.scene, this);
-        //this.challengeWinState = new ChallengeWinState(this.scene, this);
+        this.challengeWinState = new ChallengeWinState(this.scene, this);
         
         this.stateMachine = new BaseStateMachine.Builder()
             .withInitialState(this.startState, true)
@@ -39,9 +41,10 @@ class ChallengeGameStateManager extends DunkShotGameStateManager {
         this.stateMachine.addOrOverwriteState(this.restartState);
         this.stateMachine.addOrOverwriteState(this.pauseState);
         this.stateMachine.addOrOverwriteState(this.customizeState);
+        this.stateMachine.addOrOverwriteState(this.challengeWinState);
     }
 
-    public reloadChallenge(){
+    public reloadChallenge() : void {
     
         this.stateMachine.setToEmptyState();
         this.scene.scene.stop(AssetManager.CHALLENGE_GAME_SCENE); // Stop the current game scene
@@ -49,12 +52,15 @@ class ChallengeGameStateManager extends DunkShotGameStateManager {
     
     }
 
-    public loadChallengeMenu(){
+    public loadChallengeMenu() : void {
         this.stateMachine.setToEmptyState()
         this.scene.scene.stop(AssetManager.CHALLENGE_GAME_SCENE);
         this.scene.scene.start(AssetManager.CHALLENGE_MENU_SCENE);
     }
 
+    public loadWinUI() : void {
+        this.stateMachine.setToState(this.challengeWinState);
+    }
 }
 
 
