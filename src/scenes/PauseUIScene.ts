@@ -31,7 +31,7 @@ class PauseUIScene extends Scene{
 
         const homepageButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.HOMEPAGE_WIDE_BUTTON_KEY);
         homepageButton.addOnPressUpCallback(() => {
-            this.gameStateManager.loadGame();
+            this.gameStateManager.reloadGame();
         });
 
         const homepageText = this.add.text(homepageButton.x + 30, homepageButton.y, 'HOMEPAGE', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);

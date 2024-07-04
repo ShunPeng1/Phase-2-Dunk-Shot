@@ -8,6 +8,7 @@ import CustomizeUIScene from "./scenes/CustomizeUIScene";
 import ChallengeMenuScene from "./scenes/ChallengeMenuScene";
 import ChallengeGameScene from "./scenes/ChallengeGameScene";
 import ChallengeStartUIScene from "./scenes/ChallengeStartUIScene";
+import ChallengeLoseUIScene from "./scenes/ChallengeLoseUIScene";
 
 
 class Game {
@@ -37,7 +38,8 @@ class Game {
 
                 ChallengeMenuScene,
                 ChallengeGameScene,
-                ChallengeStartUIScene
+                ChallengeStartUIScene,
+                ChallengeLoseUIScene
             ],
             physics: {
                 default: 'arcade',

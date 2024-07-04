@@ -8,11 +8,11 @@ import UiImageButton from "../ultilities/ui/UiImageButton";
 import UiUtilities from "../ultilities/ui/UiUtilities";
 import CustomizeUIScene from "./CustomizeUIScene";
 
-class ChallengeStartUIScene extends Phaser.Scene {
+class ChallengeLoseUIScene extends Phaser.Scene {
     private gameStateManager: ChallengeGameStateManager;
 
     constructor() {
-        super(AssetManager.CHALLENGE_START_UI_SCENE);
+        super(AssetManager.CHALLENGE_LOSE_UI_SCENE);
     }
 
     init(data: ChallengeGameStateManager) {
@@ -31,33 +31,39 @@ class ChallengeStartUIScene extends Phaser.Scene {
         let behindPanel = this.add.image(width/2, height/2, AssetManager.MASKS_23_KEY);
         behindPanel.setScale(0.9, 0.65);
 
-        let challengeText = this.add.text(width/2, height/2 - 150, 'CHALLENGES', { font: '28px Arial', color: '#939393' }).setOrigin(0.5);
+        let panelText = this.add.text(width/2, height/2 - 150, 'FAILED', { font: '32px Arial', color: '#b8b8b8' }).setOrigin(0.5);
 
-        let banner = this.add.image(width/2, height/2 - 50, AssetManager.UI_218_KEY);
-        banner.setScale(0.705);
+        
+        let rewardIcon = this.add.image(width/2, height/2 - 40 , AssetManager.WHEEL_181_KEY);
 
-        let rewardText = this.add.text(width/2 + 170, height/2 - 90, 'Rewards', { font: '20px Arial', color: '#ffffff' }).setOrigin(0.5);
+        rewardIcon.setScale(0.8);
         
 
-        let rewardIcon = this.add.image(width/2 + 170, height/2 - 40 , AssetManager.WHEEL_181_KEY);
+        let restartButton = new UiImageButton(this, width/2 + 90, height/2 + 100, AssetManager.UI_90_KEY);
 
-        rewardIcon.setScale(0.4);
-        
-        let goalText = this.add.text(width/2 - 75, height/2 - 50, 'Need to reach ?? points', { font: '26px Arial', color: '#ffffff' }).setOrigin(0.5);
+        let restartText = this.add.text(restartButton.x, restartButton.y, 'TRY AGAIN', { font: '34px Arial', color: '#ffffff' }).setOrigin(0.5);
+        restartButton.add(restartText);
 
-        let startButton = new UiImageButton(this, width/2, height/2 + 100, AssetManager.UI_139_KEY);
+        restartButton.setScale(0.8);
 
-        let startText = this.add.text(startButton.x, startButton.y, 'Start', { font: '40px Arial', color: '#ffffff' }).setOrigin(0.5);
-        startButton.add(startText);
-
-        startButton.setScale(0.8);
-
-        startButton.addOnPressUpCallback(() => {
-            this.gameStateManager.loadGameUI();
+        restartButton.addOnPressUpCallback(() => {
+            this.gameStateManager.reloadChallenge();
         });
 
-        UiUtilities.applyButtonScaleTweens(startButton);
+        UiUtilities.applyButtonScaleTweens(restartButton);
 
+        let giveUpButton = new UiImageButton(this, width/2 - 90, height/2 + 100, AssetManager.MASKS_118_KEY);
+
+        let giveUpText = this.add.text(giveUpButton.x, giveUpButton.y, 'GIVE UP', { font: '34px Arial', color: '#ffffff' }).setOrigin(0.5);
+        giveUpButton.add(giveUpText);
+
+        giveUpButton.setScale(0.8);
+
+        giveUpButton.addOnPressUpCallback(() => {
+            this.gameStateManager.loadChallengeMenu();
+        });
+
+        UiUtilities.applyButtonScaleTweens(giveUpButton);
 
 
         let exitButton = new UiImageButton(this, width/2 + 180, height/2 - 230, AssetManager.MASKS_98_KEY);
@@ -67,6 +73,7 @@ class ChallengeStartUIScene extends Phaser.Scene {
         UiUtilities.applyButtonScaleTweens(exitButton);
 
         exitButton.addOnPressDownCallback(() => {
+            
             this.gameStateManager.loadChallengeMenu();
         });
 
@@ -77,4 +84,4 @@ class ChallengeStartUIScene extends Phaser.Scene {
     
 }
 
-export default ChallengeStartUIScene;
+export default ChallengeLoseUIScene;

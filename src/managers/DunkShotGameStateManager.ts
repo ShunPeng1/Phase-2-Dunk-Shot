@@ -48,7 +48,7 @@ class DunkShotGameStateManager extends Phaser.Events.EventEmitter {
     }
 
 
-    public loadGame() {
+    public reloadGame() {
         this.stateMachine.setToEmptyState();
         this.scene.scene.stop(AssetManager.DUNK_SHOT_GAME_SCENE); // Stop the current game scene
         this.scene.scene.start(AssetManager.DUNK_SHOT_GAME_SCENE); // Start the game scene again, effectively restarting it

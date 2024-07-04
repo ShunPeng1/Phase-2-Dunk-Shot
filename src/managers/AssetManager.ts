@@ -487,6 +487,8 @@ class AssetManager {
     public static readonly UI_8_KEY: string = "ui_8";
     public static readonly UI_84_IMAGE: string = AssetManager.UI_FOLDER + "84.png";
     public static readonly UI_84_KEY: string = "ui_84";
+    public static readonly UI_85_IMAGE: string = AssetManager.UI_FOLDER + "85.png";
+    public static readonly UI_85_KEY: string = "ui_85";
     public static readonly UI_88_IMAGE: string = AssetManager.UI_FOLDER + "88.png";
     public static readonly UI_88_KEY: string = "ui_88";
     public static readonly UI_9_IMAGE: string = AssetManager.UI_FOLDER + "9.png";
@@ -655,6 +657,8 @@ class AssetManager {
     public static readonly CHALLENGE_MENU_SCENE: string = "ChallengeMenuScene";
     public static readonly CHALLENGE_GAME_SCENE: string = "ChallengeGameScene";
     public static readonly CHALLENGE_START_UI_SCENE: string = "ChallengeStartUIScene";
+    public static readonly CHALLENGE_LOSE_UI_SCENE: string = "ChallengeLoseUIScene";
+    public static readonly CHALLENGE_WIN_UI_SCENE: string = "ChallengeWinUIScene";
     
     // Inventory keys
     public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";
