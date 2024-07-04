@@ -4,37 +4,56 @@ class UiUtilities {
 
     static applyButtonScaleTweens(button: UiImageButton, scaleDownFactor: number = 0.95, duration: number = 100): void {
         // Scale down on pointer down
-
         let isScaled = false;
-        button.addOnPressDownCallback(() => {
+        let scaleDownTween: Phaser.Tweens.Tween | null = null;
+        let scaleUpTween: Phaser.Tweens.Tween | null = null;
 
-            const currentScaleX = button.container.scaleX;
-            const currentScaleY = button.container.scaleY;
+        let defaultScale : Phaser.Math.Vector2;
+
+        button.addOnPressDownCallback(() => {
+            if (scaleUpTween) {
+                scaleUpTween.complete();
+            }
+
+            //const currentScaleX = button.container.scaleX;
+            //const currentScaleY = button.container.scaleY;
+            defaultScale = new Phaser.Math.Vector2(button.container.scaleX, button.container.scaleY)
+            const endScaleX = defaultScale.x * scaleDownFactor;
+            const endScaleY = defaultScale.y * scaleDownFactor;
             isScaled = true;
 
-            button.scene.tweens.add({
+            scaleDownTween = button.scene.tweens.add({
                 targets: button.container,
-                scaleX: currentScaleX * scaleDownFactor,
-                scaleY: currentScaleY * scaleDownFactor,
+                scaleX: endScaleX ,
+                scaleY: endScaleY ,
                 duration: duration,
-                ease: 'Linear'
+                ease: 'Linear',
+                onComplete: () => {
+                    button.container.setScale(endScaleX, endScaleY);
+                    scaleDownTween = null;
+                }
             });
         });
 
-        // Return to normal scale on pointer up or hover out
         const returnToNormalScale = () => {
             if (!isScaled) return;
 
-            const currentScaleX = button.container.scaleX;
-            const currentScaleY = button.container.scaleY;
+            if (scaleDownTween) {
+                scaleDownTween.stop();
+            }
+
             isScaled = false;
 
-            button.scene.tweens.add({
+            scaleUpTween = button.scene.tweens.add({
                 targets: button.container,
-                scaleX: currentScaleX / scaleDownFactor,
-                scaleY: currentScaleY / scaleDownFactor,
+                scaleX: defaultScale.x,
+                scaleY: defaultScale.y,
                 duration: duration,
-                ease: 'Linear'
+                ease: 'Linear',
+                onComplete: () => {
+                    button.container.setScale(defaultScale.x, defaultScale.y);
+                    scaleUpTween = null;
+                }
             });
         };
 
