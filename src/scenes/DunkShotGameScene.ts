@@ -276,7 +276,7 @@ class DunkShotGameScene extends Scene {
     protected setupGameStateManager(){
         
         let gameStateManager = new DunkShotGameStateManager(this);
-        gameStateManager.loadMainMenuUI();
+        gameStateManager.loadStartUI();
 
 
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.ballInteraction);

@@ -1,10 +1,10 @@
 import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import GameState from "./GameState";
-import { DunkShotGameStateManager } from "../DunkShotGameStateManager";
+import DunkShotGameStateManager from "../DunkShotGameStateManager";
 import IStateTransitionData from "../../ultilities/state-machines/IStateTransitionData";
 
-export class PauseState extends GameState {
+class PauseState extends GameState {
 
     constructor(scene: Scene, gameStateManager: DunkShotGameStateManager) {
         super(scene, gameStateManager, AssetManager.PAUSE_UI_SCENE);
@@ -22,3 +22,6 @@ export class PauseState extends GameState {
     }
 
 }
+
+
+export default PauseState;

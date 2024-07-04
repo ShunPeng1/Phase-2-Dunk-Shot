@@ -1,19 +1,39 @@
-class ChallengeGameStateManager {
-    private themeColor : number;
+import { Scene } from "phaser";
+import BaseStateMachine from "../ultilities/state-machines/StateMachine";
+import AssetManager from "./AssetManager";
+import CustomizeState from "./game-states/CustomizeState";
+import DunkShotGameState from "./game-states/DunkShotGameState";
+import DunkShotStateMementoStrategy from "./game-states/DunkShotStateMementoStrategy";
+import MainMenuState from "./game-states/MainMenuState";
+import PauseState from "./game-states/PauseState";
+import RestartState from "./game-states/RestartState";
+import DunkShotGameStateManager from "./DunkShotGameStateManager";
 
-    private currentGameState : string;
+class ChallengeGameStateManager extends DunkShotGameStateManager {
 
-    constructor() {
-        this.themeColor = 0x000000;
-        this.currentGameState = '';
+    constructor(scene: Scene) {
+        super(scene);
+        
+
     }
 
-    public setThemeColor(color : number) : void {
-        this.themeColor = color;
-    }
+    protected intializeStateMachine() {
+        this.mainGameState = new DunkShotGameState(this.scene, this);
+        this.startState = new MainMenuState(this.scene, this);
+        this.restartState = new RestartState(this.scene, this);
+        this.pauseState = new PauseState(this.scene, this);
+        this.customizeState = new CustomizeState(this.scene, this);
 
-    public getThemeColor() : number {
-        return this.themeColor;
+        this.stateMachine = new BaseStateMachine.Builder()
+            .withInitialState(this.startState, true)
+            .withHistoryStrategy(new DunkShotStateMementoStrategy())
+            .build();
+
+        this.stateMachine.addOrOverwriteState(this.mainGameState);
+        this.stateMachine.addOrOverwriteState(this.startState);
+        this.stateMachine.addOrOverwriteState(this.restartState);
+        this.stateMachine.addOrOverwriteState(this.pauseState);
+        this.stateMachine.addOrOverwriteState(this.customizeState);
     }
 
 }
