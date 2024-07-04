@@ -1,6 +1,6 @@
-import IState from "../../ultilities/state_machines/IState";
-import IStateMementoStrategy from "../../ultilities/state_machines/IStateMementoStrategy";
-import IStateTransitionData from "../../ultilities/state_machines/IStateTransitionData";
+import IState from "../../ultilities/state-machines/IState";
+import IStateMementoStrategy from "../../ultilities/state-machines/IStateMementoStrategy";
+import IStateTransitionData from "../../ultilities/state-machines/IStateTransitionData";
 import CustomizeState from "./CustomizeState";
 
 class DunkShotStateMementoStrategy implements IStateMementoStrategy{

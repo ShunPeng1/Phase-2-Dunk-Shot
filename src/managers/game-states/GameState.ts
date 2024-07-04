@@ -1,15 +1,15 @@
 import { Scene } from "phaser";
-import IState from "../../ultilities/state_machines/IState";
-import IStateTransitionData from "../../ultilities/state_machines/IStateTransitionData";
-import GameStateManager from "../GameStateManager";
+import IState from "../../ultilities/state-machines/IState";
+import IStateTransitionData from "../../ultilities/state-machines/IStateTransitionData";
+import DunkShotGameStateManager from "../DunkShotGameStateManager";
 
 class GameState implements IState {
     
     protected scene: Scene;
-    protected gameStateManager: GameStateManager;
+    protected gameStateManager: DunkShotGameStateManager;
     protected sceneName: string;
 
-    constructor(scene : Scene, gameStateManager: GameStateManager, sceneName: string) {
+    constructor(scene : Scene, gameStateManager: DunkShotGameStateManager, sceneName: string) {
         this.scene = scene;
         this.gameStateManager = gameStateManager;
         this.sceneName = sceneName;

@@ -1,16 +1,16 @@
 import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 
 class MainMenuInputHandler {
     private scene : Scene;
     private gameScene : Scene;
-    private gameStateManager: GameStateManager; 
+    private gameStateManager: DunkShotGameStateManager; 
     
     private onPointerDownInMainMenuScene: () => void; // Define the event handler as a class member
     
 
-    constructor(scene: Scene, gameStateManager: GameStateManager) {
+    constructor(scene: Scene, gameStateManager: DunkShotGameStateManager) {
         
         this.scene = scene;
         this.gameScene = this.scene.scene.get(AssetManager.DUNK_SHOT_GAME_SCENE);

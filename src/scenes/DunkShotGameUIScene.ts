@@ -1,10 +1,10 @@
 import AssetManager from "../managers/AssetManager";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
 
 
 class DunkShotGameUIScene extends Phaser.Scene {
-    private gameStateManager: GameStateManager;
+    private gameStateManager: DunkShotGameStateManager;
 
     
 
@@ -12,7 +12,7 @@ class DunkShotGameUIScene extends Phaser.Scene {
         super(AssetManager.DUNK_SHOT_GAME_UI_SCENE);
     }
 
-    init(data: GameStateManager) {
+    init(data: DunkShotGameStateManager) {
         this.gameStateManager = data;
     }
 

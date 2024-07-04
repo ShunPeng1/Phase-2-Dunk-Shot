@@ -1,11 +1,11 @@
 import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
 import UiUtilities from "../ultilities/ui/UiUtilities";
 
 class PauseUIScene extends Scene{
-    private gameStateManager: GameStateManager;
+    private gameStateManager: DunkShotGameStateManager;
 
     
 
@@ -13,7 +13,7 @@ class PauseUIScene extends Scene{
         super(AssetManager.PAUSE_UI_SCENE);
     }
 
-    init(data: GameStateManager) {
+    init(data: DunkShotGameStateManager) {
         this.gameStateManager = data;
     }
 

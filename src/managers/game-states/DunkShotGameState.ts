@@ -1,11 +1,11 @@
 import { Scene } from "phaser";
 import AssetManager from "../AssetManager";
 import GameState from "./GameState";
-import { GameStateManager } from "../GameStateManager";
+import { DunkShotGameStateManager } from "../DunkShotGameStateManager";
 
 export class DunkShotGameState extends GameState {
 
-    constructor(scene: Scene, gameStateManager: GameStateManager) {
+    constructor(scene: Scene, gameStateManager: DunkShotGameStateManager) {
         super(scene, gameStateManager, AssetManager.DUNK_SHOT_GAME_UI_SCENE);
     }
 }

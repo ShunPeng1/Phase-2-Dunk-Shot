@@ -1,19 +1,19 @@
 import StarText from "../entities/scores/StarText";
 import AssetManager from "../managers/AssetManager";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import InventoryManager from "../managers/InventoryManager";
 import UiImage from "../ultilities/ui/UiImage";
 import UiImageButton from "../ultilities/ui/UiImageButton";
 
 
 class CustomizeUIScene extends Phaser.Scene {
-    private gameStateManager: GameStateManager;
+    private gameStateManager: DunkShotGameStateManager;
 
     constructor() {
         super(AssetManager.CUSTOMIZE_UI_SCENE);
     }
 
-    init(data: GameStateManager) {
+    init(data: DunkShotGameStateManager) {
         this.gameStateManager = data;
     }
 

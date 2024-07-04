@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import BaseStateMachine from "../ultilities/state_machines/StateMachine";
+import BaseStateMachine from "../ultilities/state-machines/StateMachine";
 import { PauseState } from "./game-states/PauseState";
 import { DunkShotGameState } from "./game-states/DunkShotGameState";
 import { RestartState } from "./game-states/RestartState";
@@ -8,7 +8,7 @@ import AssetManager from "./AssetManager";
 import CustomizeState from "./game-states/CustomizeState";
 import DunkShotStateMementoStrategy from "./game-states/DunkShotStateMementoStrategy";
 
-export class GameStateManager extends Phaser.Events.EventEmitter {
+export class DunkShotGameStateManager extends Phaser.Events.EventEmitter {
     private scene : Scene;
     private stateMachine : BaseStateMachine;
     
@@ -79,4 +79,4 @@ export class GameStateManager extends Phaser.Events.EventEmitter {
 
 }
 
-export default GameStateManager;
+export default DunkShotGameStateManager;

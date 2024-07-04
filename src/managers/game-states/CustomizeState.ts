@@ -1,12 +1,12 @@
 import { Scene } from "phaser";
 import GameState from "./GameState";
-import GameStateManager from "../GameStateManager";
+import DunkShotGameStateManager from "../DunkShotGameStateManager";
 import AssetManager from "../AssetManager";
-import IStateTransitionData from "../../ultilities/state_machines/IStateTransitionData";
+import IStateTransitionData from "../../ultilities/state-machines/IStateTransitionData";
 
 class CustomizeState extends GameState {
 
-    constructor(scene: Scene, gameStateManager: GameStateManager) {
+    constructor(scene: Scene, gameStateManager: DunkShotGameStateManager) {
         super(scene, gameStateManager, AssetManager.CUSTOMIZE_UI_SCENE);
     }
 

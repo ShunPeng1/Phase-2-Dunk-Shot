@@ -2,18 +2,18 @@ import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
 
 import ScoreManager from "../managers/ScoreManager";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
 import UiUtilities from "../ultilities/ui/UiUtilities";
 
 class RestartUIScene extends Scene {
-    private gameStateManager: GameStateManager;
+    private gameStateManager: DunkShotGameStateManager;
 
     constructor() {
         super({ key: AssetManager.RESTART_UI_SCENE });
     }
 
-    init(data: GameStateManager) {
+    init(data: DunkShotGameStateManager) {
         this.gameStateManager = data;
     }
 

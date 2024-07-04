@@ -14,7 +14,7 @@ import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTraje
 import ScoreText from "../entities/scores/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
 import LoseBoundaryImage from "../entities/boundaries/LoseBoundaryImage";
-import GameStateManager from "../managers/GameStateManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import ScoreManager from "../managers/ScoreManager";
 import ScorePopupText from "../entities/scores/ScorePopupText";
 import StarText from "../entities/scores/StarText";
@@ -72,9 +72,9 @@ class DunkShotGameScene extends Scene {
         this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
     }
 
-    private setupGameStateManager() : GameStateManager {
+    private setupGameStateManager() : DunkShotGameStateManager {
         
-        let gameStateManager = new GameStateManager(this);
+        let gameStateManager = new DunkShotGameStateManager(this);
         gameStateManager.loadMainMenuUI();
         return gameStateManager;
     }
@@ -236,7 +236,7 @@ class DunkShotGameScene extends Scene {
     }
 
 
-    private setupLoseCondition(gameStateManager : GameStateManager ) : void {
+    private setupLoseCondition(gameStateManager : DunkShotGameStateManager ) : void {
         
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.hoopSpawner);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
