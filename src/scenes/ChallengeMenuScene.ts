@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager";
 import UiImage from "../ultilities/ui/UiImage";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import ChallengeSelectionButton from "../entities/ui/ChallengeSelectionButton";
 
 class ChallengeMenuScene extends Scene{
     constructor() {
@@ -36,13 +37,11 @@ class ChallengeMenuScene extends Scene{
         });
 
         
-        let newBallChallengeButton = new UiImageButton(this, width/2, 150, AssetManager.MASKS_186_KEY);
+        let newBallChallengeButton = new ChallengeSelectionButton(this, width/2, 150, AssetManager.UI_387_KEY, "NEW BALL", AssetManager.MASKS_135_KEY);
         newBallChallengeButton.setScale(0.7);
         newBallChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
-
-
 
 
         
@@ -50,28 +49,28 @@ class ChallengeMenuScene extends Scene{
         middleBar.setScale(5, 1)
 
 
-        let limitTimeChallengeButton = new UiImageButton(this, width/2, 330, AssetManager.MASKS_186_KEY);
+        let limitTimeChallengeButton = new ChallengeSelectionButton(this, width/2, 330, AssetManager.UI_131_KEY, "LIMIT TIME", AssetManager.MASKS_152_KEY);
         limitTimeChallengeButton.setScale(0.6);
         limitTimeChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
 
-        let achievementChallengeButton = new UiImageButton(this, width/2, 330 + 130, AssetManager.MASKS_186_KEY);
+        let achievementChallengeButton = new ChallengeSelectionButton(this, width/2,  330 + 130, AssetManager.UI_151_KEY, "ACHIEVEMENT", AssetManager.MASKS_111_KEY);
         achievementChallengeButton.setScale(0.6);
         achievementChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
 
-        let bounceChallengeButton = new UiImageButton(this, width/2,  330 + 130 * 2, AssetManager.MASKS_186_KEY);
+        let bounceChallengeButton = new ChallengeSelectionButton(this, width/2,  330 + 130 * 2, AssetManager.UI_88_KEY, "BOUNCE", AssetManager.MASKS_143_KEY);
         bounceChallengeButton.setScale(0.6);
         bounceChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
         });
 
         
-        let accurateChallengeButton = new UiImageButton(this, width/2,  330 + 130 * 3, AssetManager.MASKS_186_KEY);
+        let accurateChallengeButton = new ChallengeSelectionButton(this, width/2,  330 + 130 * 3, AssetManager.UI_4_KEY, "ACCURATE", AssetManager.MASKS_27_KEY);
         accurateChallengeButton.setScale(0.6);
         accurateChallengeButton.addOnPressDownCallback(() => {
             console.log("New Ball Challenge Button is active");
