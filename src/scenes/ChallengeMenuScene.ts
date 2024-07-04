@@ -59,7 +59,7 @@ class ChallengeMenuScene extends Scene{
         let achievementChallengeButton = new ChallengeSelectionButton(this, width/2,  330 + 130, AssetManager.UI_151_KEY, "ACHIEVEMENT", AssetManager.MASKS_111_KEY);
         achievementChallengeButton.setScale(0.6);
         achievementChallengeButton.addOnPressDownCallback(() => {
-            console.log("New Ball Challenge Button is active");
+            this.scene.start(AssetManager.CHALLENGE_GAME_SCENE);
         });
 
 

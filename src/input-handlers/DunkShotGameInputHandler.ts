@@ -1,3 +1,4 @@
+import { Scene } from "phaser";
 import Ball from "../entities/balls/Ball";
 import BasketballHoop from "../entities/hoops/BasketballHoop";
 import ITrajectory from "../entities/trajectories/ITrajectory";
@@ -5,7 +6,7 @@ import DunkShotGameScene from "../scenes/DunkShotGameScene";
 
 
 class DunkShotGameInputHandler {
-    private scene: DunkShotGameScene;
+    private scene: Scene;
     private isDragging: boolean = false;
     private dragStartPoint: Phaser.Math.Vector2;
     private currentHoop: BasketballHoop;
@@ -21,7 +22,7 @@ class DunkShotGameInputHandler {
     private readonly PUSH_BALL_FORCE: number = 1100;
     
     
-    constructor(scene: DunkShotGameScene, ball: Ball, trajectory : ITrajectory) {
+    constructor(scene: Scene, ball: Ball, trajectory : ITrajectory) {
         this.scene = scene;
         this.ball = ball;
         this.trajectory = trajectory;

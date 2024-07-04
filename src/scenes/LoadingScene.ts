@@ -322,6 +322,10 @@ class LoadingScene extends Scene {
         this.load.audio(AssetManager.SOUNDS_TRUMP_6_KEY, AssetManager.SOUNDS_TRUMP_6_SOUND);
         this.load.audio(AssetManager.SOUNDS_TRUMP_8_KEY, AssetManager.SOUNDS_TRUMP_8_SOUND);
         this.load.audio(AssetManager.SOUNDS_TRUMP_9_KEY, AssetManager.SOUNDS_TRUMP_9_SOUND);
+
+
+        // levels
+        this.load.tilemapTiledJSON(AssetManager.LEVELS_TEST_LEVEL_KEY, AssetManager.LEVELS_TEST_LEVEL);
     }
     
     // The rest of this file makes the visual loading bar work!

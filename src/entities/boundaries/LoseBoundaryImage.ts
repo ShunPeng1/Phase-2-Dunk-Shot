@@ -42,7 +42,10 @@ class LoseBoundaryImage extends Physics.Arcade.Image {
 
 
     private onHoopEnter(hoop : BasketballHoop) : void {
-        this.setY(hoop.y + this.offsetY);
+        let hoopWorldPosition = hoop.getWorldTransformMatrix();
+        //this.setX(hoopWorldPosition.tx + this.offsetX);
+
+        this.setY(hoopWorldPosition.ty + this.offsetY);
     }
 
 }

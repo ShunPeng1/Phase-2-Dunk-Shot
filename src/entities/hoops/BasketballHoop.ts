@@ -5,7 +5,7 @@ import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContaine
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
 import NetLinePhysicGroupContainer from "../physics/NetLinePhysicGroupContainer";
 
-class BasketballHoop extends Phaser.GameObjects.Container{
+class BasketballHoop extends Phaser.GameObjects.GameObject{
     
     
     private isInitialized: boolean = false;
@@ -21,6 +21,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     private readonly RING_RADIUS: number = 83; // Property to store the radius of the circle collider
     
     // Container to hold the hoop components
+    private hoopContainer: Phaser.GameObjects.Container;
     private internalHoopContainer: Phaser.GameObjects.Container;
 
 
@@ -45,9 +46,9 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     constructor(scene : Scene, x : number, y : number) {
         
-        super(scene, x, y);   
+        super(scene, 'BasketballHoop');   
 
-
+        this.hoopContainer = scene.add.container(x, y);
 
         this.initImageComponents(scene, x, y); // Initialize the image components
 
@@ -84,7 +85,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.ringPhysicGroupContainer.setAllowGravity(false);
         this.ringPhysicGroupContainer.setBounce(0.5);
 
-        this.add(this.ringPhysicGroupContainer);
+        this.hoopContainer.add(this.ringPhysicGroupContainer);
 
 
         // Create the line collider
@@ -97,7 +98,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         
 
-        this.add(this.linePhysicGroupContainer)
+        this.hoopContainer.add(this.linePhysicGroupContainer)
         
     }
 
@@ -105,7 +106,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         
         // Create the internal hoop components
         this.internalHoopContainer = scene.add.container(0, this.INTERNAL_CONTAINER_OFFSET_Y);
-        this.add(this.internalHoopContainer);
+        this.hoopContainer.add(this.internalHoopContainer);
         
 
         
@@ -116,7 +117,7 @@ class BasketballHoop extends Phaser.GameObjects.Container{
         this.internalHoopPhysicGroupContainer.setAllowGravity(false);
         this.internalHoopPhysicGroupContainer.setEnable(true); // Make the collider a trigger
     
-        this.add(this.internalHoopPhysicGroupContainer);
+        this.hoopContainer.add(this.internalHoopPhysicGroupContainer);
     }
 
 
@@ -141,12 +142,12 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     
     public setPosition(x: number, y: number) : this {
-        super.setPosition(x, y);
 
         if (!this.isInitialized) {
             return this;
         }
 
+        this.hoopContainer.setPosition(x, y);
         this.innerRing.setPosition(x, y);
         this.outerRing.setPosition(x, y);
         this.net.setPosition(x, y + this.NET_OFFSET_Y); // Adjust the Y offset as needed
@@ -161,10 +162,10 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
     // Method to set the scale of the basketball hoop components
     public setScale(scaleX: number, scaledY? : number) : this {
-        super.setScale(scaleX, scaledY);
+        
 
         this.currentRingScale = scaleX;
-
+        this.hoopContainer.setScale(scaleX, scaledY);
         this.innerRing.setScale(scaleX);
         this.outerRing.setScale(scaleX);
         
@@ -176,8 +177,8 @@ class BasketballHoop extends Phaser.GameObjects.Container{
     }
     
     public setRotation(angle: number) : this {
-        super.setRotation(angle);
-
+       
+        this.hoopContainer.setRotation(angle);
         this.innerRing.setRotation(angle);
         this.outerRing.setRotation(angle);
         this.net.setRotation(angle);
@@ -186,6 +187,11 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
         this.updateComponentPosition();
 
+        return this;
+    }
+
+    public setTexture(texture: string) : this {
+        // Ignore
         return this;
     }
 
@@ -212,6 +218,12 @@ class BasketballHoop extends Phaser.GameObjects.Container{
 
 
         return new Phaser.Math.Vector2(worldPoint.x, worldPoint.y);
+    }
+
+    public getWorldTransformMatrix() : Phaser.GameObjects.Components.TransformMatrix {
+        let matrix = new Phaser.GameObjects.Components.TransformMatrix();
+        this.internalHoopContainer.getWorldTransformMatrix(matrix);
+        return matrix;
     }
 
     public getCurrentNetScale(): number {

@@ -12,6 +12,8 @@ class AssetManager {
 
     public static readonly DUNK_SHOT_SOUNDS_FOLDER: string = "assets/dunk-shot/sounds/";
 
+    public static readonly DUNK_SHOT_LEVELS_FOLDER: string = "assets/dunk-shot/levels/";
+
     // Balls images
     public static readonly BASKETBALL_IMAGE: string = AssetManager.BALLS_FOLDER + "17.png"; 
     public static readonly BASKETBALL_KEY: string = "basketball";
@@ -633,6 +635,12 @@ class AssetManager {
     public static readonly SOUNDS_TRUMP_9_SOUND: string = AssetManager.DUNK_SHOT_SOUNDS_FOLDER + "trump_9.mp3";  
     public static readonly SOUNDS_TRUMP_9_KEY: string = "sounds_trump_9";
 
+
+    // Tilemaps
+    public static readonly LEVELS_TEST_LEVEL: string = AssetManager.DUNK_SHOT_LEVELS_FOLDER + "test-level.json";
+    public static readonly LEVELS_TEST_LEVEL_KEY: string = "levels_test_level";
+
+
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";
     public static readonly DUNK_SHOT_GAME_SCENE: string = "DunkShotGameScene";
@@ -645,6 +653,7 @@ class AssetManager {
     public static readonly CUSTOMIZE_UI_SCENE: string = "CustomizeUIScene";
 
     public static readonly CHALLENGE_MENU_SCENE: string = "ChallengeMenuScene";
+    public static readonly CHALLENGE_GAME_SCENE: string = "ChallengeGameScene";
     
     // Inventory keys
     public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";

@@ -7,6 +7,7 @@ import PauseUIScene from "./scenes/PauseUIScene";
 import CustomizeState from "./managers/game-states/CustomizeState";
 import CustomizeUIScene from "./scenes/CustomizeUIScene";
 import ChallengeMenuScene from "./scenes/ChallengeMenuScene";
+import ChallengeGameScene from "./scenes/ChallengeGameScene";
 
 
 class Game {
@@ -33,7 +34,8 @@ class Game {
                 DunkShotGameUIScene, 
                 PauseUIScene, 
                 CustomizeUIScene,
-                ChallengeMenuScene
+                ChallengeMenuScene,
+                ChallengeGameScene
             ],
             physics: {
                 default: 'arcade',
