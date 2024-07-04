@@ -654,6 +654,7 @@ class AssetManager {
 
     public static readonly CHALLENGE_MENU_SCENE: string = "ChallengeMenuScene";
     public static readonly CHALLENGE_GAME_SCENE: string = "ChallengeGameScene";
+    public static readonly CHALLENGE_START_UI_SCENE: string = "ChallengeStartUIScene";
     
     // Inventory keys
     public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";

@@ -5,7 +5,7 @@
  </editorsettings>
  <tileset firstgid="1" source="Hoop.tsx"/>
  <objectgroup id="4" name="Object Layer 1">
-  <object id="60" name="Start Position" x="88.9394" y="5680.86" width="10.6667" height="8.16667"/>
+  <object id="60" name="Start Position" x="126.273" y="5691.86" width="10.6667" height="8.16667"/>
   <object id="72" name="Start Hoop" gid="8" x="121.667" y="5784.5" width="98" height="53.5"/>
   <object id="74" gid="8" x="381" y="5626.58" width="98" height="53.5"/>
   <object id="75" gid="8" x="243" y="5322.58" width="98" height="53.5" rotation="13"/>

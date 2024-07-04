@@ -24,6 +24,7 @@ import InventoryManager from "../managers/InventoryManager";
 import ScoreManager from "../managers/ScoreManager";
 import DunkShotGameScene from "./DunkShotGameScene";
 import BallInteraction from "../entities/balls/BallInteraction";
+import ChallengeGameStateManager from "../managers/ChallengeGameStateManager";
 
 class ChallengeGameScene extends DunkShotGameScene {
 
@@ -48,6 +49,8 @@ class ChallengeGameScene extends DunkShotGameScene {
         });
 
         let offsetY = this.ballSpawnPlace.y - startPosition.y;
+
+        this.ball.setPosition(startPosition.x, this.ballSpawnPlace.y);
 
         console.log(basketballHoopInLayer);
 
@@ -102,8 +105,45 @@ class ChallengeGameScene extends DunkShotGameScene {
     }
 
     protected setupGameStateManager(): void {
-        //this.gameStateManager = new DunkShotGameStateManager();
+        let gameStateManager = new ChallengeGameStateManager(this);
+        gameStateManager.loadStartUI();
 
+        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.ballInteraction);
+        loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
+            
+            if (ball instanceof Ball && loseBoundaryImage instanceof LoseBoundaryImage) {
+                let firstHoop = this.ballInteraction.getFirstHoop();
+                
+                if (firstHoop){
+                    ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
+                    ball.stableBall();
+                    // Tween the hoop's rotation to 0
+                    this.tweens.add({
+                        targets: firstHoop,
+                        values: {from: firstHoop.getRotation(), to: 0}, 
+                        ease: 'Linear',
+                        duration: 100,
+                        onComplete: () => {
+                            // After the rotation tween completes, set the ball's position and velocity
+                            ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
+                            ball.pushBall(100, 100, Math.PI/2);
+                        },
+                        onUpdate: (tween) => {
+                            // Update the hoop's rotation during the tween
+                            const value = tween.getValue();
+                            firstHoop!.setRotation(value);
+                        }
+                    });
+                    
+                }
+                else{
+                    loseBoundaryImage.disableBody();
+                    ScoreManager.getInstance().saveHighScore();
+                    
+                    gameStateManager.loadRestartUI();
+                }
+            }
+        });
 
     }
 

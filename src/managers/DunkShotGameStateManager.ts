@@ -25,6 +25,7 @@ class DunkShotGameStateManager extends Phaser.Events.EventEmitter {
         
         this.scene = scene;
 
+        this.intializeStateMachine();
     }
 
     protected intializeStateMachine() {
