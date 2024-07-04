@@ -469,6 +469,8 @@ class AssetManager {
     public static readonly UI_32_KEY: string = "ui_32";
     public static readonly UI_38_IMAGE: string = AssetManager.UI_FOLDER + "38.png";
     public static readonly UI_38_KEY: string = "ui_38";
+    public static readonly UI_387_IMAGE: string = AssetManager.UI_FOLDER + "387.png";
+    public static readonly UI_387_KEY: string = "ui_387";
     public static readonly UI_4_IMAGE: string = AssetManager.UI_FOLDER + "4.png";
     public static readonly UI_4_KEY: string = "ui_4";
     public static readonly UI_44_IMAGE: string = AssetManager.UI_FOLDER + "44.png";
