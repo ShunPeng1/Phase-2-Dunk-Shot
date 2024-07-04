@@ -1,0 +1,70 @@
+import { Scene } from "phaser";
+import AssetManager from "../managers/AssetManager";
+import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
+import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiUtilities from "../ultilities/ui/UiUtilities";
+import ChallengeGameStateManager from "../managers/ChallengeGameStateManager";
+
+class ChallengePauseUIScene extends Scene{
+    private gameStateManager: ChallengeGameStateManager;
+
+    
+
+    constructor() {
+        super(AssetManager.CHALLENGE_PAUSE_UI_SCENE);
+    }
+
+    init(data: ChallengeGameStateManager) {
+        this.gameStateManager = data;
+    }
+
+
+    create() {
+        
+        const { width, height } = this.sys.game.config;
+
+        
+        const overlay = this.add.graphics();
+        overlay.fillStyle(0xe8e8e8, 0.8); // Grey color with alpha 0.6
+        overlay.fillRect(0, 0, Number(width), Number(height));
+    
+
+
+        const restartButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.UI_85_KEY);
+        restartButton.addOnPressUpCallback(() => {
+            this.gameStateManager.reloadChallenge();
+        });
+
+        const restartText = this.add.text(restartButton.x + 30, restartButton.y, 'RESTART', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
+        restartButton.add(restartText);
+        restartButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(restartButton);
+        
+
+        const skinButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 50, AssetManager.SKIN_WIDE_BUTTON_KEY);
+        skinButton.addOnPressUpCallback(() => {
+            this.gameStateManager.loadCustomizeUI();
+        });
+
+        const skinText = this.add.text(skinButton.x + 30, skinButton.y, 'SKIN', { font: 'bold 30px Arial', color: '#ffffff' }).setOrigin(0.5);
+        skinButton.add(skinText);
+        skinButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(skinButton);
+
+        const resumeButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 + 100, AssetManager.RESUME_WIDE_BUTTON_KEY);
+        resumeButton.addOnPressUpCallback(() => {
+            this.gameStateManager.loadGameUI();
+        });
+
+        const resumeText = this.add.text(resumeButton.x + 30, resumeButton.y, 'RESUME', { font: 'bold 30px Arial', color: '#ffffff' }).setOrigin(0.5);
+        resumeButton.add(resumeText);
+        resumeButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(resumeButton);
+
+
+    }
+
+
+}
+
+export default ChallengePauseUIScene;

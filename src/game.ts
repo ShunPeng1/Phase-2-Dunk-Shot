@@ -9,6 +9,7 @@ import ChallengeMenuScene from "./scenes/ChallengeMenuScene";
 import ChallengeGameScene from "./scenes/ChallengeGameScene";
 import ChallengeStartUIScene from "./scenes/ChallengeStartUIScene";
 import ChallengeLoseUIScene from "./scenes/ChallengeLoseUIScene";
+import ChallengePauseUIScene from "./scenes/ChallengePauseUIScene";
 
 
 class Game {
@@ -39,7 +40,8 @@ class Game {
                 ChallengeMenuScene,
                 ChallengeGameScene,
                 ChallengeStartUIScene,
-                ChallengeLoseUIScene
+                ChallengeLoseUIScene,
+                ChallengePauseUIScene
             ],
             physics: {
                 default: 'arcade',

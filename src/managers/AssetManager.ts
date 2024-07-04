@@ -659,7 +659,8 @@ class AssetManager {
     public static readonly CHALLENGE_START_UI_SCENE: string = "ChallengeStartUIScene";
     public static readonly CHALLENGE_LOSE_UI_SCENE: string = "ChallengeLoseUIScene";
     public static readonly CHALLENGE_WIN_UI_SCENE: string = "ChallengeWinUIScene";
-    
+    public static readonly CHALLENGE_PAUSE_UI_SCENE: string = "ChallengePauseUIScene";
+        
     // Inventory keys
     public static readonly GOLDEN_STAR_INVENTORY_KEY: string = "golden star";
     public static readonly BALL_SKIN_INVENTORY_KEY: string = "ball skin";

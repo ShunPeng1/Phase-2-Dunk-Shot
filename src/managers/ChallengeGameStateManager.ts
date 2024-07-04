@@ -10,6 +10,7 @@ import ChallengeStartState from "./game-states/ChallengeStartState";
 import GameState from "./game-states/GameState";
 import ChallengeLoseState from "./game-states/ChallengeLoseState";
 import AssetManager from "./AssetManager";
+import ChallengePauseState from "./game-states/ChallengePauseState";
 
 class ChallengeGameStateManager extends DunkShotGameStateManager {
     private challengeWinState: GameState;
@@ -24,7 +25,7 @@ class ChallengeGameStateManager extends DunkShotGameStateManager {
         this.mainGameState = new DunkShotGameState(this.scene, this);
         this.startState = new ChallengeStartState(this.scene, this);
         this.restartState = new ChallengeLoseState(this.scene, this);
-        this.pauseState = new PauseState(this.scene, this);
+        this.pauseState = new ChallengePauseState(this.scene, this);
         this.customizeState = new CustomizeState(this.scene, this);
         //this.challengeWinState = new ChallengeWinState(this.scene, this);
         
