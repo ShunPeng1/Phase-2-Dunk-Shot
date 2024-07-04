@@ -22,20 +22,12 @@ import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTraje
 import DunkShotGameInputHandler from "../input-handlers/DunkShotGameInputHandler";
 import InventoryManager from "../managers/InventoryManager";
 import ScoreManager from "../managers/ScoreManager";
+import DunkShotGameScene from "./DunkShotGameScene";
 
-class ChallengeGameScene extends Phaser.Scene {
-
-    private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 450);
-    private ball: Ball;
-    private invisibleBallFollower: GameObjects.Graphics;
-
-    private hoopSpawner: HoopSpawner;
-
-    private readonly PHYSICS_FPS: number = 300;
-    
+class ChallengeGameScene extends DunkShotGameScene {
 
     constructor() {
-        super({ key: AssetManager.CHALLENGE_GAME_SCENE});
+        super(AssetManager.CHALLENGE_GAME_SCENE);
     }
 
 

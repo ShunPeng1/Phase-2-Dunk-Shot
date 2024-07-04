@@ -30,48 +30,58 @@ import BallInteraction from "../entities/balls/BallInteraction";
 
 class DunkShotGameScene extends Scene {
 
-    private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 450);
-    private ball: Ball;
-    private invisibleBallFollower: GameObjects.Graphics;
-    private ballInteraction: BallInteraction;
+    protected ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 450);
+    protected ball: Ball;
+    protected invisibleBallFollower: GameObjects.Graphics;
+    protected ballInteraction: BallInteraction;
+    protected scoreCounter: ScoreCounter;
 
     private readonly PHYSICS_FPS: number = 300;
     
-    constructor() {
-        super({ key: AssetManager.DUNK_SHOT_GAME_SCENE });
+    constructor(key: string = AssetManager.DUNK_SHOT_GAME_SCENE) {
+        super({ key: key });
     }
 
-    create() {
-        this.setupPhysics();
-        let gameStateManager = this.setupGameStateManager();
+    private create() {
+        this.setupGame();
+
+        // Configure the game UI and style
         
-        // Order of setup matters
+        this.setupGameFeel();
+        this.setupGameUI();
+        this.setupGameStyle();
+    }
+
+    private setupGame() : void {
+        this.setupPhysics();
         this.setupBall();
-        this.setupHoops();
         this.setupInputHandler();
         this.setupBoundaries();
-        this.setupLoseCondition(gameStateManager);
-
-        // Set up effects and UI
         this.setupCamera();
-        this.setupStarManagement();
         this.setupScoreManagement();
+    }
+
+    protected setupGameFeel() : void {
+        this.setupScorePopupText();
         this.setupParticle();
         this.setupSound();
     }
 
+    protected setupGameUI() : void {
+        this.setUpScoreBackgroundText();
+        this.setupStarManagement();
+    }
+
+    protected setupGameStyle() : void {
+        this.setupGameStateManager();
+        this.setupRandomSpawnHoops();
+    }
     
     private setupPhysics() : void {
         this.physics.world.setFPS(this.PHYSICS_FPS);
         this.physics.world.setBounds(0, 0, AssetManager.WORLD_WIDTH, AssetManager.WORLD_HEIGHT);
     }
 
-    private setupGameStateManager() : DunkShotGameStateManager {
-        
-        let gameStateManager = new DunkShotGameStateManager(this);
-        gameStateManager.loadMainMenuUI();
-        return gameStateManager;
-    }
 
     private setupCamera() : void {
     
@@ -120,7 +130,95 @@ class DunkShotGameScene extends Scene {
        
     }
 
-    private setupHoops() : void {
+
+    private setupInputHandler() : void {
+        
+
+        let inputHandler = new DunkShotGameInputHandler(this, this.ball, 
+            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
+        inputHandler.setCurrentHoop(this.ballInteraction.getFirstHoop()!);
+
+    }
+
+    private setupScoreManagement() : void {
+        
+        ScoreManager.getInstance().resetScore();
+        const scoreCounter = new ScoreCounter(this.ballInteraction);
+        this.scoreCounter = scoreCounter;
+        
+
+    }
+
+    protected setUpScoreBackgroundText() : void {
+
+        
+        let scoreText = new ScoreText(
+            this, 
+            this.cameras.main.width / 2, // X position: Middle of the screen
+            this.cameras.main.height / 3.5, // Y position: Middle of the screen
+            '0', 
+            { 
+                fontSize: 'bold 150px', 
+                fontFamily: 'Arial', // Specify a bold font family
+                color: '#c6c6c6', // Example color: white
+                align: 'center' // Ensure the text is centered
+            }
+        );
+        scoreText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
+        scoreText.setDepth(-5);
+        scoreText.setScrollFactor(0, 0); // This line makes the score text follow the camera
+    
+        
+        this.scoreCounter.on(this.scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
+            scoreText.updateScore(totalScore);
+            //console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
+        });
+
+
+    }
+
+    protected setupScorePopupText() : void {
+        let scorePopupText = new ScorePopupText(this, this.ball, this.scoreCounter);
+    }
+
+    protected setupStarManagement() : void {
+        let starText = new StarText(this, 500, 150, '0', { 
+            fontSize: 'bold 40px', 
+            fontFamily: 'Arial', // Specify a bold font family
+            color: '#f2a63b', // Example color: white
+            align: 'center' // Ensure the text is centered
+            }
+        );
+
+        starText.setScale(0.6);
+        starText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
+        starText.setScrollFactor(0, 0); // This line makes the score text follow the camera
+   
+        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
+        
+        this.ball.on(this.ball.COLLECTIBLE_OVERLAP_EVENT, (collectible: GoldenStarCollectible) => {
+            
+            if (collectible instanceof GoldenStarCollectible) {
+                starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
+                const collectibleEndPosition = new Phaser.Math.Vector2(starText.x + this.cameras.main.scrollX - 45, starText.y + this.cameras.main.scrollY);
+                collectible.createCollectAnimation(new Phaser.Math.Vector2(collectibleEndPosition));
+            }
+        });
+    }
+
+
+    protected setupParticle() : void {
+        let ballParticle = new BallParticle(this,"", this.ball, this.ballInteraction, this.invisibleBallFollower);
+        
+        this.add.existing(ballParticle);
+    }
+
+    protected setupSound() : void {
+        let ballSpeaker = new BallSpeaker(this, this.ball, this.ballInteraction);
+    }
+
+    
+    protected setupRandomSpawnHoops() : void {
         
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
         let collectibleFactory = new CollectibleFactory(this);
@@ -168,77 +266,13 @@ class DunkShotGameScene extends Scene {
         });
 
     }
-
-    private setupInputHandler() : void {
-        
-
-        let inputHandler = new DunkShotGameInputHandler(this, this.ball, 
-            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
-        inputHandler.setCurrentHoop(this.ballInteraction.getFirstHoop()!);
-
-    }
-
-    private setupScoreManagement() : void {
-        
-        ScoreManager.getInstance().resetScore();
-        const scoreCounter = new ScoreCounter(this.ballInteraction);
-
-        
-
-        let scoreText = new ScoreText(
-            this, 
-            this.cameras.main.width / 2, // X position: Middle of the screen
-            this.cameras.main.height / 3.5, // Y position: Middle of the screen
-            '0', 
-            { 
-                fontSize: 'bold 150px', 
-                fontFamily: 'Arial', // Specify a bold font family
-                color: '#c6c6c6', // Example color: white
-                align: 'center' // Ensure the text is centered
-            }
-        );
-        scoreText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
-        scoreText.setDepth(-5);
-        scoreText.setScrollFactor(0, 0); // This line makes the score text follow the camera
     
-        scoreCounter.on(scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
-            scoreText.updateScore(totalScore);
-            //console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
-        });
-
-
-        let scorePopupText = new ScorePopupText(this, this.ball, scoreCounter);
-
-    }
-
-    private setupStarManagement() : void {
-        let starText = new StarText(this, 500, 150, '0', { 
-            fontSize: 'bold 40px', 
-            fontFamily: 'Arial', // Specify a bold font family
-            color: '#f2a63b', // Example color: white
-            align: 'center' // Ensure the text is centered
-            }
-        );
-
-        starText.setScale(0.6);
-        starText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
-        starText.setScrollFactor(0, 0); // This line makes the score text follow the camera
-   
-        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
+    protected setupGameStateManager(){
         
-        this.ball.on(this.ball.COLLECTIBLE_OVERLAP_EVENT, (collectible: GoldenStarCollectible) => {
-            
-            if (collectible instanceof GoldenStarCollectible) {
-                starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
-                const collectibleEndPosition = new Phaser.Math.Vector2(starText.x + this.cameras.main.scrollX - 45, starText.y + this.cameras.main.scrollY);
-                collectible.createCollectAnimation(new Phaser.Math.Vector2(collectibleEndPosition));
-            }
-        });
-    }
+        let gameStateManager = new DunkShotGameStateManager(this);
+        gameStateManager.loadMainMenuUI();
 
 
-    private setupLoseCondition(gameStateManager : DunkShotGameStateManager ) : void {
-        
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.ballInteraction);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
             
@@ -265,8 +299,6 @@ class DunkShotGameScene extends Scene {
                             firstHoop!.setRotation(value);
                         }
                     });
-
-
                     
                 }
                 else{
@@ -277,18 +309,6 @@ class DunkShotGameScene extends Scene {
                 }
             }
         });
-
-    }
-
-    private setupParticle() : void {
-        let ballParticle = new BallParticle(this,"", this.ball, this.ballInteraction, this.invisibleBallFollower);
-        
-        this.add.existing(ballParticle);
-    }
-
-    private setupSound() : void {
-        let ballSpeaker = new BallSpeaker(this, this.ball, this.ballInteraction);
-
 
     }
 
