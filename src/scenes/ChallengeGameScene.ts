@@ -27,10 +27,14 @@ import BallInteraction from "../entities/balls/BallInteraction";
 import ChallengeGameStateManager from "../managers/ChallengeGameStateManager";
 import ScoreToWinPredicate from "../managers/win-predicates/ScoreToWinPredicate";
 import IGoalPredicate from "../managers/win-predicates/types/IGoalPredicate";
+import ChallengeConfiguration from "../managers/win-predicates/ChallengeConfiguration";
 
 class ChallengeGameScene extends DunkShotGameScene {
 
+    
     private winCondition: IGoalPredicate;
+    private orderHoops: GameObjects.GameObject[];
+
 
     constructor() {
         super(AssetManager.CHALLENGE_GAME_SCENE);
@@ -42,42 +46,48 @@ class ChallengeGameScene extends DunkShotGameScene {
         this.setupHoops();
     }
 
+    
+    protected setupGameUI() : void {
+        this.setupScoreBackgroundText();
+        this.setupHoopCountText();
+    }
+
+    protected setupHoopCountText() {
+        let hoopCountText = this.add.text(550, 160, "0/"+ (this.orderHoops.length -1) + " Baskets", { fontFamily: 'Arial', fontSize: 24, color: '#000000' }).setOrigin(1);
+        hoopCountText.setScrollFactor(0);
+        console.log("setupHoopCountText");
+        let currentCount = 0;
+        this.ballInteraction.on(BallInteraction.ENTER_NEXT_HOOP_EVENT, (enterHoop: BasketballHoop, lastHoop : BasketballHoop , perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean) => {
+            currentCount++;
+            hoopCountText.setText(currentCount+"/"+ (this.orderHoops.length-1) + " Baskets");
+        });
+    }
+
     protected setupWinCondition() {
         var map = this.make.tilemap({
-            key: AssetManager.LEVELS_TEST_LEVEL_KEY ,
+            key: AssetManager.LEVELS_TEST_LEVEL_KEY,
             tileWidth: 16,
             tileHeight: 16
         });
-
+    
         const configure = map.findObject("Object Layer 1", obj => obj.name === "Configure") as any;
-  
-        if (!configure  || !configure.properties) {
+    
+        if (!configure || !configure.properties) {
             throw new Error("No configuration object found in the level");
         }
-
-        // Utility function to find a property value by name
-        const findPropertyValue = (properties: any[], propertyName: string): string | undefined => {
-            const property = properties.find(prop => prop.name === propertyName);
-            return property ? property.value : undefined;
-        };
-
-        let winCondition: string = findPropertyValue(configure.properties, "WinCondition")!;
-
     
-
+        const levelConfig = new ChallengeConfiguration(configure);
+    
         let goalPredicate: IGoalPredicate;
-
-        switch (winCondition) {
+    
+        switch (levelConfig.winCondition) {
             case "SCORE":
-                let scoreToWin = parseInt(findPropertyValue(configure.properties, "ScoreToWin")!);
-                
-
-                goalPredicate = new ScoreToWinPredicate(scoreToWin, () => ScoreManager.getInstance().getScore());
+                goalPredicate = new ScoreToWinPredicate(levelConfig.scoreToWin, () => ScoreManager.getInstance().getScore());
                 break;
             default:
                 throw new Error("Invalid win condition");
         }
-
+    
         this.winCondition = goalPredicate;
 
     }
@@ -131,6 +141,8 @@ class ChallengeGameScene extends DunkShotGameScene {
         if (orderHoops.length < 3) {
             throw new Error("Not enough hoops in the level");
         }
+
+        this.orderHoops = orderHoops;
 
         // Set the first and next hoop for the ball interaction
         this.ballInteraction.setFirstHoop(orderHoops[0]);

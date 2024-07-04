@@ -68,7 +68,7 @@ class DunkShotGameScene extends Scene {
     }
 
     protected setupGameUI() : void {
-        this.setUpScoreBackgroundText();
+        this.setupScoreBackgroundText();
         this.setupStarManagement();
     }
 
@@ -148,7 +148,7 @@ class DunkShotGameScene extends Scene {
 
     }
 
-    protected setUpScoreBackgroundText() : void {
+    protected setupScoreBackgroundText() : void {
 
         
         let scoreText = new ScoreText(
