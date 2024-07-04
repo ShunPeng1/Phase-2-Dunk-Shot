@@ -3,14 +3,15 @@ import Ball from "../balls/Ball";
 import HoopSpawner from "../hoops/HoopSpawner";
 import AssetManager from "../../managers/AssetManager";
 import BasketballHoop from "../hoops/BasketballHoop";
+import BallInteraction from "../balls/BallInteraction";
 
 class BallSpeaker extends Phaser.GameObjects.GameObject {
     private ball : Ball;
-    private hoopSpawner : HoopSpawner;
+    private hoopSpawner : BallInteraction;
 
     private perfectCount : number = 0;
 
-    constructor(scene : Scene, ball : Ball, hoopSpawner : HoopSpawner) {
+    constructor(scene : Scene, ball : Ball, ballInteraction : BallInteraction) {
         super(scene, "BallSpeaker");
         this.ball = ball;
     
@@ -20,10 +21,10 @@ class BallSpeaker extends Phaser.GameObjects.GameObject {
         this.ball.on(this.ball.COLLECTIBLE_OVERLAP_EVENT, this.playCollectibleSound.bind(this));
         this.ball.on(this.ball.BALL_PUSH_EVENT, this.playPushSound.bind(this));
 
-        this.hoopSpawner = hoopSpawner;
+        this.hoopSpawner = ballInteraction;
 
-        this.hoopSpawner.subscribeToEnterNextHoop(this.playEnterNextHoopSound.bind(this));
-        this.hoopSpawner.subscribeToEnterCurrentHoop(this.playEnterCurrentHoopSound.bind(this));
+        this.hoopSpawner.on(BallInteraction.ENTER_NEXT_HOOP_EVENT , this.playEnterNextHoopSound.bind(this));
+        this.hoopSpawner.on(BallInteraction.ENTER_CURRENT_HOOP_EVENT , this.playEnterCurrentHoopSound.bind(this));
 
         
         this.scene.add.existing(this);
@@ -44,7 +45,7 @@ class BallSpeaker extends Phaser.GameObjects.GameObject {
         this.scene.sound.play(AssetManager.SOUNDS_STAR_2_KEY);
     }
 
-    private playEnterNextHoopSound(hoop : BasketballHoop, perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean ) : void {  
+    private playEnterNextHoopSound(hoop : BasketballHoop, lastHoop : BasketballHoop , perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean ) : void {  
         this.perfectCount = perfectCount;
         
         switch(perfectCount) {

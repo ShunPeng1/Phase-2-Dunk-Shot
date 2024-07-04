@@ -1,20 +1,21 @@
 import { Physics } from "phaser";
 import HoopSpawner from "../hoops/HoopSpawner";
 import BasketballHoop from "../hoops/BasketballHoop";
+import BallInteraction from "../balls/BallInteraction";
 
 class LoseBoundaryImage extends Physics.Arcade.Image {
 
-    private spawner : HoopSpawner;
+    private ballInteraction : BallInteraction;
 
     private offsetX : number;
     private offsetY : number;
     
     
-    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, offsetX : number, offsetY : number, spawner : HoopSpawner){
+    constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, offsetX : number, offsetY : number, ballInteraction : BallInteraction){
         super(scene, x, y, '');
 
 
-        this.spawner = spawner;
+        this.ballInteraction = ballInteraction;
 
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -31,7 +32,7 @@ class LoseBoundaryImage extends Physics.Arcade.Image {
         this.setVisible(false);
 
 
-        this.spawner.subscribeToEnterNextHoop(this.onHoopEnter.bind(this));
+        this.ballInteraction.on(BallInteraction.ENTER_NEXT_HOOP_EVENT, this.onHoopEnter.bind(this));
 
     }
 

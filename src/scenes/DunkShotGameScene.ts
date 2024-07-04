@@ -26,26 +26,20 @@ import WallBoundaryImage from "../entities/boundaries/WallBoundaryImage";
 import FireTrail from "../entities/particles/FireTrail";
 import BallParticle from "../entities/balls/BallParticle";
 import BallSpeaker from "../entities/sounds/BallSpeaker";
+import BallInteraction from "../entities/balls/BallInteraction";
 
 class DunkShotGameScene extends Scene {
 
     private ballSpawnPlace: Phaser.Math.Vector2 = new Phaser.Math.Vector2(150, 450);
     private ball: Ball;
     private invisibleBallFollower: GameObjects.Graphics;
-
-    private hoopSpawner: HoopSpawner;
+    private ballInteraction: BallInteraction;
 
     private readonly PHYSICS_FPS: number = 300;
-    
     
     constructor() {
         super({ key: AssetManager.DUNK_SHOT_GAME_SCENE });
     }
-
-    preload() {
-        
-    }
-
 
     create() {
         this.setupPhysics();
@@ -121,13 +115,13 @@ class DunkShotGameScene extends Scene {
         this.invisibleBallFollower.setVisible(false);
         this.invisibleBallFollower.setY(600);
 
+        this.ballInteraction = new BallInteraction(this.ball);
 
        
     }
 
     private setupHoops() : void {
         
-
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
         let collectibleFactory = new CollectibleFactory(this);
         let hoopSpawner = new HoopSpawner(this, this.ball, new HoopSpawnSet(
@@ -161,11 +155,18 @@ class DunkShotGameScene extends Scene {
         hoop2.enableCollision(this.ball, this.ball.hoopCollisionCallback);
 
 
+        // Set the first and next hoop for the ball interaction
+        this.ballInteraction.setFirstHoop(hoop1);
+        this.ballInteraction.setNextHoop(hoop2);
+        this.ballInteraction.on(BallInteraction.ENTER_NEXT_HOOP_EVENT, (enterHoop: BasketballHoop, lastHoop : BasketballHoop , perfectCount: number, bounceCount: number, isBounceWall: boolean, isBounceRing: boolean) => {
+            if (lastHoop) {
+                lastHoop.destroy();
+            }
 
-        hoopSpawner.setFirstHoop(hoop1);
-        hoopSpawner.setNextHoop(hoop2);
+            let nextHoop = hoopSpawner.spawnNextHoop(enterHoop);
+            this.ballInteraction.advanceNextHoop(nextHoop);
+        });
 
-        this.hoopSpawner = hoopSpawner;
     }
 
     private setupInputHandler() : void {
@@ -173,21 +174,21 @@ class DunkShotGameScene extends Scene {
 
         let inputHandler = new DunkShotGameInputHandler(this, this.ball, 
             new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
-        inputHandler.setCurrentHoop(this.hoopSpawner.getFirstHoop()!);
+        inputHandler.setCurrentHoop(this.ballInteraction.getFirstHoop()!);
 
     }
 
     private setupScoreManagement() : void {
         
         ScoreManager.getInstance().resetScore();
-        const scoreCounter = new ScoreCounter(this.hoopSpawner, this.ball);
+        const scoreCounter = new ScoreCounter(this.ballInteraction);
 
         
 
         let scoreText = new ScoreText(
             this, 
             this.cameras.main.width / 2, // X position: Middle of the screen
-            this.cameras.main.height / 4, // Y position: Middle of the screen
+            this.cameras.main.height / 3.5, // Y position: Middle of the screen
             '0', 
             { 
                 fontSize: 'bold 150px', 
@@ -238,11 +239,11 @@ class DunkShotGameScene extends Scene {
 
     private setupLoseCondition(gameStateManager : DunkShotGameStateManager ) : void {
         
-        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.hoopSpawner);
+        let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.ballInteraction);
         loseBoundaryImage.enableOverlap(this.ball, (ball: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, loseBoundaryImage: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) => {
             
             if (ball instanceof Ball && loseBoundaryImage instanceof LoseBoundaryImage) {
-                let firstHoop = this.hoopSpawner.getFirstHoop();
+                let firstHoop = this.ballInteraction.getFirstHoop();
                 
                 if (firstHoop){
                     ball.setPosition(this.ballSpawnPlace.x, this.ballSpawnPlace.y);
@@ -280,13 +281,13 @@ class DunkShotGameScene extends Scene {
     }
 
     private setupParticle() : void {
-        let ballParticle = new BallParticle(this,"", this.ball, this.hoopSpawner, this.invisibleBallFollower);
+        let ballParticle = new BallParticle(this,"", this.ball, this.ballInteraction, this.invisibleBallFollower);
         
         this.add.existing(ballParticle);
     }
 
     private setupSound() : void {
-        let ballSpeaker = new BallSpeaker(this, this.ball, this.hoopSpawner);
+        let ballSpeaker = new BallSpeaker(this, this.ball, this.ballInteraction);
 
 
     }
