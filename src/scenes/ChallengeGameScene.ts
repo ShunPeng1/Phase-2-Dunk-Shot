@@ -192,9 +192,13 @@ class ChallengeGameScene extends DunkShotGameScene {
         this.orderHoops = orderHoops;
 
         // Set the first and next hoop for the ball interaction
+
+        const lastHoop = orderHoops[orderHoops.length - 1];
+        lastHoop.setHoopTextureToGold();
+
         this.ballInteraction.setFirstHoop(orderHoops[0]);
         this.ballInteraction.setNextHoop(orderHoops[1]);
-        this.ballInteraction.setGoalHoop(orderHoops[orderHoops.length - 1]);
+        this.ballInteraction.setGoalHoop(lastHoop);
 
         let currentHoopIndex = 1;
 

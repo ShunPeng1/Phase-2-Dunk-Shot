@@ -247,6 +247,12 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         return this;
     }
 
+    public setHoopTextureToGold() : void {
+        this.innerRing.setTint(0xfbc230);
+        this.outerRing.setTint(0xfbc230);
+        this.net.setTexture(AssetManager.BASKETS_211_KEY);
+    }
+
     public getPosition() : Phaser.Math.Vector2 {
         return new Phaser.Math.Vector2(this.hoopContainer.x, this.hoopContainer.y);
     }
