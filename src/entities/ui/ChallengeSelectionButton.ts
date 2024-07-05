@@ -72,6 +72,8 @@ class ChallengeSelectionButton extends UiImageButton {
     }
 
     public setPercentage(percentage: number) {
+        percentage = Math.min(100, Math.max(0, percentage));
+        percentage = Math.round(percentage);
         this.percentageText.setText(`${percentage}%`);
     }
 }

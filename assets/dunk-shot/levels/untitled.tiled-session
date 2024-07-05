@@ -13,6 +13,55 @@
             "scaleInDock": 0.125,
             "scaleInEditor": 0.25
         },
+        "achievement-1-level.json": {
+            "scale": 0.1147421875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 270.1708994348742,
+                "y": 3202.832436848914
+            }
+        },
+        "achievement-1-level.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 249.3333333333333,
+                "y": 5234
+            }
+        },
+        "achievement-2-level.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 369.33333333333326,
+                "y": 5222
+            }
+        },
+        "achievement-3-level.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 336,
+                "y": 5628.666666666666
+            }
+        },
+        "test-level.json": {
+            "scale": 0.1147421875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 270.1708994348742,
+                "y": 3202.832436848914
+            }
+        },
         "test-level.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
@@ -32,8 +81,9 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "Hoop.tsx",
-        "test-level.tmx"
+        "test-level.json",
+        "test-level.tmx",
+        "Hoop.tsx"
     ],
     "resizeMap.removeObjects": false,
     "tileset.lastUsedFormat": "tsx",

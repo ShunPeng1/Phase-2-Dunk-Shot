@@ -43,7 +43,9 @@ class ChallengeStartUIScene extends Phaser.Scene {
 
         rewardIcon.setScale(0.4);
         
-        let goalText = this.add.text(width/2 - 75, height/2 - 50, 'Need to reach ?? points', { font: '26px Arial', color: '#ffffff' }).setOrigin(0.5);
+        let scoreToWin = this.gameStateManager.getChallengeConfiguration().scoreToWin;
+
+        let goalText = this.add.text(width/2 - 75, height/2 - 50, 'Need to reach '+ scoreToWin +' points', { font: '26px Arial', color: '#ffffff' }).setOrigin(0.5);
 
         let startButton = new UiImageButton(this, width/2, height/2 + 100, AssetManager.UI_139_KEY);
 

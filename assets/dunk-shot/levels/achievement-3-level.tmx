@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="17" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="82">
+ <editorsettings>
+  <export target="achievement-3-level.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="Hoop.tsx"/>
+ <objectgroup id="4" name="Object Layer 1">
+  <object id="60" name="Start Position" x="411.273" y="5677.86" width="10.6667" height="8.16667"/>
+  <object id="72" name="Start Hoop" gid="8" x="411.667" y="5780.5" width="98" height="53.5"/>
+  <object id="74" gid="8" x="116.667" y="5499.58" width="98" height="53.5"/>
+  <object id="75" gid="8" x="130.333" y="5182.58" width="98" height="53.5" rotation="-23"/>
+  <object id="76" name="End Hoop" gid="8" x="325.333" y="4693.91" width="98" height="53.5"/>
+  <object id="78" gid="8" x="398.333" y="4937.25" width="98" height="53.5" rotation="10"/>
+  <object id="79" name="Configure" x="173.667" y="4455.33" width="177.333" height="138.667">
+   <properties>
+    <property name="ScoreToWin" value="13"/>
+    <property name="Theme" value="GREEN"/>
+    <property name="WinCondition" value="SCORE"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

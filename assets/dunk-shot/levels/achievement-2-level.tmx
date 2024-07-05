@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="17" height="200" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="82">
  <editorsettings>
-  <export target="test-level.json" format="json"/>
+  <export target="achievement-2-level.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="Hoop.tsx"/>
  <objectgroup id="4" name="Object Layer 1">
   <object id="60" name="Start Position" x="126.273" y="5691.86" width="10.6667" height="8.16667"/>
   <object id="72" name="Start Hoop" gid="8" x="121.667" y="5784.5" width="98" height="53.5"/>
-  <object id="74" gid="8" x="381" y="5626.58" width="98" height="53.5"/>
-  <object id="75" gid="8" x="243" y="5322.58" width="98" height="53.5" rotation="13"/>
-  <object id="76" name="End Hoop" gid="8" x="280.333" y="4709.25" width="98" height="53.5"/>
-  <object id="78" gid="8" x="101.667" y="5019.91" width="98" height="53.5" rotation="40"/>
-  <object id="79" name="Configure" x="224" y="4397.33" width="177.333" height="138.667">
+  <object id="74" gid="8" x="119" y="5528.58" width="98" height="53.5" rotation="-24"/>
+  <object id="75" gid="8" x="407" y="5327.58" width="98" height="53.5" rotation="-13"/>
+  <object id="76" name="End Hoop" gid="8" x="437.333" y="4858.58" width="98" height="53.5"/>
+  <object id="78" gid="8" x="99.3333" y="5053.58" width="98" height="53.5" rotation="40"/>
+  <object id="79" name="Configure" x="185.667" y="4632.33" width="177.333" height="138.667">
    <properties>
-    <property name="ScoreToWin" value="10"/>
+    <property name="ScoreToWin" value="15"/>
     <property name="Theme" value="GREEN"/>
     <property name="WinCondition" value="SCORE"/>
    </properties>

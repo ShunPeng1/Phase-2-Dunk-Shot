@@ -12,14 +12,16 @@ import ChallengeLoseState from "./game-states/ChallengeLoseState";
 import AssetManager from "./AssetManager";
 import ChallengePauseState from "./game-states/ChallengePauseState";
 import ChallengeWinState from "./game-states/ChallengeWinState";
+import ChallengeConfiguration from "./win-predicates/ChallengeConfiguration";
 
 class ChallengeGameStateManager extends DunkShotGameStateManager {
     
     private challengeWinState: GameState;
+    private challengeConfiguration: ChallengeConfiguration;
 
-    constructor(scene: Scene) {
+    constructor(scene: Scene, challengeConfiguration: ChallengeConfiguration) {
         super(scene);
-        
+        this.challengeConfiguration = challengeConfiguration;
 
     }
 
@@ -60,6 +62,10 @@ class ChallengeGameStateManager extends DunkShotGameStateManager {
 
     public loadWinUI() : void {
         this.stateMachine.setToState(this.challengeWinState);
+    }
+
+    public getChallengeConfiguration() : ChallengeConfiguration {
+        return this.challengeConfiguration;
     }
 }
 

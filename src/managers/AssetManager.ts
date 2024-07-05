@@ -642,6 +642,11 @@ class AssetManager {
     public static readonly LEVELS_ACHIEVEMENT_1: string = AssetManager.DUNK_SHOT_LEVELS_FOLDER + "achievement-1-level.json";
     public static readonly LEVELS_ACHIEVEMENT_1_KEY: string = "levels_achievement_1";
 
+    public static readonly LEVELS_ACHIEVEMENT_2: string = AssetManager.DUNK_SHOT_LEVELS_FOLDER + "achievement-2-level.json";
+    public static readonly LEVELS_ACHIEVEMENT_2_KEY: string = "levels_achievement_2";
+
+    public static readonly LEVELS_ACHIEVEMENT_3: string = AssetManager.DUNK_SHOT_LEVELS_FOLDER + "achievement-3-level.json";
+    public static readonly LEVELS_ACHIEVEMENT_3_KEY: string = "levels_achievement_3";
 
     // Scenes
     public static readonly LOADING_SCENE: string = "LoadingScene";

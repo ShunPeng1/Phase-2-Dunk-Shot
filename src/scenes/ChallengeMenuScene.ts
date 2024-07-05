@@ -3,13 +3,21 @@ import AssetManager from "../managers/AssetManager";
 import UiImage from "../ultilities/ui/UiImage";
 import UiImageButton from "../ultilities/ui/UiImageButton";
 import ChallengeSelectionButton from "../entities/ui/ChallengeSelectionButton";
+import LevelCongiguration from "../managers/win-predicates/LevelConfiguration";
+import InventoryManager from "../managers/InventoryManager";
 
 class ChallengeMenuScene extends Scene{
+
+    private readonly challengeLevels = [AssetManager.LEVELS_ACHIEVEMENT_1_KEY, AssetManager.LEVELS_ACHIEVEMENT_2_KEY, AssetManager.LEVELS_ACHIEVEMENT_3_KEY ]
+
+    
+
     constructor() {
         super(AssetManager.CHALLENGE_MENU_SCENE);
     }
 
     create() {
+        
         const { width: widthConfig, height : heightConfig } = this.sys.game.config;
         const width = Number(widthConfig) as any;
         const height = Number(heightConfig) as any;
@@ -58,8 +66,24 @@ class ChallengeMenuScene extends Scene{
 
         let achievementChallengeButton = new ChallengeSelectionButton(this, width/2,  330 + 130, AssetManager.UI_151_KEY, "ACHIEVEMENT", AssetManager.MASKS_111_KEY);
         achievementChallengeButton.setScale(0.6);
+        achievementChallengeButton.setPercentage((this.challengeLevels.length-this.countUnfinishedLevels(this.challengeLevels)) / this.challengeLevels.length *100);
         achievementChallengeButton.addOnPressDownCallback(() => {
-            this.scene.start(AssetManager.CHALLENGE_GAME_SCENE);
+
+            let unfinishedLevel = this.getUnfinishedLevel(this.challengeLevels);
+            if (unfinishedLevel) {
+                const levelCongiguration = new LevelCongiguration(unfinishedLevel, this.challengeLevels.indexOf(unfinishedLevel) + 1);
+                this.scene.start(AssetManager.CHALLENGE_GAME_SCENE, levelCongiguration);
+                return;
+            }
+            else{
+                const finishedLevel = this.getRandomFinishedLevel();
+                if (finishedLevel) {
+                    const levelCongiguration = new LevelCongiguration(finishedLevel, this.challengeLevels.indexOf(finishedLevel) + 1);
+                    this.scene.start(AssetManager.CHALLENGE_GAME_SCENE, levelCongiguration);
+                    return;
+                }
+            }
+            
         });
 
 
@@ -78,6 +102,64 @@ class ChallengeMenuScene extends Scene{
 
     }
 
+    private getUnfinishedLevel(levelKeys : string[]): string | null {
+        for (let i = 0; i < levelKeys.length; i++) {
+            const key = levelKeys[i];
+            try {
+                const levelData = InventoryManager.getInstance().getItem(key);
+                if (levelData === undefined) {
+                    return key;
+                }
+            }
+            catch (e) {
+                continue;
+            }
+        }
+
+        return null;
+    }
+
+    private countUnfinishedLevels(levelKeys: string[]): number {
+        let count = 0;
+        for (let i = 0; i < levelKeys.length; i++) {
+            const key = levelKeys[i];
+            try {
+                const levelData = InventoryManager.getInstance().getItem(key);
+                if (levelData === undefined) {
+                    count++;
+                }
+            }
+            catch (e) {
+                continue;
+            }
+        }
+        return count;
+    }
+
+
+    private getRandomFinishedLevel(): string | null {
+        const levelKeys = this.challengeLevels;
+        const finishedLevelKeys = levelKeys.filter(key => {
+            try {
+                const levelData = InventoryManager.getInstance().getItem(key);
+                if (levelData === undefined) {
+                    return false;
+                }
+            }
+            catch (e) {
+                return true;
+            }
+
+            return true;
+        });
+
+        if (finishedLevelKeys.length === 0) {
+            return null;
+        }
+
+        const randomIndex = Math.floor(Math.random() * finishedLevelKeys.length);
+        return finishedLevelKeys[randomIndex];
+    }
 
 }
 

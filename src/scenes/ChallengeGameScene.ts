@@ -28,24 +28,31 @@ import ChallengeGameStateManager from "../managers/ChallengeGameStateManager";
 import ScoreToWinPredicate from "../managers/win-predicates/ScoreToWinPredicate";
 import IGoalPredicate from "../managers/win-predicates/types/IGoalPredicate";
 import ChallengeConfiguration from "../managers/win-predicates/ChallengeConfiguration";
+import LevelCongiguration from "../managers/win-predicates/LevelConfiguration";
 
 class ChallengeGameScene extends DunkShotGameScene {
 
+    private levelConfiguration: LevelCongiguration;
+    private challengeConfiguration: ChallengeConfiguration;
     
-    private winCondition: IGoalPredicate;
     private orderHoops: GameObjects.GameObject[];
 
+    private map : Phaser.Tilemaps.Tilemap;
 
     constructor() {
         super(AssetManager.CHALLENGE_GAME_SCENE);
     }
 
+    public init(levelCongiguration : LevelCongiguration){
+        this.levelConfiguration = levelCongiguration; 
+    }
+
     protected setupGameStyle() : void {
+        this.setupMap();
         this.setupWinCondition();
         this.setupGameStateManager();
         this.setupHoops();
     }
-
     
     protected setupGameUI() : void {
         this.setupTopBanner();
@@ -66,7 +73,7 @@ class ChallengeGameScene extends DunkShotGameScene {
         challengeText.setScrollFactor(0);
         challengeText.setDepth(11);
 
-        let numberText = this.add.text(150, 110, "1", { fontFamily: 'Arial', fontSize: 18, color: '#ffffff' }).setOrigin(0.5);
+        let numberText = this.add.text(150, 110, this.levelConfiguration.level.toString(), { fontFamily: 'Arial', fontSize: 18, color: '#ffffff' }).setOrigin(0.5);
 
         numberText.setScrollFactor(0);
         numberText.setDepth(11);
@@ -77,21 +84,21 @@ class ChallengeGameScene extends DunkShotGameScene {
         icon.setScrollFactor(0);
         icon.setDepth(11);
 
-        let scoreText = this.add.text(315, 100, "0/"+ + this.winCondition.getGoalValue().toString(), { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' }).setOrigin(0.5);
+        let scoreText = this.add.text(315, 100, "0/"+ + this.challengeConfiguration.getGoalPredicate().getGoalValue().toString(), { fontFamily: 'Arial', fontSize: 24, color: '#ffffff' }).setOrigin(0.5);
 
         scoreText.setScrollFactor(0);
         scoreText.setDepth(11);
 
         
         this.scoreCounter.on(this.scoreCounter.SCORE_UPDATE_EVENT, (totalScore : number, score: number, prefectCount : number, isBounceWall : boolean) => {
-            scoreText.setText(totalScore + "/" + this.winCondition.getGoalValue().toString());
+            scoreText.setText(totalScore + "/" + this.challengeConfiguration.getGoalPredicate().getGoalValue().toString());
             console.log("Total Score ", totalScore,"Score: ", score, " Prefect Count: ", prefectCount, " Bounce Wall: ", isBounceWall);
         });
 
         
     }
 
-    protected setupHoopCountText() {
+    protected setupHoopCountText() : void {
         let hoopCountText = this.add.text(550, 160, "0/"+ (this.orderHoops.length -1) + " Baskets", { fontFamily: 'Arial', fontSize: 24, color: '#939596' }).setOrigin(1);
         hoopCountText.setScrollFactor(0);
         console.log("setupHoopCountText");
@@ -102,46 +109,47 @@ class ChallengeGameScene extends DunkShotGameScene {
         });
     }
 
-    protected setupWinCondition() {
-        var map = this.make.tilemap({
-            key: AssetManager.LEVELS_ACHIEVEMENT_1_KEY,
+
+    protected setupMap() : void {
+        this.map = this.make.tilemap({
+            key: this.levelConfiguration.key,
             tileWidth: 16,
             tileHeight: 16
         });
-    
-        const configure = map.findObject("Object Layer 1", obj => obj.name === "Configure") as any;
+    }
+
+
+    protected setupWinCondition() : void {
+        
+        const configure = this.map.findObject("Object Layer 1", obj => obj.name === "Configure") as any;
     
         if (!configure || !configure.properties) {
             throw new Error("No configuration object found in the level");
         }
     
-        const levelConfig = new ChallengeConfiguration(configure);
+        const challengeConfig = new ChallengeConfiguration(configure);
     
         let goalPredicate: IGoalPredicate;
     
-        switch (levelConfig.winCondition) {
+        switch (challengeConfig.winCondition) {
             case "SCORE":
-                goalPredicate = new ScoreToWinPredicate(levelConfig.scoreToWin, () => ScoreManager.getInstance().getScore());
+                goalPredicate = new ScoreToWinPredicate(challengeConfig.scoreToWin, () => ScoreManager.getInstance().getScore());
                 break;
             default:
                 throw new Error("Invalid win condition");
         }
     
-        this.winCondition = goalPredicate;
+        challengeConfig.setGoalPredicate(goalPredicate);
+        
+        this.challengeConfiguration = challengeConfig;
 
     }
 
     protected setupHoops(): void {
 
-        var map = this.make.tilemap({
-            key: AssetManager.LEVELS_ACHIEVEMENT_1_KEY ,
-            tileWidth: 16,
-            tileHeight: 16
-        });
+        const startPosition = this.map.findObject("Object Layer 1", obj => obj.name === "Start Position") as unknown as Phaser.GameObjects.Image;
 
-        const startPosition = map.findObject("Object Layer 1", obj => obj.name === "Start Position") as unknown as Phaser.GameObjects.Image;
-
-        const basketballHoopInLayer = map.createFromObjects("Object Layer 1", {
+        const basketballHoopInLayer = this.map.createFromObjects("Object Layer 1", {
             gid : 8,
             classType: BasketballHoop,
         
@@ -150,7 +158,7 @@ class ChallengeGameScene extends DunkShotGameScene {
         let offsetY = this.ballSpawnPlace.y - startPosition.y;
 
         this.ball.setPosition(startPosition.x, this.ballSpawnPlace.y);
-
+        this.ballSpawnPlace.x = startPosition.x;
         console.log(basketballHoopInLayer);
 
         
@@ -209,7 +217,7 @@ class ChallengeGameScene extends DunkShotGameScene {
     }
 
     protected setupGameStateManager(): void {
-        let gameStateManager = new ChallengeGameStateManager(this);
+        let gameStateManager = new ChallengeGameStateManager(this, this.challengeConfiguration);
         gameStateManager.loadStartUI();
 
         let loseBoundaryImage = new LoseBoundaryImage(this, 20, 1500, AssetManager.WORLD_WIDTH, 100, 0, 1000 , this.ballInteraction);
@@ -252,7 +260,8 @@ class ChallengeGameScene extends DunkShotGameScene {
 
         
         this.ballInteraction.on(BallInteraction.ENTER_GOAL_HOOP_EVENT, (enterHoop: BasketballHoop) => {
-            if (this.winCondition.checkGoalAchieved()) {
+            if (this.challengeConfiguration.getGoalPredicate().checkGoalAchieved()) {
+                InventoryManager.getInstance().addItem(this.levelConfiguration.key, 1);
                 gameStateManager.loadWinUI();
             }
             else{
