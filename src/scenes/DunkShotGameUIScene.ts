@@ -1,6 +1,7 @@
 import AssetManager from "../managers/AssetManager";
 import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiUtilities from "../ultilities/ui/UiUtilities";
 
 
 class DunkShotGameUIScene extends Phaser.Scene {
@@ -18,11 +19,13 @@ class DunkShotGameUIScene extends Phaser.Scene {
 
 
     create() {
-        let pauseButton = new UiImageButton(this, 50, 50, AssetManager.PAUSE_BUTTON_KEY);
-        pauseButton.setScale(1);
-        pauseButton.addOnPressDownCallback(() => {
+        let pauseButton = new UiImageButton(this, 30, 30, AssetManager.PAUSE_BUTTON_KEY);
+        pauseButton.setScale(0.7);
+        pauseButton.addOnPressUpCallback(() => {
             this.gameStateManager.loadPauseUI();
         });
+
+        UiUtilities.applyButtonScaleTweens(pauseButton);
 
     }
 }

@@ -233,7 +233,7 @@ class DunkShotGameScene extends Scene {
             ], [new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)] , 0.15),
             hoopFactory,
             collectibleFactory,
-            70, 
+            80, 
             450);
         
 
