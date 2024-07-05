@@ -1,18 +1,21 @@
+import ObstacleSpawnInfo from "../boundaries/ObstacleSpawnInfo";
 import CollectibleSpawnInfo from "../collectibles/CollectibleSpawnInfo";
 import HoopSpawnInfo from "./HoopSpawnInfo";
 
 class HoopSpawnSet{
     private hoopSpawnInfos : HoopSpawnInfo[];
     private collectibleSpawnInfos : CollectibleSpawnInfo[];
+    private obstacleSpawnInfos : ObstacleSpawnInfo[];
 
-    private totalHoopSpawnChance : number;
-
-    private totalCollectibleSpawnChance : number;
+    private totalHoopSpawnChance : number = 0;
+    private totalCollectibleSpawnChance : number = 0;
+    private totalObstacleSpawnChance : number = 0;
 
     private collectibleSpawnChance : number;
+    private obstacleSpawnChance : number;
 
 
-    constructor(hoopSpawnInfos : HoopSpawnInfo[], collectibleSpawnInfos : CollectibleSpawnInfo[], collectibleSpawnChance : number){
+    constructor(hoopSpawnInfos : HoopSpawnInfo[], collectibleSpawnInfos : CollectibleSpawnInfo[], obstacleSpawnInfos : ObstacleSpawnInfo[], collectibleSpawnChance : number, obstacleSpawnChance : number){
         this.hoopSpawnInfos = hoopSpawnInfos;
 
         hoopSpawnInfos.forEach(hoopSpawnInfo => {
@@ -26,6 +29,14 @@ class HoopSpawnSet{
         })
 
         this.collectibleSpawnChance = collectibleSpawnChance;
+
+        this.obstacleSpawnInfos = obstacleSpawnInfos;
+
+        obstacleSpawnInfos.forEach(obstacleSpawnInfo => {
+            this.totalObstacleSpawnChance += obstacleSpawnInfo.spawnChance;
+        })
+
+        this.obstacleSpawnChance = obstacleSpawnChance;
 
     }
 
@@ -65,7 +76,25 @@ class HoopSpawnSet{
         return this.collectibleSpawnInfos[0];
     }
 
+    public getRandomObstacleSpawnInfo() : ObstacleSpawnInfo | null{
+            
+            if (Math.random() > this.obstacleSpawnChance){
+                return null;
+            }
     
+            let random = Math.random() * this.totalObstacleSpawnChance;
+    
+            let currentChance = 0;
+    
+            for(let i = 0; i < this.obstacleSpawnInfos.length; i++){
+                currentChance += this.obstacleSpawnInfos[i].spawnChance;
+                if(random <= currentChance){
+                    return this.obstacleSpawnInfos[i];
+                }
+            }
+    
+            return this.obstacleSpawnInfos[0];
+    }
 
 }
 

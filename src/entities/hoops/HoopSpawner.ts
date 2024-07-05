@@ -8,6 +8,7 @@ import Collectible from "../collectibles/Collectible";
 import CollectibleFactory from "../collectibles/CollectibleFactory";
 import BallInteraction from "../balls/BallInteraction";
 import ObstacleFactory from "../boundaries/ObstacleFactory";
+import ObstacleBoundaryImage from "../boundaries/ObstacleBoundaryImage";
 
 class HoopSpawner {
     
@@ -142,8 +143,75 @@ class HoopSpawner {
         let nextHoop = this.spawnRandomHoop(worldPosition);
         this.spawnRandomCollectible(nextHoop);
 
+        let nextHoopWorldPosition = nextHoop.getWorldTransformMatrix(); 
+    
+        let obstacle = this.spawnRandomObstacle(currentHoop, nextHoop, worldPosition.x < nextHoopWorldPosition.tx);
+
         return nextHoop;
     }
+
+    public spawnRandomObstacle(lastHoop: BasketballHoop, currentHoop : BasketballHoop, isFacingLeft: boolean): ObstacleBoundaryImage | null{
+
+        let obstacleSpawnInfo = this.hoopSpawnSet.getRandomObstacleSpawnInfo();
+
+        if (obstacleSpawnInfo) {
+            let worldPosition = currentHoop.getInternalHoopWorldPosition();
+
+            let x = worldPosition.x;
+            let y = worldPosition.y;
+            let rotation = 0;
+            
+
+            switch (obstacleSpawnInfo.spawnPositionAndRotation) {
+                case "NEXTTO VERTICAL":
+                    x = x + (isFacingLeft ? 60 : -60);
+                    y = y - 60;
+                    break;
+
+                case "SIDE HORIZONTAL":
+    
+                    x = x + (isFacingLeft ? -130 : 130);
+                    rotation = Math.PI / 2;
+                    
+                    break;
+
+                case "TOP HORIZONTAL":
+                    y = y - 140;
+                    rotation = Math.PI / 2;
+                    break;
+                
+                case "TOP VERTICAL":
+                    y = y - 170;
+                    
+                    break;
+
+                case "SIDE VERTICAL":
+                    x = x + (isFacingLeft ? -200 : 200);
+                    y = y - 60;
+                    break;
+
+            }
+
+
+            console.log(obstacleSpawnInfo.spawnPositionAndRotation, isFacingLeft, x, y, rotation)
+
+
+            let obstacle = this.obstacleFactory.createObstacle(obstacleSpawnInfo.obstacleType, x, y);
+            obstacle.setRotation(rotation);
+            obstacle.setScale(0.5);            
+            obstacle.enableCollision(this.ball, this.ball.wallCollisionCallback);
+
+            this.scene.add.existing(obstacle);
+
+            lastHoop.addObstacle(obstacle);
+
+            return obstacle;
+        }
+        
+        return null;
+        
+    }
+
 
     
     

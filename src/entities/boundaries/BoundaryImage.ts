@@ -1,7 +1,9 @@
 class BoundaryImage extends Phaser.Physics.Arcade.Image {
+    protected vericalWidth: number;
+    protected verticalHeight: number;
+    protected isCircle: boolean;
 
-
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, width: number, height: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, width: number, height: number, isCircle: boolean = false) {
         super(scene, x, y, texture);
 
         scene.physics.add.existing(this);
@@ -9,7 +11,15 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
         this.setImmovable(true);
         (this.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
-        this.setSize(width, height);
+        if (isCircle) {
+            this.setCircle(width / 2);
+        } else {
+            this.setSize(width, height);
+        }
+
+        this.vericalWidth = width;
+        this.verticalHeight = height;
+        this.isCircle = isCircle;
 
     }
 

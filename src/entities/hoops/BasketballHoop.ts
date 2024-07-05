@@ -4,6 +4,7 @@ import LinePhysicGroupContainer from "../physics/LinePhysicGroupContainer";
 import RingHoopPhysicGroupContainer from "../physics/RingHoopPhysicGroupContainer";
 import InternalHoopPhysicGroupContainer from "../physics/InternalHoopPhysicGroupContainer";
 import NetLinePhysicGroupContainer from "../physics/NetLinePhysicGroupContainer";
+import ObstacleBoundaryImage from "../boundaries/ObstacleBoundaryImage";
 
 class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.GameObjects.Components.Transform, Phaser.GameObjects.Components.Texture {
     
@@ -35,7 +36,7 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
     // Container to hold the hoop components
     private hoopContainer: Phaser.GameObjects.Container;
     private internalHoopContainer: Phaser.GameObjects.Container;
-    private obstacleContainer: Phaser.GameObjects.Container;
+    private obstacles: ObstacleBoundaryImage[] = [];
 
     // Collider properties
     
@@ -62,7 +63,6 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
 
         this.hoopContainer = scene.add.container(x, y);
 
-        this.obstacleContainer = scene.add.container(x, y);
 
         this.initImageComponents(scene, x, y); // Initialize the image components
 
@@ -203,6 +203,7 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
 
         //this.lineCollider.setPosition(x, y,0,0);
         this.internalHoopContainer.setPosition(x, y);
+        
 
         this.updateComponentPosition();
 
@@ -219,6 +220,7 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         this.outerRing.setScale(scaleX);
         
         this.internalHoopContainer.setScale(1/scaleX);
+        
 
         this.updateComponentPosition();
 
@@ -339,10 +341,10 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         
     }
 
-    public addObstacle(obstacle: Phaser.GameObjects.GameObject) : void {
+    public addObstacle(obstacle: ObstacleBoundaryImage) : void {
         
 
-        this.obstacleContainer.add(obstacle);
+        this.obstacles.push(obstacle);
     }
 
 
@@ -365,7 +367,10 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         this.outerRing.destroy();
         this.net.destroy();
 
-        this.obstacleContainer.destroy();
+        this.obstacles.forEach(obstacle => {
+            obstacle.destroy();
+        });
+        
         this.internalHoopContainer.destroy();
         this.hoopContainer.destroy();
 

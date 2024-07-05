@@ -26,6 +26,12 @@ import BallParticle from "../entities/balls/BallParticle";
 import BallSpeaker from "../entities/sounds/BallSpeaker";
 import BallInteraction from "../entities/balls/BallInteraction";
 import ObstacleFactory from "../entities/boundaries/ObstacleFactory";
+import ObstacleSpawnInfo from "../entities/boundaries/ObstacleSpawnInfo";
+import SmallLineObstacleBoundaryImage from "../entities/boundaries/SmallLineObstacleBoundaryImage";
+import MediumLineObstacleBoundaryImage from "../entities/boundaries/MediumLineObstacleBoundaryImage";
+import LongLineObstacleBoundaryImage from "../entities/boundaries/LongLineObstacleBoundaryImage";
+import ExtremeLineObstacleBoundaryImage from "../entities/boundaries/ExtremeLineObstacleBoundaryImage";
+import CircleObstacleBoundaryImage from "../entities/boundaries/CircleObstacleBoundaryImage";
 
 class DunkShotGameScene extends Scene {
 
@@ -246,10 +252,25 @@ class DunkShotGameScene extends Scene {
                 .setSpawnType("RANDOM")
                 .setMinOffset(new Phaser.Math.Vector2(120,-150))
                 .setMaxOffset(new Phaser.Math.Vector2(500,-250))
-                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 , Math.PI/4))
+                .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/6 , Math.PI/6))
                 .setSpawnChance(1)
                 .build()
-            ], [new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)] , 0.15),
+            ], [
+                new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)
+            ], [
+                new ObstacleSpawnInfo(SmallLineObstacleBoundaryImage, 1, "NEXTTO VERTICAL"),
+                new ObstacleSpawnInfo(LongLineObstacleBoundaryImage, 1, "TOP HORIZONTAL"),
+                new ObstacleSpawnInfo(MediumLineObstacleBoundaryImage, 1, "SIDE HORIZONTAL"),
+                new ObstacleSpawnInfo(MediumLineObstacleBoundaryImage, 1, "TOP VERTICAL"),
+                new ObstacleSpawnInfo(ExtremeLineObstacleBoundaryImage, 1, "SIDE VERTICAL"),
+                new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "TOP HORIZONTAL"),
+                new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "NEXTTO VERTICAL"),
+                new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "SIDE VERTICAL"),
+
+            ],
+            0.15,
+            0.1,
+            ),
             hoopFactory,
             collectibleFactory,
             obstacleFactory,
