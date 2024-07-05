@@ -4,6 +4,8 @@ import BasketballHoop from "../hoops/BasketballHoop";
 import InternalHoopArcadeImage from "../hoops/InternalHoopArcadeImage";
 import RingHoopArcadeImage from "../hoops/RingHoopArcadeImage";
 import NetArcadeImage from "../hoops/NetArcardImage";
+import InventoryManager from "../../managers/InventoryManager";
+import AssetManager from "../../managers/AssetManager";
 
 class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly arcadeBody: Phaser.Physics.Arcade.Body;
@@ -55,6 +57,10 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.on(this.RING_HOOP_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
         this.on(this.NET_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
 
+        this.setTexture(InventoryManager.getInstance().getItem(AssetManager.BALL_SKIN_INVENTORY_KEY) ?? AssetManager.BASKETBALL_KEY); 
+        InventoryManager.getInstance().subscribe(AssetManager.BALL_SKIN_INVENTORY_KEY, (from: string, value: any) => {
+            this.setTexture(value);
+        });
 
     }
 

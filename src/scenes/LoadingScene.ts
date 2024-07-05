@@ -345,6 +345,7 @@ class LoadingScene extends Scene {
 
         if (!ballSkin) {
             InventoryManager.getInstance().setItem(AssetManager.BALL_SKIN_INVENTORY_KEY, AssetManager.BASKETBALL_KEY);
+            InventoryManager.getInstance().setItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY, "1000");
         }
     }
 

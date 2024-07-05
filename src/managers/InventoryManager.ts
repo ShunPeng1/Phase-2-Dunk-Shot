@@ -66,14 +66,14 @@ class InventoryManager {
     }
 
     
-    public subscribe(item: string, callback: (quantity: string) => void) {
+    public subscribe(item: string, callback: (from: string, to : string) => void) {
         if (!this.subscribers[item]) {
             this.subscribers[item] = [];
         }
         this.subscribers[item].push(callback);
     }
 
-    public unsubscribe(item: string, callback: (quantity: string) => void) {
+    public unsubscribe(item: string, callback: (from: string, to : string) => void) {
         if (this.subscribers[item]) {
             const index = this.subscribers[item].indexOf(callback);
             if (index !== -1) {

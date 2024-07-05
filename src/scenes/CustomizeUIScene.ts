@@ -78,15 +78,44 @@ class CustomizeUIScene extends Phaser.Scene {
         }, true);
         this.add.existing(grid);
         
-        // for (let i = 0; i < allBalls.length; i++) {
-        //     let ballSelectionButton = new BallSelectionButton(this, 100, 100, allBalls[i], 100);
-        //     console.log("Creating ball selection button",allBalls[i], i );
-        //     ballSelectionButton.setScale(0.7);
-        // }
+
+        const maskGraphics = this.add.graphics().setVisible(false).fillRect(0, 240, 700, 8000);
+        const mask = maskGraphics.createGeometryMask();
         
+        grid.setMask(mask);
+        this.enableScrolling(grid, 700, 8000);
 
     }
 
+    
+    private enableScrolling(grid : Phaser.GameObjects.Components.Transform & { height: number }, maskWidth: number, maskHeight: number): void {
+        let startY = 0;
+        let scrolling = false;
+    
+        this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+            if (pointer.x >= grid.x && pointer.x <= grid.x + maskWidth && pointer.y >= grid.y && pointer.y <= grid.y + maskHeight) {
+                startY = pointer.y;
+                scrolling = true;
+
+            }
+        }, this);
+    
+        this.input.on('pointermove',  (pointer: Phaser.Input.Pointer) => {
+            if (scrolling) {
+                const deltaY = pointer.y - startY;
+                grid.y += deltaY;
+                startY = pointer.y;
+    
+                
+                // Clamp the y position
+                grid.y = Phaser.Math.Clamp(grid.y, -4300, 350);
+            }
+        }, this);
+    
+        this.input.on('pointerup', () => {
+            scrolling = false;
+        }, this);
+    }
     
     private setupStarManagement() : void {
         let starText = new StarText(this, 530, 90, '0', { 

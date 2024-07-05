@@ -11,6 +11,9 @@ class BallSelectionButton extends UiImageButton {
     private costText: Phaser.GameObjects.Text; // For displaying the cost
     private maskGraphics: Phaser.GameObjects.Graphics; // For the gray mask
     private selectedGraphics: Phaser.GameObjects.Graphics; // For the selected border
+    private costPanel: Phaser.GameObjects.Image;
+    private starImage: Phaser.GameObjects.Image;
+    
     private cost: number = 0;
 
 
@@ -40,7 +43,9 @@ class BallSelectionButton extends UiImageButton {
         this.isUnlocked = true;
         this.costText?.destroy();
         this.maskGraphics?.destroy();
-        console.log("Unlocking");
+        this.costPanel?.destroy();
+        this.starImage?.destroy();
+        
 
         if (InventoryManager.getInstance().getItem(AssetManager.BALL_SKIN_INVENTORY_KEY) == this.ballKey) {
             this.selectBall();
@@ -49,7 +54,7 @@ class BallSelectionButton extends UiImageButton {
 
     private lock(): void {
         this.isUnlocked = false;
-        console.log("Locking");
+        
         this.createGrayMask();
         this.createCostBanner(this.cost);
     }
@@ -98,6 +103,9 @@ class BallSelectionButton extends UiImageButton {
         panel.setDepth(2);
         panel.setTint(0xff8b00); // Black color
         this.add(panel);
+
+        
+        this.costPanel = panel;
         
         let starImage = this.scene.add.image(-40, this.height / 2 - 5, AssetManager.UI_19_KEY);
         starImage.setOrigin(0.5, 0.5);
@@ -105,6 +113,7 @@ class BallSelectionButton extends UiImageButton {
         starImage.setDepth(2);
         this.add(starImage);
 
+        this.starImage = starImage;
 
         // Create a text object for the cost banner
         this.costText = this.scene.add.text(30, this.height / 2 - 30, `${cost}`, {
