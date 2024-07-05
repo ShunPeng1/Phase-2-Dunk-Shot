@@ -47,6 +47,8 @@ class DunkShotGameInputHandler {
 
         this.isDragging = true;
         this.dragStartPoint.set(pointer.x, pointer.y);
+
+        this.scene.cameras.main.setLerp(0,0);
     }
 
     private onPointerMove(pointer: Phaser.Input.Pointer) {
@@ -73,6 +75,7 @@ class DunkShotGameInputHandler {
 
         if (distance > this.MIN_REQUIRED_SCALED_DISTANCE) {
             this.launchBall(distance, pointer);
+            this.scene.cameras.main.setLerp(0, 0.01);
         }
     }
 
