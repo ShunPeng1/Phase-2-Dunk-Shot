@@ -30,7 +30,7 @@ class ChallengePauseUIScene extends Scene{
     
 
 
-        const restartButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.UI_85_KEY);
+        const restartButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 350, AssetManager.UI_85_KEY);
         restartButton.addOnPressUpCallback(() => {
             this.gameStateManager.reloadChallenge();
         });
@@ -40,6 +40,18 @@ class ChallengePauseUIScene extends Scene{
         restartButton.setScale(0.8);
         UiUtilities.applyButtonScaleTweens(restartButton);
         
+
+        const homepageButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 200, AssetManager.HOMEPAGE_WIDE_BUTTON_KEY);
+        homepageButton.addOnPressUpCallback(() => {
+            this.gameStateManager.loadChallengeMenu();
+        });
+
+        const homepageText = this.add.text(homepageButton.x + 30, homepageButton.y, 'HOMEPAGE', { font: 'bold 30px Arial', color: '#ffffff'  }).setOrigin(0.5);
+        homepageButton.add(homepageText);
+        homepageButton.setScale(0.8);
+        UiUtilities.applyButtonScaleTweens(homepageButton);
+        
+
 
         const skinButton = new UiImageButton(this, Number(width) / 2, Number(height) / 2 - 50, AssetManager.SKIN_WIDE_BUTTON_KEY);
         skinButton.addOnPressUpCallback(() => {

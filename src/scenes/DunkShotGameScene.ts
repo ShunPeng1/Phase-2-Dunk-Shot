@@ -225,15 +225,15 @@ class DunkShotGameScene extends Scene {
             [
                 new HoopSpawnInfo.Builder(BasketballHoop)
                 .setSpawnType("RANDOM")
-                .setMinOffset(new Phaser.Math.Vector2(120,-100))
-                .setMaxOffset(new Phaser.Math.Vector2(500,-200))
+                .setMinOffset(new Phaser.Math.Vector2(120,-150))
+                .setMaxOffset(new Phaser.Math.Vector2(500,-250))
                 .setRotationVariance(new Phaser.Math.Vector2(-Math.PI/4 , Math.PI/4))
                 .setSpawnChance(1)
                 .build()
             ], [new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)] , 0.15),
             hoopFactory,
             collectibleFactory,
-            80, 
+            90, 
             450);
         
 
