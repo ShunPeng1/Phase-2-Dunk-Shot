@@ -8,8 +8,6 @@ import HoopSpawner from "../entities/hoops/HoopSpawner";
 import HoopSpawnSet from "../entities/hoops/HoopSpawnSet";
 import HoopSpawnInfo from "../entities/hoops/HoopSpawnInfo";
 import HoopFactory from "../entities/hoops/HoopFactory";
-import BoundaryImage from "../entities/boundaries/BoundaryImage";
-import ImageTrajectory from "../entities/trajectories/ImageTrajectory";
 import BoundaryImageTrajectory from "../entities/trajectories/BoundaryImageTrajectory";
 import ScoreText from "../entities/scores/ScoreText";
 import ScoreCounter from "../entities/scores/ScoreCounter";
@@ -134,7 +132,7 @@ class DunkShotGameScene extends Scene {
         
 
         let inputHandler = new DunkShotGameInputHandler(this, this.ball, 
-            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 187, 17, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
+            new BoundaryImageTrajectory(this, this.ball.arcadeBody, 4000, 176, 16, AssetManager.TRAJECTORY_KEY, 0xff9500, 0.15));
         inputHandler.setCurrentHoop(this.ballInteraction.getFirstHoop()!);
 
     }
@@ -234,7 +232,7 @@ class DunkShotGameScene extends Scene {
             hoopFactory,
             collectibleFactory,
             90, 
-            450);
+            440);
         
 
 
