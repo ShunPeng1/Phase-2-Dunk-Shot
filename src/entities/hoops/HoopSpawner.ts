@@ -7,6 +7,7 @@ import HoopFactory from "./HoopFactory";
 import Collectible from "../collectibles/Collectible";
 import CollectibleFactory from "../collectibles/CollectibleFactory";
 import BallInteraction from "../balls/BallInteraction";
+import ObstacleFactory from "../boundaries/ObstacleFactory";
 
 class HoopSpawner {
     
@@ -21,16 +22,18 @@ class HoopSpawner {
 
     private hoopFactory: HoopFactory;
     private collectibleFactory: CollectibleFactory;
+    private obstacleFactory: ObstacleFactory;
 
 
     
-    constructor(scene : Scene, ball : Ball, hoopSpawnSet: HoopSpawnSet, hoopFactory : HoopFactory, collectibleFactory : CollectibleFactory, leftBound: number, rightBound: number) {
+    constructor(scene : Scene, ball : Ball, hoopSpawnSet: HoopSpawnSet, hoopFactory : HoopFactory, collectibleFactory : CollectibleFactory, obstacleFactory : ObstacleFactory, leftBound: number, rightBound: number) {
         this.scene = scene;
         this.ball = ball;
 
         this.hoopSpawnSet = hoopSpawnSet;
         this.hoopFactory = hoopFactory;
         this.collectibleFactory = collectibleFactory;
+        this.obstacleFactory = obstacleFactory;
 
         this.leftBound = leftBound;
         this.rightBound = rightBound;

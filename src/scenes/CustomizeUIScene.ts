@@ -47,6 +47,7 @@ class CustomizeUIScene extends Phaser.Scene {
             console.log("Back button is active");
             this.gameStateManager.loadPreviousUI();
         });
+        backButton.setDepth(10000);
 
         this.setupStarManagement();
 

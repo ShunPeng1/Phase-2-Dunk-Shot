@@ -25,7 +25,7 @@ import FireTrail from "../entities/particles/FireTrail";
 import BallParticle from "../entities/balls/BallParticle";
 import BallSpeaker from "../entities/sounds/BallSpeaker";
 import BallInteraction from "../entities/balls/BallInteraction";
-import SmallLineObstacleBoundaryImage from "../entities/boundaries/SmallLineObstacleBoundaryImage";
+import ObstacleFactory from "../entities/boundaries/ObstacleFactory";
 
 class DunkShotGameScene extends Scene {
 
@@ -112,15 +112,7 @@ class DunkShotGameScene extends Scene {
         
         leftBound.enableCollision(this.ball, this.ball.wallCollisionCallback);
         rightBound.enableCollision(this.ball,  this.ball.wallCollisionCallback);
-            
 
-        
-        const line = new SmallLineObstacleBoundaryImage(this, 300, 300);
-        //line.setPosition(300, 300);
-        line.setScale(0.5);
-
-        line.enableCollision(this.ball, this.ball.wallCollisionCallback);
-        this.add.existing(line);
     }
 
     private setupBall() : void {
@@ -247,6 +239,7 @@ class DunkShotGameScene extends Scene {
         
         let hoopFactory = new HoopFactory(this, 0xea4214, 0.5);
         let collectibleFactory = new CollectibleFactory(this);
+        let obstacleFactory = new ObstacleFactory(this);
         let hoopSpawner = new HoopSpawner(this, this.ball, new HoopSpawnSet(
             [
                 new HoopSpawnInfo.Builder(BasketballHoop)
@@ -259,6 +252,7 @@ class DunkShotGameScene extends Scene {
             ], [new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)] , 0.15),
             hoopFactory,
             collectibleFactory,
+            obstacleFactory,
             90, 
             440);
         
