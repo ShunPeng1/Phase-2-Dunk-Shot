@@ -104,7 +104,7 @@ class ChallengeGameScene extends DunkShotGameScene {
 
     protected setupWinCondition() {
         var map = this.make.tilemap({
-            key: AssetManager.LEVELS_TEST_LEVEL_KEY,
+            key: AssetManager.LEVELS_ACHIEVEMENT_1_KEY,
             tileWidth: 16,
             tileHeight: 16
         });
@@ -134,7 +134,7 @@ class ChallengeGameScene extends DunkShotGameScene {
     protected setupHoops(): void {
 
         var map = this.make.tilemap({
-            key: AssetManager.LEVELS_TEST_LEVEL_KEY ,
+            key: AssetManager.LEVELS_ACHIEVEMENT_1_KEY ,
             tileWidth: 16,
             tileHeight: 16
         });

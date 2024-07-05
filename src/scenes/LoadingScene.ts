@@ -326,7 +326,7 @@ class LoadingScene extends Scene {
 
 
         // levels
-        this.load.tilemapTiledJSON(AssetManager.LEVELS_TEST_LEVEL_KEY, AssetManager.LEVELS_TEST_LEVEL);
+        this.load.tilemapTiledJSON(AssetManager.LEVELS_ACHIEVEMENT_1_KEY, AssetManager.LEVELS_ACHIEVEMENT_1);
     }
     
     // The rest of this file makes the visual loading bar work!
