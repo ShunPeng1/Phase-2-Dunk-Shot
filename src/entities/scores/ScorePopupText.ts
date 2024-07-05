@@ -57,7 +57,7 @@ class ScorePopupText {
     
         // Prefect Count Text
         if (prefectCount > 0) {
-            let prefectTextMessage = "Prefect " + (prefectCount > 1 ? `x${prefectCount}` : '');
+            let prefectTextMessage = "Perfect " + (prefectCount > 1 ? `x${prefectCount}` : '');
             let prefectText = this.scene.add.text(position.x, position.y - height, prefectTextMessage, textStyle).setOrigin(0.5);
             this.animateText(prefectText, delay); // Further delay this animation
         }

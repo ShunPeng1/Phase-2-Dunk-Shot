@@ -1,7 +1,8 @@
 class InventoryManager {
+    
     private static instance: InventoryManager;
-    private inventory: { [key: string]: number };
-    private subscribers: { [key: string]: Array<(from : number, to: number) => void> };
+    private inventory: { [key: string]: string};
+    private subscribers: { [key: string]: Array<(from : string, to: string) => void> };
 
     private constructor() {
         this.inventory = {};
@@ -16,33 +17,44 @@ class InventoryManager {
         return InventoryManager.instance;
     }
 
-    public addItem(item: string, quantity: number) {
+    public addItem(item: string, arg1: number) {
         if (this.inventory[item]) {
             let from = this.inventory[item];
-            this.inventory[item] += quantity;
-            this.notifySubscribers(item, from);
-        } else {
-            let from = 0;
-            this.inventory[item] = quantity;
+            this.inventory[item] = (parseInt(this.inventory[item]) + arg1).toString();
             this.notifySubscribers(item, from);
         }
-        
+        else {
+            let from = "0";
+            this.inventory[item] = arg1.toString();
+            this.notifySubscribers(item, from);
+        }
+
+    }
+
+    public removeItem(item: string) {
+        if (this.inventory[item]) {
+            let from = this.inventory[item];
+            delete this.inventory[item];
+            this.notifySubscribers(item, from);
+            this.saveInventory();
+        }
+    }
+
+    public setItem(item: string, data: string) {
+        if (this.inventory[item]) {
+            let from = this.inventory[item];
+            this.inventory[item] = data;
+            this.notifySubscribers(item, from);
+        } else {
+            let from = "";
+            this.inventory[item] = data;
+            this.notifySubscribers(item, from);
+        }
         this.saveInventory();
     }
 
-    public removeItem(item: string, quantity: number) {
-        if (this.inventory[item] && this.inventory[item] >= quantity) {
-            let from = this.inventory[item];
-            this.inventory[item] -= quantity;
-
-            
-            this.notifySubscribers(item, from);
-            if (this.inventory[item] === 0) {
-                delete this.inventory[item];
-            }
-            
-            this.saveInventory();
-        }
+    public getItemAsNumber(item: string) {
+        return parseInt(this.inventory[item]);
     }
 
     public getItem(item: string) {
@@ -54,14 +66,14 @@ class InventoryManager {
     }
 
     
-    public subscribe(item: string, callback: (quantity: number) => void) {
+    public subscribe(item: string, callback: (quantity: string) => void) {
         if (!this.subscribers[item]) {
             this.subscribers[item] = [];
         }
         this.subscribers[item].push(callback);
     }
 
-    public unsubscribe(item: string, callback: (quantity: number) => void) {
+    public unsubscribe(item: string, callback: (quantity: string) => void) {
         if (this.subscribers[item]) {
             const index = this.subscribers[item].indexOf(callback);
             if (index !== -1) {
@@ -70,9 +82,9 @@ class InventoryManager {
         }
     }
 
-    private notifySubscribers(item: string, from : number) {
+    private notifySubscribers(item: string, from : string) {
         if (this.subscribers[item]) {
-            const to = this.inventory[item] || 0;
+            const to = this.inventory[item] || "";
             this.subscribers[item].forEach(callback => callback(from, to));
         }
     }

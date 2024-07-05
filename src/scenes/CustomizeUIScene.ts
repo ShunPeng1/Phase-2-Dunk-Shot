@@ -1,13 +1,21 @@
 import StarText from "../entities/scores/StarText";
+import BallSelectionButton from "../entities/ui/BallSelectionButton";
 import AssetManager from "../managers/AssetManager";
 import DunkShotGameStateManager from "../managers/DunkShotGameStateManager";
 import InventoryManager from "../managers/InventoryManager";
+import UiGridLayout from "../ultilities/ui/UiGridLayout";
 import UiImage from "../ultilities/ui/UiImage";
 import UiImageButton from "../ultilities/ui/UiImageButton";
+import UiUtilities from "../ultilities/ui/UiUtilities";
 
 
 class CustomizeUIScene extends Phaser.Scene {
     private gameStateManager: DunkShotGameStateManager;
+    private defaultBall: string = AssetManager.BASKETBALL_KEY;
+
+    
+        
+
 
     constructor() {
         super(AssetManager.CUSTOMIZE_UI_SCENE);
@@ -53,12 +61,29 @@ class CustomizeUIScene extends Phaser.Scene {
         let middleBar = new UiImage(this, width/2, 240, AssetManager.MASKS_222_KEY);
         middleBar.setScale(5, 1)
 
-        let ballImagePrefab = new UiImage(this, width/2, 400, AssetManager.BASKETBALL_KEY);
-        ballImagePrefab.setScale(0.5);
+        //let ballImagePrefab = new UiImage(this, width/2, 400, AssetManager.BASKETBALL_KEY);
+        //ballImagePrefab.setScale(0.5);
         //this.children.remove(ballImagePrefab);
 
+        let allBalls : string[]= AssetManager.ALL_BALL_KEYS;
 
 
+        let grid = new UiGridLayout(this, 100, 350, 0, 0, 200, 200); 
+        grid.createGrid(3, allBalls.length, (scene: Phaser.Scene, x: number, y: number, index: number) => {
+            let ballSelectionButton = new BallSelectionButton(scene, x, y, allBalls[index], 100);
+            
+            ballSelectionButton.setScale(0.6);
+            UiUtilities.applyButtonScaleTweens(ballSelectionButton);
+            return ballSelectionButton.container;
+        }, true);
+        this.add.existing(grid);
+        
+        // for (let i = 0; i < allBalls.length; i++) {
+        //     let ballSelectionButton = new BallSelectionButton(this, 100, 100, allBalls[i], 100);
+        //     console.log("Creating ball selection button",allBalls[i], i );
+        //     ballSelectionButton.setScale(0.7);
+        // }
+        
 
     }
 
@@ -76,7 +101,7 @@ class CustomizeUIScene extends Phaser.Scene {
         starText.setOrigin(0.5, 0.5); // Center the origin of the text for accurate positioning
         starText.setScrollFactor(0, 0); // This line makes the score text follow the camera
    
-        starText.updateStar(InventoryManager.getInstance().getItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
+        starText.updateStar(InventoryManager.getInstance().getItemAsNumber(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
         
     }
 }

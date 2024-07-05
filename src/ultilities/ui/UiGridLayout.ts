@@ -17,22 +17,43 @@ class UiGridLayout<T extends Phaser.GameObjects.GameObject> extends Phaser.GameO
         this.grid = [];
     }
 
-    public createGrid(columns: number, rows: number, factoryFunction: (scene: Phaser.Scene, x: number, y: number) => T): void {
-        for (let y = 0; y < rows; y++) {
-            this.grid[y] = [];
-            for (let x = 0; x < columns; x++) {
-                const posX = this.offsetX + x * (this.scaleX + this.spacingX);
-                const posY = this.offsetY + y * (this.scaleY + this.spacingY);
-                const gameObject = factoryFunction(this.scene, posX, posY);
-
+    public createGrid(minColumn: number, count: number, factoryFunction: (scene: Phaser.Scene, x: number, y: number, index: number) => T, isTranspose: boolean = false): void {
+        let rowCount = Math.ceil(count / minColumn);
+        let columnCount = minColumn;
+    
+        this.grid = [];
+    
+        for (let i = 0; i < rowCount; i++) {
+            this.grid[i] = [];
+            for (let j = 0; j < columnCount; j++) {
+                let index = isTranspose ? j * rowCount + i : i * columnCount + j;
+                if (index >= count) break; // Prevent creating more items than the count
+    
+                const posX = (isTranspose ? j : i) * (this.scaleX + this.spacingX);
+                const posY = (isTranspose ? i : j) * (this.scaleY + this.spacingY);
+                const gameObject = factoryFunction(this.scene, posX, posY, index);
+    
                 this.add(gameObject); // Add the gameObject to the container for automatic positioning and rendering.
-                this.grid[y][x] = gameObject;
+                this.grid[i][j] = gameObject;
             }
         }
     }
 
+    public setItem(column: number, row: number, item: T): void {
+        if (!this.grid[row]) this.grid[row] = [];
+        this.grid[row][column] = item;
+    }
+
+    public setPosition(x?: number, y?: number, z?: number, w?: number): this {
+        super.setPosition(x, y, z, w);
+        return this;
+    }
+
+    
+
+
     // Optional: Method to remove the grid or a specific button
-    removeGrid(): void {
+    public removeGrid(): void {
         for (let row of this.grid) {
             for (let gameObject of row) {
                 gameObject.destroy();
@@ -41,7 +62,7 @@ class UiGridLayout<T extends Phaser.GameObjects.GameObject> extends Phaser.GameO
         this.grid = [];
     }
 
-    removeButton(column: number, row: number): void {
+    public removeButton(column: number, row: number): void {
         if (this.grid[row] && this.grid[row][column]) {
             this.grid[row][column].destroy();
         }

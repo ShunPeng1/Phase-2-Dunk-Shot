@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import AssetManager from "../managers/AssetManager"
+import InventoryManager from "../managers/InventoryManager";
 
 class LoadingScene extends Scene {
     private loadingProgressComplete: boolean;
@@ -112,7 +113,7 @@ class LoadingScene extends Scene {
         this.load.image(AssetManager.BALLS_60_KEY, AssetManager.BALLS_60_IMAGE);
         this.load.image(AssetManager.BALLS_61_KEY, AssetManager.BALLS_61_IMAGE);
         this.load.image(AssetManager.BALLS_68_KEY, AssetManager.BALLS_68_IMAGE);
-        this.load.image(AssetManager.BALLS_7_KEY, AssetManager.BALLS_7_IMAGE);
+        this.load.image(AssetManager.WHEELS_7_KEY, AssetManager.WHEELS_7_IMAGE);
         this.load.image(AssetManager.BALLS_71_KEY, AssetManager.BALLS_71_IMAGE);
         this.load.image(AssetManager.BALLS_72_KEY, AssetManager.BALLS_72_IMAGE);
         this.load.image(AssetManager.BALLS_74_KEY, AssetManager.BALLS_74_IMAGE);
@@ -339,6 +340,12 @@ class LoadingScene extends Scene {
 
         this.add.text(centerX, centerY - 48, "Dunk Shot", { fontFamily: 'Arial', fontSize: '32px', color: '#ffffff' })
         .setOrigin(0.5, 0.5);
+
+        let ballSkin = InventoryManager.getInstance().getItem(AssetManager.BALL_SKIN_INVENTORY_KEY);
+
+        if (!ballSkin) {
+            InventoryManager.getInstance().setItem(AssetManager.BALL_SKIN_INVENTORY_KEY, AssetManager.BASKETBALL_KEY);
+        }
     }
 
     public init() : void {
@@ -377,6 +384,7 @@ class LoadingScene extends Scene {
             this.loadingProgressComplete = true;
         });
     }
+
 
     private nextScene() : void {
         this.scene.start(AssetManager.DUNK_SHOT_GAME_SCENE);

@@ -225,8 +225,7 @@ class AssetManager {
     public static readonly BALLS_61_KEY: string = "balls_61";
     public static readonly BALLS_68_IMAGE: string = AssetManager.BALLS_FOLDER + "68.png";
     public static readonly BALLS_68_KEY: string = "balls_68";
-    public static readonly BALLS_7_IMAGE: string = AssetManager.BALLS_FOLDER + "7.png";
-    public static readonly BALLS_7_KEY: string = "balls_7";
+
     public static readonly BALLS_71_IMAGE: string = AssetManager.BALLS_FOLDER + "71.png";
     public static readonly BALLS_71_KEY: string = "balls_71";
     public static readonly BALLS_72_IMAGE: string = AssetManager.BALLS_FOLDER + "72.png";
@@ -249,7 +248,85 @@ class AssetManager {
     public static readonly BALLS_97_KEY: string = "balls_97";
     public static readonly BALLS_99_IMAGE: string = AssetManager.BALLS_FOLDER + "99.png";
     public static readonly BALLS_99_KEY: string = "balls_99";
-
+    public static readonly ALL_BALL_KEYS: string[] = [
+        AssetManager.BASKETBALL_KEY,
+        AssetManager.BALLS_104_KEY,
+        AssetManager.BALLS_105_KEY,
+        AssetManager.BALLS_107_KEY,
+        AssetManager.BALLS_108_KEY,
+        AssetManager.BALLS_109_KEY,
+        AssetManager.BALLS_11_KEY,
+        AssetManager.BALLS_110_KEY,
+        AssetManager.BALLS_113_KEY,
+        AssetManager.BALLS_122_KEY,
+        AssetManager.BALLS_125_KEY,
+        AssetManager.BALLS_127_KEY,
+        AssetManager.BALLS_13_KEY,
+        AssetManager.BALLS_134_KEY,
+        AssetManager.BALLS_138_KEY,
+        AssetManager.BALLS_14_KEY,
+        AssetManager.BALLS_140_KEY,
+        AssetManager.BALLS_145_KEY,
+        AssetManager.BALLS_146_KEY,
+        AssetManager.BALLS_15_KEY,
+        AssetManager.BALLS_150_KEY,
+        AssetManager.BALLS_153_KEY,
+        AssetManager.BALLS_154_KEY,
+        AssetManager.BALLS_155_KEY,
+        AssetManager.BALLS_156_KEY,
+        AssetManager.BALLS_158_KEY,
+        AssetManager.BALLS_16_KEY,
+        AssetManager.BALLS_162_KEY,
+        AssetManager.BALLS_164_KEY,
+        AssetManager.BALLS_165_KEY,
+        AssetManager.BALLS_166_KEY,
+        AssetManager.BALLS_169_KEY,
+        AssetManager.BALLS_171_KEY,
+        AssetManager.BALLS_174_KEY,
+        AssetManager.BALLS_175_KEY,
+        AssetManager.BALLS_178_KEY,
+        AssetManager.BALLS_18_KEY,
+        AssetManager.BALLS_183_KEY,
+        AssetManager.BALLS_187_KEY,
+        AssetManager.BALLS_189_KEY,
+        AssetManager.BALLS_192_KEY,
+        AssetManager.BALLS_194_KEY,
+        AssetManager.BALLS_197_KEY,
+        AssetManager.BALLS_202_KEY,
+        AssetManager.BALLS_207_KEY,
+        AssetManager.BALLS_215_KEY,
+        AssetManager.BALLS_216_KEY,
+        AssetManager.BALLS_25_KEY,
+        AssetManager.BALLS_28_KEY,
+        AssetManager.BALLS_29_KEY,
+        AssetManager.BALLS_33_KEY,
+        AssetManager.BALLS_34_KEY,
+        AssetManager.BALLS_40_KEY,
+        AssetManager.BALLS_41_KEY,
+        AssetManager.BALLS_46_KEY,
+        AssetManager.BALLS_47_KEY,
+        AssetManager.BALLS_49_KEY,
+        AssetManager.BALLS_51_KEY,
+        AssetManager.BALLS_54_KEY,
+        AssetManager.BALLS_55_KEY,
+        AssetManager.BALLS_56_KEY,
+        AssetManager.BALLS_57_KEY,
+        AssetManager.BALLS_58_KEY,
+        AssetManager.BALLS_60_KEY,
+        AssetManager.BALLS_61_KEY,
+        AssetManager.BALLS_68_KEY,
+        AssetManager.BALLS_71_KEY,
+        AssetManager.BALLS_72_KEY,
+        AssetManager.BALLS_74_KEY,
+        AssetManager.BALLS_78_KEY,
+        AssetManager.BALLS_81_KEY,
+        AssetManager.BALLS_86_KEY,
+        AssetManager.BALLS_87_KEY,
+        AssetManager.BALLS_93_KEY,
+        AssetManager.BALLS_94_KEY,
+        AssetManager.BALLS_97_KEY,
+        AssetManager.BALLS_99_KEY,
+    ];
 
     public static readonly BASKETS_142_IMAGE: string = AssetManager.BASKETS_FOLDER + "142.png";        
     public static readonly BASKETS_142_KEY: string = "baskets_142";
@@ -515,6 +592,8 @@ class AssetManager {
     public static readonly WHEEL_35_KEY: string = "wheel_35";
     public static readonly WHEEL_67_IMAGE: string = AssetManager.WHEEL_FOLDER + "67.png";
     public static readonly WHEEL_67_KEY: string = "wheel_67";
+    public static readonly WHEELS_7_IMAGE: string = AssetManager.WHEEL_FOLDER + "7.png";
+    public static readonly WHEELS_7_KEY: string = "wheel_7";
     public static readonly WHEEL_73_IMAGE: string = AssetManager.WHEEL_FOLDER + "73.png";
     public static readonly WHEEL_73_KEY: string = "wheel_73";
     public static readonly WHEEL_83_IMAGE: string = AssetManager.WHEEL_FOLDER + "83.png";

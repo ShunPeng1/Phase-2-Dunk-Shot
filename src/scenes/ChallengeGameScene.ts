@@ -261,7 +261,7 @@ class ChallengeGameScene extends DunkShotGameScene {
         
         this.ballInteraction.on(BallInteraction.ENTER_GOAL_HOOP_EVENT, (enterHoop: BasketballHoop) => {
             if (this.challengeConfiguration.getGoalPredicate().checkGoalAchieved()) {
-                InventoryManager.getInstance().addItem(this.levelConfiguration.key, 1);
+                InventoryManager.getInstance().setItem(this.levelConfiguration.key, "unlocked");
                 gameStateManager.loadWinUI();
             }
             else{
