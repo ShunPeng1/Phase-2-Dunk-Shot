@@ -14,7 +14,7 @@ class CustomizeUIScene extends Phaser.Scene {
     private defaultBall: string = AssetManager.BASKETBALL_KEY;
 
     
-        
+    private coinUpdateFuction: (old: string, value: string) => void;
 
 
     constructor() {
@@ -23,6 +23,7 @@ class CustomizeUIScene extends Phaser.Scene {
 
     init(data: DunkShotGameStateManager) {
         this.gameStateManager = data;
+
     }
 
     create() {
@@ -132,7 +133,21 @@ class CustomizeUIScene extends Phaser.Scene {
    
         starText.updateStar(InventoryManager.getInstance().getItemAsNumber(AssetManager.GOLDEN_STAR_INVENTORY_KEY));
         
+        let coinUpdate = (old: string, value: string): void =>{
+            starText.updateStar(parseInt(value));
+        };
+
+        this.coinUpdateFuction = coinUpdate.bind(this);
+
+        InventoryManager.getInstance().subscribe(AssetManager.GOLDEN_STAR_INVENTORY_KEY, this.coinUpdateFuction);
+
+        starText.on('destroy', () => {
+            InventoryManager.getInstance().unsubscribe(AssetManager.GOLDEN_STAR_INVENTORY_KEY, this.coinUpdateFuction);
+        });
+
     }
+
+    
 }
 
 export default CustomizeUIScene;

@@ -25,8 +25,9 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public readonly COLLECTIBLE_OVERLAP_EVENT = "collide with collectible";
     public readonly BALL_PUSH_EVENT = "ball push";
 
-
     private readonly BLOCKED_COOLDOWN = 300;
+
+    private ballSkinFunction : (old :string , skin: string) => void;
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture) {
         super(scene, x, y, texture);
@@ -50,6 +51,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         // to prevent memory leaks or unexpected behavior
         this.on('destroy', () => {
             this.scene.events.off('update', this.update, this);
+            InventoryManager.getInstance().unsubscribe(AssetManager.BALL_SKIN_INVENTORY_KEY, this.ballSkinFunction);
         });
 
 
@@ -57,11 +59,12 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         this.on(this.RING_HOOP_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
         this.on(this.NET_COLLIDE_EVENT, this.adjustBounceOnCollidingObject, this);
 
-        this.setTexture(InventoryManager.getInstance().getItem(AssetManager.BALL_SKIN_INVENTORY_KEY) ?? AssetManager.BASKETBALL_KEY); 
-        InventoryManager.getInstance().subscribe(AssetManager.BALL_SKIN_INVENTORY_KEY, (from: string, value: any) => {
-            this.setTexture(value);
-        });
+        this.ballSkinFunction = this.setBallSkin.bind(this);
 
+        this.setTexture(InventoryManager.getInstance().getItem(AssetManager.BALL_SKIN_INVENTORY_KEY) ?? AssetManager.BASKETBALL_KEY); 
+        InventoryManager.getInstance().subscribe(AssetManager.BALL_SKIN_INVENTORY_KEY, this.ballSkinFunction);
+
+        //InventoryManager.getInstance().setItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY, "1000");
     }
 
     public update() : void {
@@ -95,7 +98,9 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
           
     }
 
-    
+    private setBallSkin(old :string , skin: string) : void {
+        this.setTexture(skin);
+    }
 
     public bindBall(basketballHoop : BasketballHoop) : void{    
         this.bindingHoop = basketballHoop;
@@ -233,6 +238,8 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     public getWasBlocked() : boolean{
         return this.wasBlocked;
     }
+
+    
 
         // Collision callback to adjust ball's bounce based on the object it collides with
     private adjustBounceOnCollidingObject(collidedObject : GameObjects.GameObject) {

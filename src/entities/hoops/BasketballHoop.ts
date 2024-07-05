@@ -35,7 +35,7 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
     // Container to hold the hoop components
     private hoopContainer: Phaser.GameObjects.Container;
     private internalHoopContainer: Phaser.GameObjects.Container;
-
+    private obstacleContainer: Phaser.GameObjects.Container;
 
     // Collider properties
     
@@ -61,6 +61,8 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         super(scene, 'BasketballHoop');   
 
         this.hoopContainer = scene.add.container(x, y);
+
+        this.obstacleContainer = scene.add.container(x, y);
 
         this.initImageComponents(scene, x, y); // Initialize the image components
 
@@ -337,6 +339,13 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         
     }
 
+    public addObstacle(obstacle: Phaser.GameObjects.GameObject) : void {
+        
+
+        this.obstacleContainer.add(obstacle);
+    }
+
+
 
     private updateComponentPosition() : void {
         
@@ -355,6 +364,11 @@ class BasketballHoop extends Phaser.GameObjects.GameObject implements Phaser.Gam
         this.innerRing.destroy();
         this.outerRing.destroy();
         this.net.destroy();
+
+        this.obstacleContainer.destroy();
+        this.internalHoopContainer.destroy();
+        this.hoopContainer.destroy();
+
 
         this.disableCollision();
         this.disableOverlap();

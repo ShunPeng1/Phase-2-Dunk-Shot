@@ -25,6 +25,7 @@ import FireTrail from "../entities/particles/FireTrail";
 import BallParticle from "../entities/balls/BallParticle";
 import BallSpeaker from "../entities/sounds/BallSpeaker";
 import BallInteraction from "../entities/balls/BallInteraction";
+import SmallLineObstacleBoundaryImage from "../entities/boundaries/SmallLineObstacleBoundaryImage";
 
 class DunkShotGameScene extends Scene {
 
@@ -36,6 +37,9 @@ class DunkShotGameScene extends Scene {
 
     private readonly PHYSICS_FPS: number = 300;
     
+
+    private coinUpdateFuction: (old: string, value: string) => void;
+
     constructor(key: string = AssetManager.DUNK_SHOT_GAME_SCENE) {
         super({ key: key });
     }
@@ -109,6 +113,14 @@ class DunkShotGameScene extends Scene {
         leftBound.enableCollision(this.ball, this.ball.wallCollisionCallback);
         rightBound.enableCollision(this.ball,  this.ball.wallCollisionCallback);
             
+
+        
+        const line = new SmallLineObstacleBoundaryImage(this, 300, 300);
+        //line.setPosition(300, 300);
+        line.setScale(0.5);
+
+        line.enableCollision(this.ball, this.ball.wallCollisionCallback);
+        this.add.existing(line);
     }
 
     private setupBall() : void {
@@ -201,7 +213,23 @@ class DunkShotGameScene extends Scene {
                 collectible.createCollectAnimation(new Phaser.Math.Vector2(collectibleEndPosition));
             }
         });
+
+        
+        let coinUpdate = (old: string, value: string): void =>{
+            starText.updateStar(parseInt(value));
+        };
+
+        this.coinUpdateFuction = coinUpdate.bind(this);
+
+        InventoryManager.getInstance().subscribe(AssetManager.GOLDEN_STAR_INVENTORY_KEY, this.coinUpdateFuction);
+
+        starText.on('destroy', () => {
+            InventoryManager.getInstance().unsubscribe(AssetManager.GOLDEN_STAR_INVENTORY_KEY, this.coinUpdateFuction);
+        });
+
     }
+
+
 
 
     protected setupParticle() : void {
