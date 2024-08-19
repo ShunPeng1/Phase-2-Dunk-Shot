@@ -161,7 +161,7 @@ class HoopSpawner {
             
 
             switch (obstacleSpawnInfo.spawnPositionAndRotation) {
-                case "NEXTTO VERTICAL":
+                case "NEXT TO VERTICAL":
                     x = x + (isFacingLeft ? 60 : -60)
                     y = y - 60
                     break

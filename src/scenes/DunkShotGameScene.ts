@@ -259,13 +259,13 @@ class DunkShotGameScene extends Scene {
             ], [
                 new CollectibleSpawnInfo(GoldenStarCollectible, 1, -40, 0.5)
             ], [
-                new ObstacleSpawnInfo(SmallLineObstacleBoundaryImage, 1, "NEXTTO VERTICAL"),
+                new ObstacleSpawnInfo(SmallLineObstacleBoundaryImage, 1, "NEXT TO VERTICAL"),
                 new ObstacleSpawnInfo(LongLineObstacleBoundaryImage, 1, "TOP HORIZONTAL"),
                 new ObstacleSpawnInfo(MediumLineObstacleBoundaryImage, 1, "SIDE HORIZONTAL"),
                 new ObstacleSpawnInfo(MediumLineObstacleBoundaryImage, 1, "TOP VERTICAL"),
                 new ObstacleSpawnInfo(SmallLineObstacleBoundaryImage, 1, "SIDE VERTICAL"),
                 new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "TOP HORIZONTAL"),
-                new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "NEXTTO VERTICAL"),
+                new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "NEXT TO VERTICAL"),
                 new ObstacleSpawnInfo(CircleObstacleBoundaryImage, 1, "SIDE VERTICAL"),
 
             ],
