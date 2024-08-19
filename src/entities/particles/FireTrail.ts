@@ -1,14 +1,14 @@
-import AssetManager from "../../managers/AssetManager";
+import AssetManager from "../../managers/AssetManager"
 
 class FireTrail extends Phaser.GameObjects.GameObject {
-    private fireEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
-    private smokeEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
-    private follow: Phaser.GameObjects.Components.Transform;
+    private fireEmitter: Phaser.GameObjects.Particles.ParticleEmitter
+    private smokeEmitter: Phaser.GameObjects.Particles.ParticleEmitter
+    private follow: Phaser.GameObjects.Components.Transform
     constructor(scene: Phaser.Scene, x: number, y: number, follow: Phaser.GameObjects.Components.Transform) {
-        super(scene, "fireTrail");
+        super(scene, "fireTrail")
 
         // Set the follow object
-        this.follow = follow;
+        this.follow = follow
 
         // Fire emitter configuration
         this.fireEmitter = new Phaser.GameObjects.Particles.ParticleEmitter(scene, x, y, AssetManager.MASKS_FIRE_KEY, {
@@ -24,11 +24,11 @@ class FireTrail extends Phaser.GameObjects.GameObject {
             
             
             //blendMode: 'ADD'
-        });
-        this.fireEmitter.setDepth(-1);
+        })
+        this.fireEmitter.setDepth(-1)
 
         // Smoke emitter configuration
-        this.smokeEmitter = new Phaser.GameObjects.Particles.ParticleEmitter(scene, x, y,  AssetManager.MASKS_BIG_SMOKE_KEY,{
+        this.smokeEmitter = new Phaser.GameObjects.Particles.ParticleEmitter(scene, x, y, AssetManager.MASKS_BIG_SMOKE_KEY, {
             color: [0x555555],
             lifespan: 1000,
             x: { min: -5, max: 5 },
@@ -42,31 +42,31 @@ class FireTrail extends Phaser.GameObjects.GameObject {
 
             frequency: 70,
             //blendMode: 'MULTIPLY'
-        });
+        })
 
-        this.fireEmitter.setDepth(-0.8);
-        this.smokeEmitter.setDepth(-0.9);
+        this.fireEmitter.setDepth(-0.8)
+        this.smokeEmitter.setDepth(-0.9)
 
-        this.scene.add.existing(this.fireEmitter);
-        this.scene.add.existing(this.smokeEmitter);
+        this.scene.add.existing(this.fireEmitter)
+        this.scene.add.existing(this.smokeEmitter)
 
-        this.stop();
+        this.stop()
         
     }
 
     public start() {
-        this.fireEmitter.start();
-        this.smokeEmitter.start();
+        this.fireEmitter.start()
+        this.smokeEmitter.start()
 
         
     }
 
     public stop() {
-        this.fireEmitter.stop();
-        this.smokeEmitter.stop();
+        this.fireEmitter.stop()
+        this.smokeEmitter.stop()
     }
 
     
 }
 
-export default FireTrail;
+export default FireTrail

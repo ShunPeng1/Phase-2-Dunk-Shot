@@ -1,21 +1,21 @@
-import AssetManager from "../../managers/AssetManager";
-import InventoryManager from "../../managers/InventoryManager";
-import BasketballHoop from "../hoops/BasketballHoop";
-import Collectible from "./Collectible";
+import AssetManager from "../../managers/AssetManager"
+import InventoryManager from "../../managers/InventoryManager"
+import BasketballHoop from "../hoops/BasketballHoop"
+import Collectible from "./Collectible"
 
 class GoldenStarCollectible extends Collectible {
     
-    constructor(scene: Phaser.Scene, x: number, y: number, basketballHoop: BasketballHoop ) {
-        super(scene, x, y, AssetManager.GOLDEN_STAR_KEY, basketballHoop);
+    constructor(scene: Phaser.Scene, x: number, y: number, basketballHoop: BasketballHoop) {
+        super(scene, x, y, AssetManager.GOLDEN_STAR_KEY, basketballHoop)
 
-        this.createIdleAnimation();
+        this.createIdleAnimation()
     }
     
 
-    public collect(collector? : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
+    public collect(_collector? : Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody) {
     
-        InventoryManager.getInstance().addItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY, 1);
-        this.disableOverlap();
+        InventoryManager.getInstance().addItem(AssetManager.GOLDEN_STAR_INVENTORY_KEY, 1)
+        this.disableOverlap()
     }
 
     private createIdleAnimation() {
@@ -26,7 +26,7 @@ class GoldenStarCollectible extends Collectible {
             repeat: -1,
             ease: 'Sine.easeInOut',
             duration: 1000,
-        });
+        })
     }
 
     public createCollectAnimation(position: Phaser.Math.Vector2) {
@@ -37,9 +37,9 @@ class GoldenStarCollectible extends Collectible {
             ease: 'Back.easeIn',
             duration: 1500,
             onComplete: () => {
-                this.destroy();
+                this.destroy()
             }
-        });
+        })
 
         this.scene.tweens.add({
             targets: this,
@@ -47,9 +47,9 @@ class GoldenStarCollectible extends Collectible {
             loop: -1,
             ease: 'Linear',
             duration: 500,
-        });
+        })
     }
 
 }
 
-export default GoldenStarCollectible;
+export default GoldenStarCollectible

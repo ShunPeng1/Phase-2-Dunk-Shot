@@ -1,23 +1,23 @@
-import IGoalPredicate from "./types/IGoalPredicate";
+import IGoalPredicate from "./types/IGoalPredicate"
 
 // Step 2: Implement Specific Goal Predicates
 class ScoreToWinPredicate implements IGoalPredicate {
-    private targetScore: number;
-    private getCurrentScore: () => number;
+    private targetScore: number
+    private getCurrentScore: () => number
 
 
     constructor(targetScore: number, getCurrentScore: () => number) {
-        this.targetScore = targetScore;
-        this.getCurrentScore = getCurrentScore;
+        this.targetScore = targetScore
+        this.getCurrentScore = getCurrentScore
     }
 
     public getGoalValue(): number {
-        return this.targetScore;
+        return this.targetScore
     }
 
     public checkGoalAchieved(): boolean {
-        return this.getCurrentScore() >= this.targetScore;
+        return this.getCurrentScore() >= this.targetScore
     }
 }
 
-export default ScoreToWinPredicate;
+export default ScoreToWinPredicate

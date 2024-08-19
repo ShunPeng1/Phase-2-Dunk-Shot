@@ -1,5 +1,5 @@
-import IState from "./IState";
-import IStateTransition from "./IStateTransition";
+import IState from "./IState"
+import IStateTransition from "./IStateTransition"
 
 interface IStateTransitionData {
     fromState: IState;
@@ -8,4 +8,4 @@ interface IStateTransitionData {
     castTo<T extends IStateTransitionData>(): T;
 }
 
-export default IStateTransitionData;
+export default IStateTransitionData

@@ -3,4 +3,4 @@ interface IStatePredicate {
     evaluate(): boolean;
 }
 
-export default IStatePredicate;
+export default IStatePredicate

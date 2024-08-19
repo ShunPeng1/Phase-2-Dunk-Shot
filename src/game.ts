@@ -1,24 +1,24 @@
-import LoadingScene from "./scenes/LoadingScene";
-import MainMenuUIScene from "./scenes/MainMenuUIScene";
-import DunkShotGameScene from "./scenes/DunkShotGameScene";
-import RestartUIScene from "./scenes/RestartUIScene";
-import DunkShotGameUIScene from "./scenes/DunkShotGameUIScene";
-import PauseUIScene from "./scenes/PauseUIScene";
-import CustomizeUIScene from "./scenes/CustomizeUIScene";
-import ChallengeMenuScene from "./scenes/ChallengeMenuScene";
-import ChallengeGameScene from "./scenes/ChallengeGameScene";
-import ChallengeStartUIScene from "./scenes/ChallengeStartUIScene";
-import ChallengeLoseUIScene from "./scenes/ChallengeLoseUIScene";
-import ChallengePauseUIScene from "./scenes/ChallengePauseUIScene";
-import ChallengeWinUIScene from "./scenes/ChallengeWinUIScene";
+import LoadingScene from "./scenes/LoadingScene"
+import MainMenuUIScene from "./scenes/MainMenuUIScene"
+import DunkShotGameScene from "./scenes/DunkShotGameScene"
+import RestartUIScene from "./scenes/RestartUIScene"
+import DunkShotGameUIScene from "./scenes/DunkShotGameUIScene"
+import PauseUIScene from "./scenes/PauseUIScene"
+import CustomizeUIScene from "./scenes/CustomizeUIScene"
+import ChallengeMenuScene from "./scenes/ChallengeMenuScene"
+import ChallengeGameScene from "./scenes/ChallengeGameScene"
+import ChallengeStartUIScene from "./scenes/ChallengeStartUIScene"
+import ChallengeLoseUIScene from "./scenes/ChallengeLoseUIScene"
+import ChallengePauseUIScene from "./scenes/ChallengePauseUIScene"
+import ChallengeWinUIScene from "./scenes/ChallengeWinUIScene"
 
 
 class Game {
     constructor() {
         // Desired aspect ratio (width:height)
-        const aspectRatio = 9 / 16;
+        const aspectRatio = 9 / 16
         
-        let gameWidth = 600, gameHeight = gameWidth / aspectRatio;
+        const gameWidth = 600, gameHeight = gameWidth / aspectRatio
 
 
         const config = {
@@ -53,10 +53,10 @@ class Game {
                 }
             }
             
-        };
+        }
 
 
-        const game = new Phaser.Game(config);
+        const game = new Phaser.Game(config)
     }
 
 }

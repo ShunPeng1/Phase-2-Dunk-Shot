@@ -3,4 +3,4 @@ interface ITrajectory {
     clear(): void;
 }
 
-export default ITrajectory;
+export default ITrajectory

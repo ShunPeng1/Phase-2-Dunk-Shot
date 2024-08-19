@@ -1,25 +1,25 @@
 class BoundaryImage extends Phaser.Physics.Arcade.Image {
-    protected vericalWidth: number;
-    protected verticalHeight: number;
-    protected isCircle: boolean;
+    protected vericalWidth: number
+    protected verticalHeight: number
+    protected isCircle: boolean
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, width: number, height: number, isCircle: boolean = false) {
-        super(scene, x, y, texture);
+    constructor(scene: Phaser.Scene, x: number, y: number, texture: string | Phaser.Textures.Texture, width: number, height: number, isCircle = false) {
+        super(scene, x, y, texture)
 
-        scene.physics.add.existing(this);
+        scene.physics.add.existing(this)
 
         this.setImmovable(true);
-        (this.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+        (this.body as Phaser.Physics.Arcade.Body).setAllowGravity(false)
 
         if (isCircle) {
-            this.setCircle(width / 2);
+            this.setCircle(width / 2)
         } else {
-            this.setSize(width, height);
+            this.setSize(width, height)
         }
 
-        this.vericalWidth = width;
-        this.verticalHeight = height;
-        this.isCircle = isCircle;
+        this.vericalWidth = width
+        this.verticalHeight = height
+        this.isCircle = isCircle
 
     }
 
@@ -27,16 +27,16 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
         this.scene.physics.add.collider(collider, this, 
             (object1: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody, object2: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody): void => {
-                this.hit(object1);
+                this.hit(object1)
                 
                 if (callback) {
-                    callback(object1, object2);
+                    callback(object1, object2)
                 }
             }
-            , undefined, this.scene);
+            , undefined, this.scene)
     }
 
-    public hit(object1?: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody): void {
+    public hit(_object1?: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody): void {
         // Implement this method in the child class
     }
 
@@ -52,4 +52,4 @@ class BoundaryImage extends Phaser.Physics.Arcade.Image {
 
 }
 
-export default BoundaryImage;
+export default BoundaryImage

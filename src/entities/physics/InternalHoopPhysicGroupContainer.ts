@@ -1,37 +1,37 @@
 
-import BasketballHoop from "../hoops/BasketballHoop";
-import InternalHoopArcadeImage from "../hoops/InternalHoopArcadeImage";
-import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer";
+import BasketballHoop from "../hoops/BasketballHoop"
+import InternalHoopArcadeImage from "../hoops/InternalHoopArcadeImage"
+import CustomPhysicGroupContainer from "./CustomPhysicGroupContainer"
 
 
 class InternalHoopPhysicGroupContainer extends CustomPhysicGroupContainer{
     
-    private size: number;
+    private size: number
 
-    private basketballHoop: BasketballHoop;
+    private basketballHoop: BasketballHoop
     
     constructor(scene: Phaser.Scene, x: number, y: number, size: number, basketballHoop: BasketballHoop) {
-        super(scene, x, y);
+        super(scene, x, y)
         
-        this.size = size;
+        this.size = size
 
-        this.basketballHoop = basketballHoop;
+        this.basketballHoop = basketballHoop
 
-        this.initColliders();
+        this.initColliders()
 
     }
 
     protected createColliderChildren(): Phaser.GameObjects.GameObject[] {
         if (!this.basketballHoop) {
-            return [];
+            return []
         }
 
         const collider = new InternalHoopArcadeImage(this.scene, 0, 0, '', this.basketballHoop)
             .setVisible(false)
-            .setCircle(this.size);
+            .setCircle(this.size)
 
-        return [collider];
+        return [collider]
     }
 }
 
-export default InternalHoopPhysicGroupContainer;
+export default InternalHoopPhysicGroupContainer

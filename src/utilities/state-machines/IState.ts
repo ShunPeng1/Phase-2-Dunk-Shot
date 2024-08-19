@@ -1,4 +1,4 @@
-import IStateTransitionData from "./IStateTransitionData";
+import IStateTransitionData from "./IStateTransitionData"
 
 
 
@@ -9,4 +9,4 @@ interface IState {
     update(deltaTime: number, transitionData: IStateTransitionData | null): void;
 }
 
-export default IState;
+export default IState
